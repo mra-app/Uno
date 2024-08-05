@@ -2,18 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnoCard : MonoBehaviour
+public class UnoCardStack : MonoBehaviour
 {
-    public enum CardType{
-        Red,
-        Green,
-        Blue,
-        Yellow,
-        WildCard
-
-    }
-    public int id;
-    public CardType type;
+    List<UnoCard> cards;
     // Start is called before the first frame update
     void Start()
     {

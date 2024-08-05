@@ -4,25 +4,24 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class TestScript
+public class UnoGameManagerTest
 {
     // A Test behaves as an ordinary method
     [Test]
-    public void TestScriptSimplePasses()
+    public void UnoGameManagerTestSimplePasses()
     {
-        int numberOne = 1;
-        int numberTwo = 1;
-        
-        Assert.That(numberOne == numberTwo, "numbers are not equal");
+        // Use the Assert class to test conditions
     }
 
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.
     [UnityTest]
-    public IEnumerator TestScriptWithEnumeratorPasses()
+    public IEnumerator UnoGameManagerTestWithEnumeratorPasses()
     {
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
         yield return null;
     }
+   
+
 }

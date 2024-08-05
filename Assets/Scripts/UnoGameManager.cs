@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnoGameManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    const int TOTAL_CARDS = 121;
     void Start()
     {
         
@@ -15,4 +16,16 @@ public class UnoGameManager : MonoBehaviour
     {
         
     }
+
+    public void ShuffleAndDistribute(int playerCount)
+    {
+        List<int> allCards = new List<int>();
+        for (int i = 0; i < TOTAL_CARDS; i++)
+        {
+            allCards.Add(i);
+        }
+        allCards = Utility.Shuffle(allCards);
+    }
+
+
 }
