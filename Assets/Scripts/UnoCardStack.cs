@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnoCardStack : MonoBehaviour
 {
-    List<UnoCard> cards;
+    List<UnoCard> cards = new List<UnoCard>();
     // Start is called before the first frame update
     void Start()
     {
@@ -15,5 +15,9 @@ public class UnoCardStack : MonoBehaviour
     void Update()
     {
         
+    }
+    public void Push(UnoCard card) {
+    cards.Add(card);
+        card.transform.parent = transform;
     }
 }

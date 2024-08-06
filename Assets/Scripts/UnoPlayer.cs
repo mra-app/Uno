@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class UnoPlayer : MonoBehaviour
 {
+    [SerializeField]
     private UnoCardStack cardStack;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+
+
+
+public void DrawCard(UnoCard card)
     {
-        
+        cardStack.Push(card);
     }
 }
