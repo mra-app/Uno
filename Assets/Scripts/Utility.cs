@@ -20,4 +20,16 @@ public static class Utility
         }
         return shuffledCards;
     }
+    public static List<int> AddUnoCardNumbers(List<int> cards)
+    {
+
+        List<int> forbiddenList = new List<int>();
+        forbiddenList.AddRange(new[] { 56, 70, 84, 98 });
+        for (int i = 0; i < 121; i++)
+        {
+            if (!forbiddenList.Contains(i))
+                cards.Add(i);
+        }
+        return cards;
+    }
 }

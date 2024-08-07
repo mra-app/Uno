@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnoCard : MonoBehaviour
 {
-    public enum CardType{
+    public enum CardType {
         Red,
         Green,
         Blue,
@@ -12,12 +12,20 @@ public class UnoCard : MonoBehaviour
         WildCard
 
     }
+    const string CardName = "unoCardName_";
+    private List<int> CardID;// = { 1, 2, 3 };
+    
     public int id;
     public CardType type;
     public List<Sprite> CardSprites;
-   // public Sprite sprite;
+    // public Sprite sprite;
     // Start is called before the first frame update
-  public void setID(int id)
+    private void Start()
+    {
+
+    }
+
+    public void setID(int id)
     {
         this.id = id;
         Sprite sprite = GetComponent<Sprite>();

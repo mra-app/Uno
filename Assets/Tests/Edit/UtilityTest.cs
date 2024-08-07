@@ -35,4 +35,22 @@ public class UtilityTest
         Assert.IsTrue(list.Count == list2.Count);
 
     }
+    [Test]
+    public void AddCards_Arrays_SizeIsRightAndNoForbiddenCards()
+    {
+
+        List<int> allNumbers = new List<int>();
+        allNumbers = Utility.AddUnoCardNumbers(allNumbers);
+
+        Assert.IsTrue(allNumbers.Count == (121 - 4));
+
+        Assert.IsTrue(allNumbers.Contains(0));
+        Assert.IsTrue(allNumbers.Contains(1));
+        Assert.IsTrue(allNumbers.Contains(111));
+
+        Assert.IsFalse(allNumbers.Contains(56));
+        Assert.IsFalse(allNumbers.Contains(70));
+        Assert.IsFalse(allNumbers.Contains(84));
+        Assert.IsFalse(allNumbers.Contains(98));
+    }
 }
