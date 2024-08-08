@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnoCard : MonoBehaviour
 {
@@ -12,25 +14,23 @@ public class UnoCard : MonoBehaviour
         WildCard
 
     }
-    const string CardName = "unoCardName_";
-    private List<int> CardID;// = { 1, 2, 3 };
+
     
     public int id;
     public CardType type;
-    public List<Sprite> CardSprites;
-    // public Sprite sprite;
-    // Start is called before the first frame update
-    private void Start()
+    Image img;
+
+    void Awake()
     {
+        img = GetComponent<Image>();
 
     }
-
-    public void setID(int id)
+    public void setIDandImg(int id,Sprite sprite)
     {
         this.id = id;
-        Sprite sprite = GetComponent<Sprite>();
-        if (sprite != null)
-            if(CardSprites != null)
-        sprite = CardSprites[id];
+
+        if (sprite !=null && img != null)
+            img.sprite = sprite;
+
     }
 }

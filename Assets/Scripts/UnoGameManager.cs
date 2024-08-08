@@ -6,19 +6,26 @@ using UnityEngine;
 public class UnoGameManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    const int TOTAL_CARDS = 112;
+    const int TOTAL_CARDS = 108;
     const int PLAYER_INIT_CARDS = 5;
     public GameObject DrawStacks;
     public GameObject DiscardStacks;
     public List<UnoPlayer> Players;
     public GameObject cardPrefab;
+    Sprite[] CardSprites;
    
     private int PlayerCount;
     void Start()
     {
+
+        CardSprites = Resources.LoadAll<Sprite>("");
+
         PlayerCount = 4;
         ShuffleAndDistribute(PlayerCount);
-        
+
+
+
+
     }
 
     // Update is called once per frame
@@ -55,7 +62,8 @@ public class UnoGameManager : MonoBehaviour
     {
         GameObject card = Instantiate(cardPrefab);
         UnoCard cardScript = card.GetComponent<UnoCard>();
-        cardScript.setID(id);
+        cardScript.setIDandImg(id, CardSprites[id]);
+
         return cardScript;
     }
    

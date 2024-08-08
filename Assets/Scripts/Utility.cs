@@ -24,10 +24,10 @@ public static class Utility
     {
 
         List<int> forbiddenList = new List<int>();
-        forbiddenList.AddRange(new[] { 56, 70, 84, 98 });
-        for (int i = 0; i < 121; i++)
+      //  forbiddenList.AddRange(new[] { 56, 70, 84, 98 });
+        for (int i = 0; i < 108; i++)
         {
-            if (!forbiddenList.Contains(i))
+        //    if (!forbiddenList.Contains(i))
                 cards.Add(i);
         }
         return cards;
