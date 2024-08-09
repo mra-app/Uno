@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1418696677732308803}
   - component: {fileID: 9002128491507840012}
-  - component: {fileID: 1723081027075896367}
+  - component: {fileID: 4708142446860683952}
   m_Layer: 5
   m_Name: CardStack
   m_TagString: Untagged
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b9c5b7c945da24a9f7f361cc0ead0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1723081027075896367
+--- !u!114 &4708142446860683952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1216669835443639794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -67,14 +67,12 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -65.42
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 113, y: 170}
+  m_Spacing: {x: -80.6, y: 0}
+  m_Constraint: 2
+  m_ConstraintCount: 1
 --- !u!1 &1264240685573187940
 GameObject:
   m_ObjectHideFlags: 0
