@@ -200,6 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b9c5b7c945da24a9f7f361cc0ead0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDiscard: 0
 --- !u!114 &154178885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1477,6 +1478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b9c5b7c945da24a9f7f361cc0ead0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDiscard: 1
 --- !u!1 &2141195763
 GameObject:
   m_ObjectHideFlags: 0
