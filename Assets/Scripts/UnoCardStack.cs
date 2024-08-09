@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnoCardStack : MonoBehaviour
 {
     List<UnoCard> cards = new List<UnoCard>();
+    public bool isDiscard = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +20,9 @@ public class UnoCardStack : MonoBehaviour
     public void Push(UnoCard card) {
     cards.Add(card);
         card.transform.parent = transform;
+        if(isDiscard)
+        {
+            card.transform.position = transform.position;//TODO: turn the cards
+        }
     }
 }

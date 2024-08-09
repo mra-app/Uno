@@ -8,8 +8,8 @@ public class UnoGameManager : MonoBehaviour
     // Start is called before the first frame update
     const int TOTAL_CARDS = 108;
     const int PLAYER_INIT_CARDS = 5;
-    public GameObject DrawStacks;
-    public GameObject DiscardStacks;
+    public UnoCardStack DrawStack;
+    public UnoCardStack DiscardStack;
     public List<UnoPlayer> Players;
     public GameObject cardPrefab;
     Sprite[] CardSprites;
@@ -47,17 +47,29 @@ public class UnoGameManager : MonoBehaviour
         }
         
 
-        for(int i = 0;i < playerCount; i++)
+        for (int i = 0;i < playerCount; i++)
         {
             int j = 0;
             while (j < PLAYER_INIT_CARDS)
             {
                 Players[i].DrawCard(allCards[0]);
+                if(i == 0)
+                 allCards[0].ShowBackImg(false);
                 allCards.RemoveAt(0);
                 j++;
             }
         }
-    }
+        if (allCards.Count > 0)
+        {
+            DiscardStack.Push(allCards[0]);
+            allCards.RemoveAt(0);
+        }
+        while (allCards.Count > 0)
+        {
+            DrawStack.Push(allCards[0]);
+            allCards.RemoveAt(0);
+        }
+        }
     private UnoCard MakeCard(int id)
     {
         GameObject card = Instantiate(cardPrefab);
