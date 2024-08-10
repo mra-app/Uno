@@ -21,10 +21,15 @@ public class UnoCard : MonoBehaviour
     Image img;
     public Sprite BackImg;
     Sprite FrontImg;
+    public MoveObject moveComponent;
 
     void Awake()
     {
         img = GetComponent<Image>();
+        moveComponent = GetComponent<MoveObject>();
+        moveComponent.targetTransform = transform;
+        moveComponent.EndPosition = new Vector3(11, 0, 0); // temp.position;
+        moveComponent.Duration = 0.1f;
 
     }
     public void ShowBackImg(bool back)
@@ -45,5 +50,11 @@ public class UnoCard : MonoBehaviour
         }
         ShowBackImg(true);
 
+    }
+    public void OnClick()
+    {
+
+
+        moveComponent.Move();
     }
 }
