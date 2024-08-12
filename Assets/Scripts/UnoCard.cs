@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,20 +13,20 @@ public class UnoCard : MonoBehaviour
 
     }
 
-    
+    public event Action<int,Owner> OnSelected;
     public int id;
     public CardType type;
     Image img;
     public Sprite BackImg;
     Sprite FrontImg;
     public MoveObject moveComponent;
-
+    public Owner owner;
+    public int globalCardIdx;
     void Awake()
     {
         img = GetComponent<Image>();
         moveComponent = GetComponent<MoveObject>();
         moveComponent.targetTransform = transform;
-        moveComponent.EndPosition = new Vector3(11, 0, 0); // temp.position;
         moveComponent.Duration = 0.1f;
 
     }
@@ -39,7 +37,7 @@ public class UnoCard : MonoBehaviour
         else
             img.sprite = FrontImg;
     }
-    public void setIDandImg(int id,Sprite sprite)
+    public void setIDandImg(int id,Sprite sprite,int _globalCardIdx)
     {
         this.id = id;
 
@@ -49,12 +47,16 @@ public class UnoCard : MonoBehaviour
             FrontImg = sprite;
         }
         ShowBackImg(true);
+        globalCardIdx = _globalCardIdx;
 
     }
     public void OnClick()
     {
-
-
-        moveComponent.Move();
+        OnSelected?.Invoke(globalCardIdx, owner);
+    }
+    //Move is called after Onclick is processed through manager
+    public void Move(Vector3 EndPosition,Action callback)
+    {
+        moveComponent.Move(EndPosition, callback);
     }
 }

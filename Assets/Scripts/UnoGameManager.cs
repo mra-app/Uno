@@ -3,9 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Owner
+{
+
+    Player1,
+    Player2,
+    Player3,
+    Player4,
+    Discard,
+    Draw,
+}
 public class UnoGameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     const int TOTAL_CARDS = 108;
     const int PLAYER_INIT_CARDS = 5;
     public UnoCardStack DrawStack;
@@ -13,26 +23,29 @@ public class UnoGameManager : MonoBehaviour
     public List<UnoPlayer> Players;
     public GameObject cardPrefab;
     Sprite[] CardSprites;
-   
+    List<UnoCard> AllCards = new List<UnoCard>();
+    private int Turn = 0;
     private int PlayerCount;
+    private bool LockCards = false;
     void Start()
     {
 
         CardSprites = Resources.LoadAll<Sprite>("");
 
         PlayerCount = 4;
+
+        for (int i = 0; i < PlayerCount; i++)
+        {
+            Players[i].SetOwner((Owner)i);
+        }
+
         ShuffleAndDistribute(PlayerCount);
-
-
-
-
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeTurn()
     {
-        
-    }
+        Turn = (Turn +1) % PlayerCount;
+    } 
 
     public void ShuffleAndDistribute(int playerCount)
     {
@@ -40,43 +53,81 @@ public class UnoGameManager : MonoBehaviour
         allNumbers = Utility.AddUnoCardNumbers(allNumbers);
         allNumbers = Utility.Shuffle(allNumbers);
 
-        List<UnoCard> allCards = new List<UnoCard>();
         for (int i = 0; i < TOTAL_CARDS; i++)
         {
-            allCards.Add(MakeCard(allNumbers[i]));
+            AllCards.Add(MakeCard(allNumbers[i],i));
         }
+
+        int j = 0;
+        while (AllCards.Count > j)
+        {
+            DrawStack.Push(AllCards[j]);
+            j++;
+        }
+        int drawCardCount = AllCards.Count - (4 * PLAYER_INIT_CARDS + 1);
+
+        DiscardStack.PushAndMove(AllCards[0], () => {
+            StartCoroutine(DistCardtoPlayers(drawCardCount + 1));
+        });
         
 
-        for (int i = 0;i < playerCount; i++)
+
+        }
+    IEnumerator DistCardtoPlayers(int AllCardIdx)
+    {
+        int initj = AllCardIdx;
+        for(int i = 0; i < PlayerCount; i++)
         {
-            int j = 0;
-            while (j < PLAYER_INIT_CARDS)
+            while (AllCardIdx < initj + PLAYER_INIT_CARDS * (i + 1))
             {
-                Players[i].DrawCard(allCards[0]);
-                if(i == 0)
-                 allCards[0].ShowBackImg(false);
-                allCards.RemoveAt(0);
-                j++;
+                Players[i].DrawCard(AllCards[AllCardIdx], () => {});
+                if (i == 0)//TODO: in online have to change
+                   AllCards[AllCardIdx].ShowBackImg(false);
+                AllCardIdx++;
+                yield return new WaitForSeconds(0.1f);
             }
         }
-        if (allCards.Count > 0)
-        {
-            DiscardStack.Push(allCards[0]);
-            allCards.RemoveAt(0);
-        }
-        while (allCards.Count > 0)
-        {
-            DrawStack.Push(allCards[0]);
-            allCards.RemoveAt(0);
-        }
-        }
-    private UnoCard MakeCard(int id)
+    }
+    private UnoCard MakeCard(int id,int globalCardIdx)
     {
         GameObject card = Instantiate(cardPrefab);
         UnoCard cardScript = card.GetComponent<UnoCard>();
-        cardScript.setIDandImg(id, CardSprites[id]);
-
+        cardScript.setIDandImg(id, CardSprites[id], globalCardIdx);
+        cardScript.OnSelected += OnCardSelected;
         return cardScript;
+    }
+    public void OnCardSelected(int globalCardIdx, Owner owner)
+    {
+        if (LockCards)
+            return;
+        
+       // DebugControl.Log("were yo" + globalCardIdx + owner.ToString()+ AllCards[globalCardIdx].id+" turn "+Turn, 3);
+        UnoCard cardScript = AllCards[globalCardIdx];
+        if ((int)owner == Turn)
+        {
+            LockCards = true;
+            DiscardStack.PushAndMove(cardScript, () =>
+            {
+                DebugControl.Log("free", 3);
+                ChangeTurn();
+                LockCards = false;
+             });  
+        }
+        else if(owner == Owner.Draw)
+        {
+            LockCards = true;
+            Players[(int)Turn].DrawCard(cardScript, () =>
+            {
+                if ((int)Turn == 0)//TODO: in online have to change
+                    cardScript.ShowBackImg(false);
+                DebugControl.Log("free2", 3);
+                ChangeTurn();
+                LockCards = false;
+            });
+        }
+
+       
+
     }
    
 

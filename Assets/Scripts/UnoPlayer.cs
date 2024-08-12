@@ -1,21 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+//using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
 
 public class UnoPlayer : MonoBehaviour
 {
     [SerializeField]
-    private UnoCardStack cardStack;
+    UnoCardStack cardStack;
+    private Owner owner;
 
     public void Start()
     {
-      //  DebugControl.Log("this"+transform.rotation, 2);
+
     }
 
-
-    public void DrawCard(UnoCard card)
+    public void SetOwner(Owner _owner)
     {
-        card.transform.rotation = transform.rotation;
-        cardStack.Push(card);
+        owner = _owner;
+        cardStack.owner = _owner; //stacks without player have assigned owners from editor.
+    }
+    public void DrawCard(UnoCard card,Action callback)
+    {    
+        cardStack.PushAndMove(card, () =>
+        {
+            callback();
+        });     
     }
 }

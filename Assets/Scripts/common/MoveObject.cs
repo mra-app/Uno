@@ -6,14 +6,14 @@ using UnityEngine;
 public class MoveObject : MonoBehaviour
 {
     public Transform targetTransform;
-    public Vector3 EndPosition;
+   // public Vector3 EndPosition;
     public float Duration;
-    public void Move()
+    public void Move(Vector3 EndPosition,Action callback)
     {
-        StartCoroutine(MoveToPosition());
+        StartCoroutine(MoveToPosition(EndPosition,callback));
     }
 
-    IEnumerator MoveToPosition()
+    IEnumerator MoveToPosition(Vector3 EndPosition,Action callBack)
     {
         float elapsedTime = 0;
         Vector3 start = targetTransform.position;
@@ -25,6 +25,7 @@ public class MoveObject : MonoBehaviour
 
         }
         transform.position = EndPosition;
+        callBack();
        
     }
 }

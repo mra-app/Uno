@@ -283,7 +283,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154178881}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7109919, w: -0.7032002}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.59999996, y: 0.59999996, z: 0.59999996}
   m_ConstrainProportionsScale: 0
@@ -292,7 +292,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -236.57939, y: 73}
+  m_AnchoredPosition: {x: -234, y: 98.00001}
   m_SizeDelta: {x: 212.112, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &154178883
@@ -331,7 +331,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b9c5b7c945da24a9f7f361cc0ead0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cards: []
   isDiscard: 0
+  owner: 5
 --- !u!222 &154178886
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1297,10 +1299,10 @@ RectTransform:
   - {fileID: 1896449403}
   m_Father: {fileID: 2141195764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 327, y: 190.5}
-  m_SizeDelta: {x: 103.279, y: 65}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -26.551392, y: -20.501297}
+  m_SizeDelta: {x: 53.102783, y: 41.002594}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &823931280
 MonoBehaviour:
@@ -1378,9 +1380,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2488,7 +2490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1896449403
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2653,7 +2655,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b9c5b7c945da24a9f7f361cc0ead0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cards: []
   isDiscard: 1
+  owner: 4
 --- !u!1 &2141195763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2688,8 +2692,8 @@ RectTransform:
   - {fileID: 378083882}
   - {fileID: 1209496621}
   - {fileID: 154178882}
-  - {fileID: 942341167}
   - {fileID: 2128047485}
+  - {fileID: 942341167}
   - {fileID: 823931279}
   - {fileID: 634242930}
   m_Father: {fileID: 519420032}

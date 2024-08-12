@@ -1,28 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
 
 public class UnoCardStack : MonoBehaviour
 {
     List<UnoCard> cards = new List<UnoCard>();
     public bool isDiscard = false;
+    public Owner owner;
+    int Discard_Z = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    public void Push(UnoCard card) {
-    cards.Add(card);
-        card.transform.parent = transform;
-        if(isDiscard)
+
+    //Push: changes the card parent and changes the rotation
+    public void Push(UnoCard card)
+    {
+        card.owner = owner;
+        cards.Add(card);
+        card.transform.SetParent(transform);
+
+        if (isDiscard)
         {
-            card.transform.position = transform.position;//TODO: turn the cards
+            card.transform.rotation = Quaternion.Euler(0, 0, Discard_Z);
+            card.ShowBackImg(false);
+            Discard_Z += 45;
         }
+        else
+            card.transform.rotation = transform.rotation;
+    }
+    //PushAndMove: moves the card position to the stack position
+    public void PushAndMove(UnoCard card, Action callback)
+    {
+        card.Move(transform.position, () =>
+        {
+            Push(card);
+            callback();
+        });
     }
 }
