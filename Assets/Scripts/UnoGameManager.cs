@@ -50,12 +50,13 @@ public class UnoGameManager : MonoBehaviour
     public void ShuffleAndDistribute(int playerCount)
     {
         List<int> allNumbers = new List<int>();
-        allNumbers = Utility.AddUnoCardNumbers(allNumbers);
+        for(int i = 0; i < TOTAL_CARDS; i++) { allNumbers.Add(i); }
         allNumbers = Utility.Shuffle(allNumbers);
 
         for (int i = 0; i < TOTAL_CARDS; i++)
         {
             AllCards.Add(MakeCard(allNumbers[i],i));
+          //  DebugControl.Log(allNumbers[i]+" ",3);
         }
 
         int j = 0;
@@ -108,7 +109,7 @@ public class UnoGameManager : MonoBehaviour
             LockCards = true;
             DiscardStack.PushAndMove(cardScript, () =>
             {
-                DebugControl.Log("free", 3);
+               // DebugControl.Log("free", 3);
                 ChangeTurn();
                 LockCards = false;
              });  
@@ -120,7 +121,7 @@ public class UnoGameManager : MonoBehaviour
             {
                 if ((int)Turn == 0)//TODO: in online have to change
                     cardScript.ShowBackImg(false);
-                DebugControl.Log("free2", 3);
+               // DebugControl.Log("free2", 3);
                 ChangeTurn();
                 LockCards = false;
             });

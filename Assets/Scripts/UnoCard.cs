@@ -52,11 +52,16 @@ public class UnoCard : MonoBehaviour
     }
     public void OnClick()
     {
+       // SetNumberAndColor();
         OnSelected?.Invoke(globalCardIdx, owner);
     }
     //Move is called after Onclick is processed through manager
     public void Move(Vector3 EndPosition,Action callback)
     {
         moveComponent.Move(EndPosition, callback);
+    }
+    void SetNumberAndColor()
+    {
+        DebugControl.Log("test",3);
     }
 }
