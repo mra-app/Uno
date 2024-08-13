@@ -82,7 +82,7 @@ public class UnoGameManager : MonoBehaviour
             while (AllCardIdx < initj + PLAYER_INIT_CARDS * (i + 1))
             {
                 Players[i].DrawCard(AllCards[AllCardIdx], () => {});
-                if (i == 0)//TODO: in online have to change
+              //  if (i == 0)//TODO: in online have to change
                    AllCards[AllCardIdx].ShowBackImg(false);
                 AllCardIdx++;
                 yield return new WaitForSeconds(0.1f);
@@ -93,7 +93,7 @@ public class UnoGameManager : MonoBehaviour
     {
         GameObject card = Instantiate(cardPrefab);
         UnoCard cardScript = card.GetComponent<UnoCard>();
-        cardScript.setIDandImg(id, CardSprites[id], globalCardIdx);
+        cardScript.InitCard(id, CardSprites[id], globalCardIdx);
         cardScript.OnSelected += OnCardSelected;
         return cardScript;
     }
@@ -119,7 +119,7 @@ public class UnoGameManager : MonoBehaviour
             LockCards = true;
             Players[(int)Turn].DrawCard(cardScript, () =>
             {
-                if ((int)Turn == 0)//TODO: in online have to change
+             //   if ((int)Turn == 0)//TODO: in online have to change
                     cardScript.ShowBackImg(false);
                // DebugControl.Log("free2", 3);
                 ChangeTurn();
