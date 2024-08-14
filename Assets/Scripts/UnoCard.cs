@@ -74,20 +74,32 @@ public class UnoCard : MonoBehaviour
     }
     void SetNumberAndColor()
     {
-        int a = (id / 14)%4;
-        Color =  a == 0?CardType.Red:a==1?CardType.Yellow:a==2?CardType.Green:CardType.Blue;
-        Number = id % 14;
-        
-        if (Number > 9)
-            Type = (SpecialCard)Number;
-        if (id > 55)
+        if (id < 56)
+        {
+            int row = (id / 14) % 4;
+            Color = row == 0 ? CardType.Red : row == 1 ? CardType.Yellow : row == 2 ? CardType.Green : CardType.Blue;
+            Number = id % 14;
+
+            if (Number > 9)
+                Type = (SpecialCard)Number;
+        }
+        else
         {
             int id2 = id - 56;
+            int row = (id2 / 13) % 4;
+            Color = row == 0 ? CardType.Red : row == 1 ? CardType.Yellow : row == 2 ? CardType.Green : CardType.Blue;
+
             Number = (id2 % 13) + 1;
             if (Number > 9)
-                Type = Number == 13?SpecialCard.Take4: (SpecialCard)Number;
+                Type = Number == 13 ? SpecialCard.Take4 : (SpecialCard)Number;
         }
 
         DebugControl.Log(id+":"+ Number + " "+Color.ToString()+" "+Type,3);
+    }
+    public bool AcceptsCard(UnoCard card)
+    {
+        if(Type==SpecialCard.None)
+            if(card.Number==Number||card.Color==Color) return true;
+        return false;
     }
 }
