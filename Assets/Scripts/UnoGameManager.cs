@@ -27,6 +27,7 @@ public class UnoGameManager : MonoBehaviour
     private int Turn = 0;
     private int PlayerCount;
     private bool LockCards = false;
+    private UnoCard LastCard = null;
     void Start()
     {
 
@@ -44,52 +45,55 @@ public class UnoGameManager : MonoBehaviour
 
     public void ChangeTurn()
     {
-        Turn = (Turn +1) % PlayerCount;
-    } 
+        Turn = (Turn + 1) % PlayerCount;
+    }
 
     public void ShuffleAndDistribute(int playerCount)
     {
         List<int> allNumbers = new List<int>();
-        for(int i = 0; i < TOTAL_CARDS; i++) { allNumbers.Add(i); }
+        for (int i = 0; i < TOTAL_CARDS; i++) { allNumbers.Add(i); }
         allNumbers = Utility.Shuffle(allNumbers);
 
         for (int i = 0; i < TOTAL_CARDS; i++)
         {
-            AllCards.Add(MakeCard(allNumbers[i],i));
-          //  DebugControl.Log(allNumbers[i]+" ",3);
+            AllCards.Add(MakeCard(allNumbers[i], i));
+            //  DebugControl.Log(allNumbers[i]+" ",3);
         }
 
         int j = 0;
         while (AllCards.Count > j)
         {
             DrawStack.Push(AllCards[j]);
+            AllCards[j].ShowBackImg(false);//todo
+
             j++;
         }
         int drawCardCount = AllCards.Count - (4 * PLAYER_INIT_CARDS + 1);
 
+
         DiscardStack.PushAndMove(AllCards[0], () => {
             StartCoroutine(DistCardtoPlayers(drawCardCount + 1));
         });
-        
+         LastCard = AllCards[0];
 
 
-        }
+    }
     IEnumerator DistCardtoPlayers(int AllCardIdx)
     {
         int initj = AllCardIdx;
-        for(int i = 0; i < PlayerCount; i++)
+        for (int i = 0; i < PlayerCount; i++)
         {
             while (AllCardIdx < initj + PLAYER_INIT_CARDS * (i + 1))
             {
-                Players[i].DrawCard(AllCards[AllCardIdx], () => {});
-              //  if (i == 0)//TODO: in online have to change
-                   AllCards[AllCardIdx].ShowBackImg(false);
+                Players[i].DrawCard(AllCards[AllCardIdx], () => { });
+                //  if (i == 0)//TODO: in online have to change
+                AllCards[AllCardIdx].ShowBackImg(false);
                 AllCardIdx++;
                 yield return new WaitForSeconds(0.1f);
             }
         }
     }
-    private UnoCard MakeCard(int id,int globalCardIdx)
+    private UnoCard MakeCard(int id, int globalCardIdx)
     {
         GameObject card = Instantiate(cardPrefab);
         UnoCard cardScript = card.GetComponent<UnoCard>();
@@ -101,36 +105,40 @@ public class UnoGameManager : MonoBehaviour
     {
         if (LockCards)
             return;
-        
-       // DebugControl.Log("were yo" + globalCardIdx + owner.ToString()+ AllCards[globalCardIdx].id+" turn "+Turn, 3);
+
         UnoCard cardScript = AllCards[globalCardIdx];
         if ((int)owner == Turn)
         {
-            LockCards = true;
-            DiscardStack.PushAndMove(cardScript, () =>
+            DebugControl.Log("1", 3);
+
+            if (LastCard.AcceptsCard(cardScript))
             {
-               // DebugControl.Log("free", 3);
-                ChangeTurn();
-                LockCards = false;
-             });  
+                LockCards = true;
+                DiscardStack.PushAndMove(cardScript, () =>
+                {
+                    ChangeTurn();
+                    LastCard = cardScript;
+                    LockCards = false;
+                });
+            }
         }
-        else if(owner == Owner.Draw)
+        else if (owner == Owner.Draw)
         {
+            DebugControl.Log("2", 3);
             LockCards = true;
             Players[(int)Turn].DrawCard(cardScript, () =>
             {
-             //   if ((int)Turn == 0)//TODO: in online have to change
-                    cardScript.ShowBackImg(false);
-               // DebugControl.Log("free2", 3);
+                //   if ((int)Turn == 0)//TODO: in online have to change
+                cardScript.ShowBackImg(false);
                 ChangeTurn();
                 LockCards = false;
             });
         }
 
-       
+
 
     }
-   
+
 
 
 }
