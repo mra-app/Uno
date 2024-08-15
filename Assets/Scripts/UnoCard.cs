@@ -32,7 +32,9 @@ public class UnoCard : MonoBehaviour
     public int globalCardIdx;
     CardType Color;
     int Number;
+    public int TurnChangeAmount = 1;
     SpecialCard Type = SpecialCard.None;
+    public int AccumulatedCards = 0;
     void Awake()
     {
         img = GetComponent<Image>();
@@ -60,6 +62,10 @@ public class UnoCard : MonoBehaviour
         ShowBackImg(true);
         globalCardIdx = _globalCardIdx;
         SetNumberAndColor();
+
+        
+        TurnChangeAmount = Type==SpecialCard.Wild ? 0 : Type == SpecialCard.Skip? 2: Type == SpecialCard.Reverse ? -1:1;
+        AccumulatedCards = Type == SpecialCard.Take2 ? 2 : Type == SpecialCard.Take4 ? 4 : 0;
 
     }
     public void OnClick()
@@ -94,12 +100,19 @@ public class UnoCard : MonoBehaviour
                 Type = Number == 13 ? SpecialCard.Take4 : (SpecialCard)Number;
         }
 
-        DebugControl.Log(id+":"+ Number + " "+Color.ToString()+" "+Type,3);
+       // DebugControl.Log(id+":"+ Number + " "+Color.ToString()+" "+Type,3);
     }
     public bool AcceptsCard(UnoCard card)
     {
-        if(Type==SpecialCard.None)
+        DebugControl.Log(Type + " " + card.Type, 3);
+        if (card.Type == SpecialCard.Wild|| card.Type == SpecialCard.Take4)
+            return true;
+        if(Type==SpecialCard.None|| Type == SpecialCard.Skip|| Type == SpecialCard.Reverse)
             if(card.Number==Number||card.Color==Color) return true;
+        else if(Type==SpecialCard.Wild)
+                return true;
+        else if(Type ==SpecialCard.Take2||Type==SpecialCard.Take4)
+                if(card.Number==Number) return true;
         return false;
     }
 }

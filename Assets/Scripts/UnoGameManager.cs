@@ -28,6 +28,7 @@ public class UnoGameManager : MonoBehaviour
     private int PlayerCount;
     private bool LockCards = false;
     private UnoCard LastCard = null;
+    private int ChangeTurnOrder = 1;
     void Start()
     {
 
@@ -43,9 +44,22 @@ public class UnoGameManager : MonoBehaviour
         ShuffleAndDistribute(PlayerCount);
     }
 
-    public void ChangeTurn()
+    public void ChangeTurn(UnoCard card = null)
     {
-        Turn = (Turn + 1) % PlayerCount;
+        if(card != null)
+        {
+            Turn = (Turn + card.TurnChangeAmount* ChangeTurnOrder) % PlayerCount;
+            if(card.TurnChangeAmount < 0)
+            {
+                ChangeTurnOrder = ChangeTurnOrder * -1;
+            }
+
+        }
+        else
+         Turn = (Turn + ChangeTurnOrder) % PlayerCount;
+        if (Turn < 0)
+            Turn += PlayerCount;
+        DebugControl.Log("turn" + Turn, 3);
     }
 
     public void ShuffleAndDistribute(int playerCount)
@@ -113,24 +127,46 @@ public class UnoGameManager : MonoBehaviour
 
             if (LastCard.AcceptsCard(cardScript))
             {
+                DebugControl.Log("12", 3);
                 LockCards = true;
                 DiscardStack.PushAndMove(cardScript, () =>
                 {
-                    ChangeTurn();
+                    ChangeTurn(cardScript);
+                    if (LastCard.AccumulatedCards != 0)
+                        cardScript.AccumulatedCards+= LastCard.AccumulatedCards;
                     LastCard = cardScript;
+                    
+
                     LockCards = false;
                 });
+            
             }
         }
         else if (owner == Owner.Draw)
         {
             DebugControl.Log("2", 3);
             LockCards = true;
+            //if (LastCard.AccumulatedCards != 0)
+            //{
+                
+            //    for(int i = 0; i < LastCard.AccumulatedCards; i++)
+            //    {
+            //        Players[(int)Turn].DrawCard(cardScript, () => { });
+            //    }
+            //    cardScript.AccumulatedCards = 0;
+
+            //}
             Players[(int)Turn].DrawCard(cardScript, () =>
             {
+                LastCard.AccumulatedCards--;
+                if (LastCard.AccumulatedCards <= 0)
+                {
+                     ChangeTurn();
+                }
+
                 //   if ((int)Turn == 0)//TODO: in online have to change
-                cardScript.ShowBackImg(false);
-                ChangeTurn();
+                    cardScript.ShowBackImg(false);
+              
                 LockCards = false;
             });
         }
