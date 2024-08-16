@@ -29,6 +29,7 @@ public class UnoGameManager : MonoBehaviour
     private bool LockCards = false;
     private UnoCard LastCard = null;
     private int ChangeTurnOrder = 1;
+    public GameObject SelectColor;
     void Start()
     {
 
@@ -121,7 +122,7 @@ public class UnoGameManager : MonoBehaviour
             return;
 
         UnoCard cardScript = AllCards[globalCardIdx];
-        if ((int)owner == Turn)
+        if ((int)owner == Turn && LastCard.AccumulatedCards <= 0)
         {
             DebugControl.Log("1", 3);
 
@@ -131,9 +132,11 @@ public class UnoGameManager : MonoBehaviour
                 LockCards = true;
                 DiscardStack.PushAndMove(cardScript, () =>
                 {
+                    if(cardScript.Type==UnoCard.SpecialCard.Wild|| cardScript.Type == UnoCard.SpecialCard.Take4)
+                        SelectColor.SetActive(true);
                     ChangeTurn(cardScript);
-                    if (LastCard.AccumulatedCards != 0)
-                        cardScript.AccumulatedCards+= LastCard.AccumulatedCards;
+                    //if (LastCard.AccumulatedCards != 0)
+                    //    cardScript.AccumulatedCards+= LastCard.AccumulatedCards;
                     LastCard = cardScript;
                     
 
@@ -173,6 +176,11 @@ public class UnoGameManager : MonoBehaviour
 
 
 
+    }
+    public void ColorSelected(int color)
+    {
+        LastCard.SetWildColor((UnoCard.CardType)color);
+        SelectColor.SetActive(false);
     }
 
 
