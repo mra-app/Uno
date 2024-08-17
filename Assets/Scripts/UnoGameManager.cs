@@ -24,7 +24,7 @@ public class UnoGameManager : MonoBehaviour
     public GameObject cardPrefab;
     Sprite[] CardSprites;
     List<UnoCard> AllCards = new List<UnoCard>();
-    private int Turn = 0;
+    private int Turn = -1;
     private int PlayerCount;
     private bool LockCards = false;
     private UnoCard LastCard = null;
@@ -43,6 +43,9 @@ public class UnoGameManager : MonoBehaviour
         }
 
         ShuffleAndDistribute(PlayerCount);
+        
+        Turn = -1;
+        ChangeTurn();
     }
 
     public void ChangeTurn(UnoCard card = null)
@@ -61,6 +64,10 @@ public class UnoGameManager : MonoBehaviour
         if (Turn < 0)
             Turn += PlayerCount;
         DebugControl.Log("turn" + Turn, 3);
+        for(int i = 0; i < PlayerCount; ++i)
+        {
+            Players[i].ChangeTurnToMe(Turn == i);
+        }
     }
 
     public void ShuffleAndDistribute(int playerCount)
@@ -149,16 +156,7 @@ public class UnoGameManager : MonoBehaviour
         {
             DebugControl.Log("2", 3);
             LockCards = true;
-            //if (LastCard.AccumulatedCards != 0)
-            //{
-                
-            //    for(int i = 0; i < LastCard.AccumulatedCards; i++)
-            //    {
-            //        Players[(int)Turn].DrawCard(cardScript, () => { });
-            //    }
-            //    cardScript.AccumulatedCards = 0;
 
-            //}
             Players[(int)Turn].DrawCard(cardScript, () =>
             {
                 LastCard.AccumulatedCards--;

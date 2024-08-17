@@ -7,6 +7,7 @@ public class UnoPlayer : MonoBehaviour
     [SerializeField]
     UnoCardStack cardStack;
     private Owner owner;
+    public GameObject MyTurnImage;
 
     public void Start()
     {
@@ -18,11 +19,16 @@ public class UnoPlayer : MonoBehaviour
         owner = _owner;
         cardStack.owner = _owner; //stacks without player have assigned owners from editor.
     }
-    public void DrawCard(UnoCard card,Action callback)
-    {    
+    public void DrawCard(UnoCard card, Action callback)
+    {
         cardStack.PushAndMove(card, () =>
         {
             callback();
-        });     
+        });
     }
+    public void ChangeTurnToMe(bool isMyTurn)
+    {
+        MyTurnImage.SetActive(isMyTurn);
+    }
+
 }
