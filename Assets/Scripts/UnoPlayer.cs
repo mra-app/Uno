@@ -13,7 +13,13 @@ public class UnoPlayer : MonoBehaviour
     {
 
     }
-
+    public bool AllCardsPlayed() {
+        return cardStack.IsEmpty();
+    }
+    public void RemoveCard(UnoCard card)
+    {
+        cardStack.Pop(card);
+    }
     public void SetOwner(Owner _owner)
     {
         owner = _owner;

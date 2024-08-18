@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public enum Owner
 {
@@ -17,7 +18,7 @@ public class UnoGameManager : MonoBehaviour
 {
 
     const int TOTAL_CARDS = 108;
-    const int PLAYER_INIT_CARDS = 5;
+    const int PLAYER_INIT_CARDS = 0;
     public UnoCardStack DrawStack;
     public UnoCardStack DiscardStack;
     public List<UnoPlayer> Players;
@@ -30,6 +31,8 @@ public class UnoGameManager : MonoBehaviour
     private UnoCard LastCard = null;
     private int ChangeTurnOrder = 1;
     public GameObject SelectColor;
+    public GameObject FinishPanel;
+    public TMP_Text text;
     void Start()
     {
 
@@ -123,7 +126,7 @@ public class UnoGameManager : MonoBehaviour
         cardScript.OnSelected += OnCardSelected;
         return cardScript;
     }
-    public void OnCardSelected(int globalCardIdx, Owner owner)
+    public void OnCardSelected(int globalCardIdx, Owner owner)//owner d? TODO!
     {
         if (LockCards)
             return;
@@ -137,10 +140,13 @@ public class UnoGameManager : MonoBehaviour
             {
                 DebugControl.Log("12", 3);
                 LockCards = true;
+
                 DiscardStack.PushAndMove(cardScript, () =>
                 {
+                    Players[Turn].RemoveCard(cardScript);//for every? TODO!
                     if(cardScript.Type==UnoCard.SpecialCard.Wild|| cardScript.Type == UnoCard.SpecialCard.Take4)
                         SelectColor.SetActive(true);
+                    CheckFinish(Turn);
                     ChangeTurn(cardScript);
                     //if (LastCard.AccumulatedCards != 0)
                     //    cardScript.AccumulatedCards+= LastCard.AccumulatedCards;
@@ -180,6 +186,16 @@ public class UnoGameManager : MonoBehaviour
         LastCard.SetWildColor((UnoCard.CardType)color);
         SelectColor.SetActive(false);
     }
+
+    private void CheckFinish(int turn)
+    {
+        DebugControl.Log("turn" + turn + Players[turn].AllCardsPlayed(), 3);
+        if (Players[turn].AllCardsPlayed())
+        {
+            text.text = turn.ToString();
+            FinishPanel.SetActive(true);
+        }
+    } 
 
 
 

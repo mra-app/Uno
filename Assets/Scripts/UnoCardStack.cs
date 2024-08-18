@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class UnoCardStack : MonoBehaviour
     public bool isDiscard = false;
     public Owner owner;
     int Discard_Z = 0;
+    public int Size = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,10 @@ public class UnoCardStack : MonoBehaviour
     {
 
     }
+    public bool IsEmpty()
+    {
+        return Size == 0;//cards.Count == 0;TODO!
+    }
 
     //Push: changes the card parent and changes the rotation
     public void Push(UnoCard card)
@@ -28,6 +34,7 @@ public class UnoCardStack : MonoBehaviour
         card.owner = owner;
         cards.Add(card);
         card.transform.SetParent(transform);
+        Size++;
 
         if (isDiscard)
         {
@@ -37,6 +44,11 @@ public class UnoCardStack : MonoBehaviour
         }
         else
             card.transform.rotation = transform.rotation;
+    }
+    public void Pop(UnoCard card)
+    {
+        Size--;
+        //cards.Remove(card);
     }
     //PushAndMove: moves the card position to the stack position
     public void PushAndMove(UnoCard card, Action callback)
