@@ -18,7 +18,7 @@ public class UnoGameManager : MonoBehaviour
 {
 
     const int TOTAL_CARDS = 108;
-    const int PLAYER_INIT_CARDS = 0;
+    const int PLAYER_INIT_CARDS = 5;
     public UnoCardStack DrawStack;
     public UnoCardStack DiscardStack;
     public List<UnoPlayer> Players;
@@ -66,7 +66,7 @@ public class UnoGameManager : MonoBehaviour
          Turn = (Turn + ChangeTurnOrder) % PlayerCount;
         if (Turn < 0)
             Turn += PlayerCount;
-        DebugControl.Log("turn" + Turn, 3);
+        //DebugControl.Log("turn" + Turn, 3);
         for(int i = 0; i < PlayerCount; ++i)
         {
             Players[i].ChangeTurnToMe(Turn == i);
@@ -89,7 +89,7 @@ public class UnoGameManager : MonoBehaviour
         while (AllCards.Count > j)
         {
             DrawStack.Push(AllCards[j]);
-            AllCards[j].ShowBackImg(false);//todo
+          //  AllCards[j].ShowBackImg(false);//todo
 
             j++;
         }
@@ -111,8 +111,8 @@ public class UnoGameManager : MonoBehaviour
             while (AllCardIdx < initj + PLAYER_INIT_CARDS * (i + 1))
             {
                 Players[i].DrawCard(AllCards[AllCardIdx], () => { });
-                //  if (i == 0)//TODO: in online have to change
-                AllCards[AllCardIdx].ShowBackImg(false);
+                if (i == 0)//TODO: in online have to change
+                  AllCards[AllCardIdx].ShowBackImg(false);
                 AllCardIdx++;
                 yield return new WaitForSeconds(0.1f);
             }
@@ -134,11 +134,11 @@ public class UnoGameManager : MonoBehaviour
         UnoCard cardScript = AllCards[globalCardIdx];
         if ((int)owner == Turn && LastCard.AccumulatedCards <= 0)
         {
-            DebugControl.Log("1", 3);
+            //DebugControl.Log("1", 3);
 
             if (LastCard.AcceptsCard(cardScript))
             {
-                DebugControl.Log("12", 3);
+                //DebugControl.Log("12", 3);
                 LockCards = true;
 
                 DiscardStack.PushAndMove(cardScript, () =>
@@ -160,20 +160,20 @@ public class UnoGameManager : MonoBehaviour
         }
         else if (owner == Owner.Draw)
         {
-            DebugControl.Log("2", 3);
+            //DebugControl.Log("2", 3);
             LockCards = true;
 
             Players[(int)Turn].DrawCard(cardScript, () =>
             {
+                if ((int)Turn == 0)//TODO: in online have to change
+                    cardScript.ShowBackImg(false);
+
                 LastCard.AccumulatedCards--;
                 if (LastCard.AccumulatedCards <= 0)
                 {
                      ChangeTurn();
                 }
-
-                //   if ((int)Turn == 0)//TODO: in online have to change
-                    cardScript.ShowBackImg(false);
-              
+                
                 LockCards = false;
             });
         }
@@ -189,7 +189,7 @@ public class UnoGameManager : MonoBehaviour
 
     private void CheckFinish(int turn)
     {
-        DebugControl.Log("turn" + turn + Players[turn].AllCardsPlayed(), 3);
+       // DebugControl.Log("turn" + turn + Players[turn].AllCardsPlayed(), 3);
         if (Players[turn].AllCardsPlayed())
         {
             text.text = turn.ToString();

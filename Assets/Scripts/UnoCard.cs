@@ -108,7 +108,7 @@ public class UnoCard : MonoBehaviour
     }
     public bool AcceptsCard(UnoCard card)
     {
-        DebugControl.Log(Type + " " + card.Type, 3);
+        //DebugControl.Log(Type + " " + card.Type, 3);
         if (card.Type == SpecialCard.Wild|| card.Type == SpecialCard.Take4)
             return true;
 
