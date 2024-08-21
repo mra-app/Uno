@@ -43,6 +43,7 @@ public class UnoGameManager : MonoBehaviour
         for (int i = 0; i < PlayerCount; i++)
         {
             Players[i].SetOwner((Owner)i);
+            Players[i].DrawStack = DrawStack;
         }
 
         ShuffleAndDistribute(PlayerCount);

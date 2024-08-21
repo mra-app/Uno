@@ -70,7 +70,7 @@ public class UnoCard : MonoBehaviour
     }
     public void OnClick()
     {
-        SetNumberAndColor();
+        //SetNumberAndColor();
         OnSelected?.Invoke(globalCardIdx, owner);
     }
     public void SetWildColor(CardType wildColor)

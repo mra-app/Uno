@@ -56,4 +56,8 @@ public class UnoCardStack : MonoBehaviour
             callback();
         });
     }
+    public List<UnoCard> GetAllCards()
+    {
+        return cards;
+    }
 }

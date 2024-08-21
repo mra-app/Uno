@@ -8,10 +8,14 @@ public class UnoPlayer : MonoBehaviour
     UnoCardStack cardStack;
     private Owner owner;
     public GameObject MyTurnImage;
+    UnoAI AI;
+    public UnoCardStack DrawStack;//TODO: unserialized?
 
     public void Start()
     {
-
+        if(GetComponent<UnoAI>() != null) {
+            AI = GetComponent<UnoAI>();
+        }
     }
     public bool AllCardsPlayed() {
         return cardStack.IsEmpty();
@@ -35,6 +39,10 @@ public class UnoPlayer : MonoBehaviour
     public void ChangeTurnToMe(bool isMyTurn)
     {
         MyTurnImage.SetActive(isMyTurn);
+        if(isMyTurn && AI != null)
+        {
+            AI.AIPlay(cardStack, DrawStack);
+        }
     }
 
 }
