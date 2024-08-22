@@ -114,4 +114,8 @@ public class UnoCard : MonoBehaviour
 
         return (card.Number == Number || card.Color == Color);
     }
+    public CardType GetColor()
+    {
+        return Color;
+    }
 }

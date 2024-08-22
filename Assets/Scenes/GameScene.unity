@@ -701,6 +701,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 36450ef1bb964d940a05d1bf57c10882, type: 3}
+    - target: {fileID: 4184723911620704286, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
+      propertyPath: SelectColorPanel
+      value: 
+      objectReference: {fileID: 1961143323}
     - target: {fileID: 4312520519764116621, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
       propertyPath: m_Name
       value: PlayerSideUI (1)
@@ -1824,6 +1828,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 593531f40b96fae42bdeb99205887243, type: 3}
+    - target: {fileID: 4184723911620704286, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
+      propertyPath: SelectColorPanel
+      value: 
+      objectReference: {fileID: 1961143323}
     - target: {fileID: 4312520519764116621, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
       propertyPath: m_Name
       value: PlayerSideUI (2)
@@ -2009,7 +2017,6 @@ MonoBehaviour:
   - {fileID: 740886811}
   - {fileID: 1305516683}
   cardPrefab: {fileID: 4245708578510514693, guid: 67bd9ba23185ab34b8829fb138ca2e3f, type: 3}
-  SelectColor: {fileID: 1961143323}
   FinishPanel: {fileID: 469760240}
   text: {fileID: 2085251395}
 --- !u!114 &743404880
@@ -3095,6 +3102,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f134f58bfd49828498c85fdb28a5e131, type: 3}
+    - target: {fileID: 4184723911620704286, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
+      propertyPath: SelectColorPanel
+      value: 
+      objectReference: {fileID: 1961143323}
     - target: {fileID: 4312520519764116621, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
       propertyPath: m_Name
       value: PlayerSideUI (3)
@@ -3708,6 +3719,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1731820325}
   m_CullTransparentMesh: 1
+--- !u!1 &1782890241 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4312520519764116621, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
+  m_PrefabInstance: {fileID: 9185628015476910685}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1790898558
 GameObject:
   m_ObjectHideFlags: 0
@@ -4686,6 +4702,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: ad019968d832aad4ca35f4c8d5171dc0, type: 3}
+    - target: {fileID: 4184723911620704286, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
+      propertyPath: SelectColorPanel
+      value: 
+      objectReference: {fileID: 1782890241}
     - target: {fileID: 4312520519764116621, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
       propertyPath: m_Name
       value: PlayerSideUI
@@ -4816,7 +4836,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4184723911620704286, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
   m_PrefabInstance: {fileID: 9185628015476910685}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1782890241}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74e917302b4f5d542aac67b83cd10517, type: 3}

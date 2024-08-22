@@ -1,5 +1,5 @@
 using System;
-//using Unity.Plastic.Newtonsoft.Json.Serialization;
+using System.Collections;
 using UnityEngine;
 
 public class UnoPlayer : MonoBehaviour
@@ -8,9 +8,10 @@ public class UnoPlayer : MonoBehaviour
     UnoCardStack cardStack;
     private Owner owner;
     public GameObject MyTurnImage;
+    public GameObject SelectColorPanel;
     UnoAI AI;
     public UnoCardStack DrawStack;//TODO: unserialized?
-
+    UnoCard LastCard = null;
     public void Start()
     {
         if(GetComponent<UnoAI>() != null) {
@@ -39,10 +40,50 @@ public class UnoPlayer : MonoBehaviour
     public void ChangeTurnToMe(bool isMyTurn)
     {
         MyTurnImage.SetActive(isMyTurn);
-        if(isMyTurn && AI != null)
+        if( AI != null)
         {
-            AI.AIPlay(cardStack, DrawStack);
+            if (!isMyTurn )
+            {
+                AIStop();
+            }
+            else
+            {
+                 StartCoroutine(AIPlay());
+
+            }
         }
+    }
+    public void SelectWildCardColor(UnoCard cardScript)
+    {
+        if (AI == null)
+        {
+            LastCard = cardScript;
+            SelectColorPanel.SetActive(true);
+
+        }
+        else
+        {
+            AIStop();
+            cardScript.SetWildColor(AI.SelectColorForWild(cardStack));
+
+        }
+    }
+    public void ColorSelected(int color)
+    {
+        LastCard.SetWildColor((UnoCard.CardType)color);
+        SelectColorPanel.SetActive(false);
+    }
+    IEnumerator AIPlay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        AI.StartPlay(true, cardStack, DrawStack);
+
+
+    }
+    void AIStop()
+    {
+        AI.StartPlay(false);
+
     }
 
 }
