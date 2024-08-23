@@ -134,11 +134,9 @@ public class UnoGameManager : MonoBehaviour
         UnoCard cardScript = AllCards[globalCardIdx];
         if ((int)owner == Turn && LastCard.AccumulatedCards <= 0)
         {
-            //DebugControl.Log("1", 3);
 
             if (LastCard.AcceptsCard(cardScript))
             {
-                //DebugControl.Log("12", 3);
                 LockCards = true;
 
                 DiscardStack.PushAndMove(cardScript, () =>

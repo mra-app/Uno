@@ -1420,8 +1420,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 743404879}
-        m_TargetAssemblyTypeName: UnoGameManager, Scripts
+      - m_Target: {fileID: 9185628015476910690}
+        m_TargetAssemblyTypeName: UnoPlayer, Scripts
         m_MethodName: ColorSelected
         m_Mode: 3
         m_Arguments:
@@ -2699,8 +2699,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 743404879}
-        m_TargetAssemblyTypeName: UnoGameManager, Scripts
+      - m_Target: {fileID: 9185628015476910690}
+        m_TargetAssemblyTypeName: UnoPlayer, Scripts
         m_MethodName: ColorSelected
         m_Mode: 3
         m_Arguments:
@@ -3719,11 +3719,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1731820325}
   m_CullTransparentMesh: 1
---- !u!1 &1782890241 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4312520519764116621, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
-  m_PrefabInstance: {fileID: 9185628015476910685}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1790898558
 GameObject:
   m_ObjectHideFlags: 0
@@ -3882,8 +3877,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 743404879}
-        m_TargetAssemblyTypeName: UnoGameManager, Scripts
+      - m_Target: {fileID: 9185628015476910690}
+        m_TargetAssemblyTypeName: UnoPlayer, Scripts
         m_MethodName: ColorSelected
         m_Mode: 3
         m_Arguments:
@@ -4301,8 +4296,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 743404879}
-        m_TargetAssemblyTypeName: UnoGameManager, Scripts
+      - m_Target: {fileID: 9185628015476910690}
+        m_TargetAssemblyTypeName: UnoPlayer, Scripts
         m_MethodName: ColorSelected
         m_Mode: 3
         m_Arguments:
@@ -4705,7 +4700,7 @@ PrefabInstance:
     - target: {fileID: 4184723911620704286, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
       propertyPath: SelectColorPanel
       value: 
-      objectReference: {fileID: 1782890241}
+      objectReference: {fileID: 1961143323}
     - target: {fileID: 4312520519764116621, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
       propertyPath: m_Name
       value: PlayerSideUI
@@ -4836,7 +4831,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4184723911620704286, guid: 855debf0f32bef9489c537167e08d1c2, type: 3}
   m_PrefabInstance: {fileID: 9185628015476910685}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1782890241}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74e917302b4f5d542aac67b83cd10517, type: 3}
