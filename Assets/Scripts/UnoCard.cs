@@ -16,12 +16,12 @@ public class UnoCard : MonoBehaviour
         None,
         Skip = 10,
         Reverse = 11,
-        Take2 = 12,
+        Draw2 = 12,
         Wild = 13,
-        Take4 = 14
+        Draw4Wild = 14
     }
 
-    public event Action<int,Owner> OnSelected;
+    public event Action<UnoCard,int,Owner> OnSelected;
     public int id;
     //public CardType type;
     Image img;
@@ -65,13 +65,13 @@ public class UnoCard : MonoBehaviour
 
         
         TurnChangeAmount =  Type == SpecialCard.Skip? 2: Type == SpecialCard.Reverse ? -1:1;
-        AccumulatedCards = Type == SpecialCard.Take2 ? 2 : Type == SpecialCard.Take4 ? 4 : 0;
+        AccumulatedCards = Type == SpecialCard.Draw2 ? 2 : Type == SpecialCard.Draw4Wild ? 4 : 0;
 
     }
     public void OnClick()
     {
         //SetNumberAndColor();
-        OnSelected?.Invoke(globalCardIdx, owner);
+        OnSelected?.Invoke(this,globalCardIdx, owner);
     }
     public void SetWildColor(CardType wildColor)
     {
@@ -101,7 +101,7 @@ public class UnoCard : MonoBehaviour
 
             Number = (id2 % 13) + 1;
             if (Number > 9)
-                Type = Number == 13 ? SpecialCard.Take4 : (SpecialCard)Number;
+                Type = Number == 13 ? SpecialCard.Draw4Wild : (SpecialCard)Number;
         }
 
        // DebugControl.Log(id+":"+ Number + " "+Color.ToString()+" "+Type,3);
@@ -109,7 +109,7 @@ public class UnoCard : MonoBehaviour
     public bool AcceptsCard(UnoCard card)
     {
         //DebugControl.Log(Type + " " + card.Type, 3);
-        if (card.Type == SpecialCard.Wild|| card.Type == SpecialCard.Take4)
+        if (card.Type == SpecialCard.Wild|| card.Type == SpecialCard.Draw4Wild)
             return true;
 
         return (card.Number == Number || card.Color == Color);

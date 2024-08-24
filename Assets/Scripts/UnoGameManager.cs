@@ -14,43 +14,54 @@ public enum Owner
     Discard,
     Draw,
 }
+
 public class UnoGameManager : MonoBehaviour
 {
-
+    
     const int TOTAL_CARDS = 108;
     const int PLAYER_INIT_CARDS = 5;
-    public UnoCardStack DrawStack;
-    public UnoCardStack DiscardStack;
+    //public UnoCardStack DiscardStack;
     public List<UnoPlayer> Players;
-    public GameObject cardPrefab;
-    Sprite[] CardSprites;
-    List<UnoCard> AllCards = new List<UnoCard>();
+    public UnoDiscardPile DiscardPile;
+    public UnoDrawPile DrawPile;
+    //public GameObject cardPrefab;
+    //Sprite[] CardSprites;
+    //List<UnoCard> AllCards = new List<UnoCard>();
+
     private int Turn = -1;
     private int PlayerCount;
-    private bool LockCards = false;
+    bool LockCards = false;
     private UnoCard LastCard = null;
     private int ChangeTurnOrder = 1;
     public GameObject FinishPanel;
     public TMP_Text text;
+   // public UnoDiscardPile DiscardPile;
     void Start()
     {
 
-        CardSprites = Resources.LoadAll<Sprite>("");
+        //CardSprites = Resources.LoadAll<Sprite>("");
 
         PlayerCount = 4;
 
         for (int i = 0; i < PlayerCount; i++)
         {
             Players[i].SetOwner((Owner)i);
-            Players[i].DrawStack = DrawStack;
+            Players[i].GameManager = this;
         }
+        DrawPile.GameManager = this;
+        //ShuffleAndDistribute(PlayerCount);
 
-        ShuffleAndDistribute(PlayerCount);
-        
         Turn = -1;
         ChangeTurn();
     }
-
+    public int GetTurn()
+    {
+        return Turn;
+    }
+    /// <summary>
+    /// change turn based on the last card played(could be skip or reverse)
+    /// </summary>
+    /// <param name="card"></param>
     public void ChangeTurn(UnoCard card = null)
     {
         if(card != null)
@@ -73,60 +84,60 @@ public class UnoGameManager : MonoBehaviour
         }
     }
 
-    public void ShuffleAndDistribute(int playerCount)
-    {
-        List<int> allNumbers = new List<int>();
-        for (int i = 0; i < TOTAL_CARDS; i++) { allNumbers.Add(i); }
-        allNumbers = Utility.Shuffle(allNumbers);
+    //public void ShuffleAndDistribute(int playerCount)
+    //{
+    //    List<int> allNumbers = new List<int>();
+    //    for (int i = 0; i < TOTAL_CARDS; i++) { allNumbers.Add(i); }
+    //    allNumbers = Utility.Shuffle(allNumbers);
 
-        for (int i = 0; i < TOTAL_CARDS; i++)
-        {
-            AllCards.Add(MakeCard(allNumbers[i], i));
-            //  DebugControl.Log(allNumbers[i]+" ",3);
-        }
+    //    for (int i = 0; i < TOTAL_CARDS; i++)
+    //    {
+    //        AllCards.Add(MakeCard(allNumbers[i], i));
+    //        //  DebugControl.Log(allNumbers[i]+" ",3);
+    //    }
 
-        int j = 0;
-        while (AllCards.Count > j)
-        {
-            DrawStack.Push(AllCards[j]);
-          //  AllCards[j].ShowBackImg(false);//todo
+    //    int j = 0;
+    //    while (AllCards.Count > j)
+    //    {
+    //        DrawStack.Push(AllCards[j]);
+    //      //  AllCards[j].ShowBackImg(false);//todo
 
-            j++;
-        }
-        int drawCardCount = AllCards.Count - (4 * PLAYER_INIT_CARDS + 1);
-
-
-        DiscardStack.PushAndMove(AllCards[0], () => {
-            StartCoroutine(DistCardtoPlayers(drawCardCount + 1));
-        });
-         LastCard = AllCards[0];
+    //        j++;
+    //    }
+    //    int drawCardCount = AllCards.Count - (4 * PLAYER_INIT_CARDS + 1);
 
 
-    }
-    IEnumerator DistCardtoPlayers(int AllCardIdx)
-    {
-        int initj = AllCardIdx;
-        for (int i = 0; i < PlayerCount; i++)
-        {
-            while (AllCardIdx < initj + PLAYER_INIT_CARDS * (i + 1))
-            {
-                Players[i].DrawCard(AllCards[AllCardIdx], () => { });
-                if (i == 0)//TODO: in online have to change
-                  AllCards[AllCardIdx].ShowBackImg(false);
-                AllCardIdx++;
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-    }
-    private UnoCard MakeCard(int id, int globalCardIdx)
-    {
-        GameObject card = Instantiate(cardPrefab);
-        UnoCard cardScript = card.GetComponent<UnoCard>();
-        cardScript.InitCard(id, CardSprites[id], globalCardIdx);
-        cardScript.OnSelected += OnCardSelected;
-        return cardScript;
-    }
-    public void OnCardSelected(int globalCardIdx, Owner owner)//owner d? TODO!
+    //    DiscardStack.PushAndMove(AllCards[0], () => {
+    //        StartCoroutine(DistCardtoPlayers(drawCardCount + 1));
+    //    });
+    //     LastCard = AllCards[0];
+
+
+    //}
+    //IEnumerator DistCardtoPlayers(int AllCardIdx)
+    //{
+    //    int initj = AllCardIdx;
+    //    for (int i = 0; i < PlayerCount; i++)
+    //    {
+    //        while (AllCardIdx < initj + PLAYER_INIT_CARDS * (i + 1))
+    //        {
+    //            Players[i].DrawCard(AllCards[AllCardIdx], () => { });
+    //            if (i == 0)//TODO: in online have to change
+    //              AllCards[AllCardIdx].ShowBackImg(false);
+    //            AllCardIdx++;
+    //            yield return new WaitForSeconds(0.1f);
+    //        }
+    //    }
+    //}
+    //private UnoCard MakeCard(int id, int globalCardIdx)
+    //{
+    //    GameObject card = Instantiate(cardPrefab);
+    //    UnoCard cardScript = card.GetComponent<UnoCard>();
+    //    cardScript.InitCard(id, CardSprites[id], globalCardIdx);
+    //    cardScript.OnSelected += OnCardSelected;
+    //    return cardScript;
+    //}
+    /*public void OnCardSelected(int globalCardIdx, Owner owner)//owner d? TODO!
     {
         if (LockCards)
             return;
@@ -177,7 +188,7 @@ public class UnoGameManager : MonoBehaviour
 
 
 
-    }
+    }*/
  
 
     private void CheckFinish(int turn)
@@ -189,6 +200,19 @@ public class UnoGameManager : MonoBehaviour
             FinishPanel.SetActive(true);
         }
     } 
+    public void ShowWinner(int turn)
+    {
+        text.text = turn.ToString();
+        FinishPanel.SetActive(true);
+    }
+    public void LockCardsToPlayTurn(bool _lock)
+    {
+        LockCards = _lock;
+    }
+    public bool IsLockToPlayTurn()
+    {
+        return LockCards;
+    }
 
 
 

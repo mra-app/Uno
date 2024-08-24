@@ -403,8 +403,9 @@ GameObject:
   - component: {fileID: 154178883}
   - component: {fileID: 154178884}
   - component: {fileID: 154178886}
+  - component: {fileID: 154178887}
   m_Layer: 5
-  m_Name: DrawStack<Script>
+  m_Name: DrawPile<Script>
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -475,6 +476,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154178881}
   m_CullTransparentMesh: 1
+--- !u!114 &154178887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154178881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4079d8b7ca5b5ae4eb4b9c1e16fc5bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DrawStack: {fileID: 0}
+  DiscardPile: {fileID: 2128047488}
+  Players:
+  - {fileID: 9185628015476910690}
+  - {fileID: 445733891}
+  - {fileID: 740886811}
+  - {fileID: 1305516683}
+  cardPrefab: {fileID: 4245708578510514693, guid: 67bd9ba23185ab34b8829fb138ca2e3f, type: 3}
 --- !u!1 &273680436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1977,7 +1998,7 @@ GameObject:
   - component: {fileID: 743404880}
   m_Layer: 0
   m_Name: Manager<Script>
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2009,14 +2030,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588e0192428d95c4786b412fc45720a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DrawStack: {fileID: 154178884}
-  DiscardStack: {fileID: 2128047487}
   Players:
   - {fileID: 9185628015476910690}
   - {fileID: 445733891}
   - {fileID: 740886811}
   - {fileID: 1305516683}
-  cardPrefab: {fileID: 4245708578510514693, guid: 67bd9ba23185ab34b8829fb138ca2e3f, type: 3}
+  DiscardPile: {fileID: 2128047488}
+  DrawPile: {fileID: 154178887}
   FinishPanel: {fileID: 469760240}
   text: {fileID: 2085251395}
 --- !u!114 &743404880
@@ -4507,8 +4527,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2128047485}
   - component: {fileID: 2128047487}
+  - component: {fileID: 2128047488}
   m_Layer: 5
-  m_Name: DiscardStack<Script>
+  m_Name: DiscardPile<Script>
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4547,6 +4568,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDiscard: 1
   owner: 4
+--- !u!114 &2128047488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128047484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a77639613c4d644e936330d490b0b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2141195763
 GameObject:
   m_ObjectHideFlags: 0
