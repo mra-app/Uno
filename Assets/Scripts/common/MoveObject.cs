@@ -7,7 +7,7 @@ public class MoveObject : MonoBehaviour
 {
     public Transform targetTransform;
    // public Vector3 EndPosition;
-    public float Duration;
+    float Duration=0.1f;
     public void Move(Vector3 EndPosition,Action callback)
     {
         StartCoroutine(MoveToPosition(EndPosition,callback));

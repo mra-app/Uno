@@ -45,6 +45,7 @@ public class UnoPlayer : MonoBehaviour
     public void ChangeTurnToMe(bool isMyTurn)
     {
         MyTurnImage.SetActive(isMyTurn);
+        DebugControl.Log("turn" + isMyTurn, 3);
         if( AI != null)
         {
             if (!isMyTurn )
@@ -68,6 +69,7 @@ public class UnoPlayer : MonoBehaviour
         else
         {
             AIStop();
+            DebugControl.Log("just", 3);
             GameManager.DiscardPile.SetWildLastCardColor(
                 AI.SelectColorForWild(cardStack)
                 );

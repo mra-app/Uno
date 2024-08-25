@@ -40,7 +40,7 @@ public class UnoCard : MonoBehaviour
         img = GetComponent<Image>();
         moveComponent = GetComponent<MoveObject>();
         moveComponent.targetTransform = transform;
-        moveComponent.Duration = 0.1f;
+       // moveComponent.Duration = 0.1f;
 
     }
     public void ShowBackImg(bool back)

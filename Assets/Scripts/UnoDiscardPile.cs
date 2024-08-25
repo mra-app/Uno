@@ -86,7 +86,7 @@ public class UnoDiscardPile : MonoBehaviour
     */
     public bool CanPlayOnUpCard()
     {
-        return AccumulatedCards <= 0;
+        return LastCard.AccumulatedCards <= 0;
     }    
     public bool CanPlayThisCard(UnoCard cardScript)
     {
@@ -104,9 +104,9 @@ public class UnoDiscardPile : MonoBehaviour
     }
     public void CardDrawn()
     {
-        if (AccumulatedCards > 0)
+        if (LastCard.AccumulatedCards > 0)
         {
-            AccumulatedCards--;
+            LastCard.AccumulatedCards--;
         }
     }
 
