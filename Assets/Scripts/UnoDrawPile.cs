@@ -61,6 +61,10 @@ public class UnoDrawPile : MonoBehaviour
                 GameManager.ChangeTurn();
 
             }
+            else
+            {
+                Players[GameManager.GetTurn()].PlayAgain();
+            }
 
             GameManager.LockCardsToPlayTurn(false);
         });

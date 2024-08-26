@@ -25,7 +25,7 @@ public class UnoDiscardPile : MonoBehaviour
     }
     public void DiscardedCard(UnoCard card, Action callback)
     {
-
+        card.ShowBackImg(false);
         cardStack.PushAndMove(card, () => { callback(); });
         LastCard = card;
         DebugControl.Log(LastCard.Type.ToString(),3);

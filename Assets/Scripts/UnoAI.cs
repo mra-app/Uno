@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class UnoAI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private bool IsMyTurn = false;
+
     private bool IsPlaying = false;
     List<UnoCard> cards;//= new List<UnoCard>();
 
@@ -14,41 +13,38 @@ public class UnoAI : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (IsMyTurn && !IsPlaying)
-            Play();        
-    }
+
     void Play()
-    {
-        IsPlaying = true;
+    {        
         if (cards.Count > 0)
         {
             cards[0].OnClick();
             cards.RemoveAt(0);
         }
-        
-        IsPlaying = false;
     }
-    void PrepareToPlay(UnoCardStack PlayerCardStack, UnoCardStack DrawStack)
+    void PrepareToPlay(UnoCardStack PlayerCardStack, UnoCardStack DrawStack,int TryNumber)
     {
         cards =new List<UnoCard>(PlayerCardStack.GetAllCards().Count+ DrawStack.GetAllCards().Count);
-        cards.AddRange(PlayerCardStack.GetAllCards());
-        cards.AddRange(DrawStack.GetAllCards());
-        DebugControl.Log("here", 3);
-      
-    }
-    public void StartPlay(bool Start, UnoCardStack PlayerCardStack = null, UnoCardStack DrawStack = null)
-    {
-        if(Start)
+        List<UnoCard> AvailableCards= new List<UnoCard>();
+        for (int i = 0; i < PlayerCardStack.GetAllCards().Count; i++)
         {
-            PrepareToPlay(PlayerCardStack, DrawStack);
-            IsMyTurn = true;
+            if (i >= TryNumber)
+            {
+                AvailableCards.Add(PlayerCardStack.GetAllCards()[i]);
+            }
         }
-        else
+
+        cards.AddRange(AvailableCards);
+        cards.AddRange(DrawStack.GetAllCards());
+    }
+    public void StartPlay(bool Start, UnoCardStack PlayerCardStack = null, UnoCardStack DrawStack = null,int TryNumber = 0)
+    {
+       // DebugControl.Log("start0" + Start, 3);
+        if (Start)
         {
-            IsMyTurn = false;
+            DebugControl.Log("start" + Start, 3);
+            PrepareToPlay(PlayerCardStack, DrawStack,TryNumber);
+            Play();
         }
     }
     public UnoCard.CardType SelectColorForWild(UnoCardStack PlayerCardStack)

@@ -15,6 +15,7 @@ public class UnoPlayer : MonoBehaviour
     //UnoCard LastCard = null;
     public UnoGameManager GameManager;
     const string ManagerTagName = "GameController";
+    private int TryNumber = 0;
     void Start()
     {
         cardStack.OnCardSelected += OnCardSelected;
@@ -45,6 +46,7 @@ public class UnoPlayer : MonoBehaviour
     public void ChangeTurnToMe(bool isMyTurn)
     {
         MyTurnImage.SetActive(isMyTurn);
+        TryNumber = 0;
         DebugControl.Log("turn" + isMyTurn, 3);
         if( AI != null)
         {
@@ -77,6 +79,13 @@ public class UnoPlayer : MonoBehaviour
 
         }
     }
+    public void PlayAgain()
+    {
+        TryNumber++;
+        DebugControl.Log("play again", 3);
+        if( AI != null ) 
+            StartCoroutine(AIPlay());
+    }
     public void ColorSelected(int color)
     {
         GameManager.DiscardPile.SetWildLastCardColor((UnoCard.CardType)color);
@@ -86,7 +95,7 @@ public class UnoPlayer : MonoBehaviour
     IEnumerator AIPlay()
     {
         yield return new WaitForSeconds(0.1f);
-        AI.StartPlay(true, cardStack, GameManager.DrawPile.DrawStack);
+        AI.StartPlay(true, cardStack, GameManager.DrawPile.DrawStack,TryNumber);
 
 
     }
@@ -125,6 +134,10 @@ public class UnoPlayer : MonoBehaviour
                 GameManager.LockCardsToPlayTurn(false);
                 });
                 
+            }
+            else
+            {
+                PlayAgain();
             }
         }
             DebugControl.Log(globalCardIdx + " " + owner.ToString(), 3);
