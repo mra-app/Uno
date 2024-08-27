@@ -92,10 +92,15 @@ public class UnoDrawPile : MonoBehaviour
             j++;
         }
         int drawCardCount = AllCards.Count - (4 * PLAYER_INIT_CARDS + 1);
-
-        RemoveFromDraw(AllCards[0]);
-        DiscardPile.DiscardedCard(AllCards[0], () => {
+        int x = 0;
+        while (AllCards[x].Type != UnoCard.SpecialCard.Wild)
+        {
+            x++;
+        }
+        RemoveFromDraw(AllCards[x]);
+        DiscardPile.DiscardedCard(AllCards[x], () => {
             StartCoroutine(DistCardtoPlayers(drawCardCount + 1));
+            GameManager.ChangeTurn(AllCards[x]);
         });
 
 

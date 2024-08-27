@@ -52,7 +52,7 @@ public class UnoGameManager : MonoBehaviour
         //ShuffleAndDistribute(PlayerCount);
 
         Turn = -1;
-        ChangeTurn();
+      //  ChangeTurn();
     }
     public int GetTurn()
     {
