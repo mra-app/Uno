@@ -49,7 +49,7 @@ public class UnoDrawPile : MonoBehaviour
             return;
         }
         GameManager.LockCardsToPlayTurn(true);
-        RemoveFromDraw(cardScript);
+       // RemoveFromDraw(cardScript);
         Players[GameManager.GetTurn()].DrawCard(cardScript, () =>
         {
             if (GameManager.GetTurn() == 0)//TODO: in online have to change
@@ -93,36 +93,48 @@ public class UnoDrawPile : MonoBehaviour
         }
         int drawCardCount = AllCards.Count - (4 * PLAYER_INIT_CARDS + 1);
         int x = 0;
-        while (AllCards[x].Type != UnoCard.SpecialCard.Wild)
+        while (!GameManager.IsAcceptableToStart(AllCards[x]))
         {
             x++;
         }
         RemoveFromDraw(AllCards[x]);
         DiscardPile.DiscardedCard(AllCards[x], () => {
-            StartCoroutine(DistCardtoPlayers(drawCardCount + 1));
-            GameManager.ChangeTurn(AllCards[x]);
+            StartCoroutine(DistCardtoPlayers(drawCardCount + 1, () => {
+                GameManager.GameStart(AllCards[x]);
+            }));
+            
         });
 
 
     }
-    IEnumerator DistCardtoPlayers(int AllCardIdx)
+    IEnumerator DistCardtoPlayers(int AllCardIdx,Action callback)
     {
         int initj = AllCardIdx;
-        for (int i = 0; i < PlayerCount; i++)
+        int i = 0;
+        //for (int i = 0; i < PlayerCount; i++)
+        while(i < PlayerCount)
         {
-            while (AllCardIdx < initj + PLAYER_INIT_CARDS * (i + 1))
+            int j = 0;
+            bool waiting = false; 
+            while (j<PLAYER_INIT_CARDS)//AllCardIdx < initj + PLAYER_INIT_CARDS * (i + 1))
             {
-                RemoveFromDraw(AllCards[AllCardIdx]);
-                Players[i].DrawCard(AllCards[AllCardIdx], () => {
-                    if (i == 0)//TODO: in online have to change
-                        AllCards[AllCardIdx].ShowBackImg(false);
-                    AllCardIdx++;
-                });
-                
-                
-                yield return new WaitForSeconds(0.1f);
+                if (!waiting)
+                {
+                    waiting = true;
+                    Players[i].DrawCard(AllCards[AllCardIdx], () => {
+                        if (i == 0)//TODO: in online have to change
+                            AllCards[AllCardIdx].ShowBackImg(false);
+                        AllCardIdx++;
+                        j++;
+                        waiting = false;
+                   });
+                }
+
+                yield return null;
             }
+            i++;
         }
+        callback();
     }
     private UnoCard MakeCard(int id, int globalCardIdx)
     {

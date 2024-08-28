@@ -36,7 +36,7 @@ public class UnoDiscardPile : MonoBehaviour
     }    
     public bool CanPlayThisCard(UnoCard cardScript)
     {
-        return (LastCard.AcceptsCard(cardScript));
+        return (LastCard.AcceptsCard(cardScript) || (cardStack.HasOneCard()&&LastCard.Type==UnoCard.SpecialCard.Wild));
     }
     public bool ColorSelectIsNeeded()
     {

@@ -37,7 +37,7 @@ public class UnoPlayer : MonoBehaviour
     }
     public void DrawCard(UnoCard card, Action callback)
     {
-
+        GameManager.DrawPile.RemoveFromDraw(card);
         cardStack.PushAndMove(card, () =>
         {
             callback();
@@ -94,7 +94,7 @@ public class UnoPlayer : MonoBehaviour
     }
     IEnumerator AIPlay()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration);
         AI.StartPlay(true, cardStack, GameManager.DrawPile.DrawStack,TryNumber);
 
 
@@ -120,7 +120,7 @@ public class UnoPlayer : MonoBehaviour
                 }
                 DebugControl.Log("h", 3);
                 GameManager.LockCardsToPlayTurn(true);
-                RemoveFromHand(card);
+                RemoveFromHand(card);//TODO: move in discard in pile code
                 GameManager.DiscardPile.DiscardedCard(card, () => {
                 if (GameManager.DiscardPile.ColorSelectIsNeeded())
                 {

@@ -7,7 +7,7 @@ public class MoveObject : MonoBehaviour
 {
     public Transform targetTransform;
    // public Vector3 EndPosition;
-    float Duration=0.5f;
+    float Duration=UnoGameManager.WaitForOneMoveDuration;
     public void Move(Vector3 EndPosition,Action callback)
     {
         StartCoroutine(MoveToPosition(EndPosition,callback));

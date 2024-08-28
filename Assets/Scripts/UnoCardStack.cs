@@ -65,5 +65,9 @@ public class UnoCardStack : MonoBehaviour
     {
         return cards;
     }
+    public bool HasOneCard()
+    {
+        return cards.Count == 1;
+    }
 
 }

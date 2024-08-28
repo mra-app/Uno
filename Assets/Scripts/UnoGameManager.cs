@@ -31,12 +31,13 @@ public class UnoGameManager : MonoBehaviour
     private int Turn = -1;
     private int PlayerCount;
     bool LockCards = false;
-    private UnoCard LastCard = null;
+    //private UnoCard LastCard = null;
     private int ChangeTurnOrder = 1;
     public GameObject FinishPanel;
     public TMP_Text text;
+    public static float WaitForOneMoveDuration = 0.2f;
    // public UnoDiscardPile DiscardPile;
-    void Start()
+    void Awake()
     {
 
         //CardSprites = Resources.LoadAll<Sprite>("");
@@ -51,7 +52,7 @@ public class UnoGameManager : MonoBehaviour
         DrawPile.GameManager = this;
         //ShuffleAndDistribute(PlayerCount);
 
-        Turn = -1;
+        Turn = 0;
       //  ChangeTurn();
     }
     public int GetTurn()
@@ -64,7 +65,7 @@ public class UnoGameManager : MonoBehaviour
     /// <param name="card"></param>
     public void ChangeTurn(UnoCard card = null)
     {
-        if(card != null)
+        if(card != null)//-1+1=0   -1+-1=-2   0+-1=--1
         {
             Turn = (Turn + card.TurnChangeAmount* ChangeTurnOrder) % PlayerCount;
             if(card.TurnChangeAmount < 0)
@@ -78,10 +79,37 @@ public class UnoGameManager : MonoBehaviour
         if (Turn < 0)
             Turn += PlayerCount;
         //DebugControl.Log("turn" + Turn, 3);
-        for(int i = 0; i < PlayerCount; ++i)
+        UpdatePlayersTurn();
+    }
+    private void UpdatePlayersTurn()
+    {
+        for (int i = 0; i < PlayerCount; ++i)
         {
             Players[i].ChangeTurnToMe(Turn == i);
         }
+    }
+
+    public void GameStart(UnoCard lastCard)
+    {
+        if (lastCard.Type == UnoCard.SpecialCard.Reverse)
+        {
+            Turn = 1;
+            ChangeTurn(lastCard);
+        }
+        else if (lastCard.Type == UnoCard.SpecialCard.Skip)
+        {
+            Turn = -1;
+            ChangeTurn(lastCard);
+        }
+
+        else
+            UpdatePlayersTurn();
+
+        //unlock cards to play if turn:TODO
+    }
+    public bool IsAcceptableToStart(UnoCard card)
+    {
+        return card.Type != UnoCard.SpecialCard.Draw4Wild;
     }
 
     //public void ShuffleAndDistribute(int playerCount)
