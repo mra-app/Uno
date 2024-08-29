@@ -55,5 +55,9 @@ public class UnoDiscardPile : MonoBehaviour
             LastCard.AccumulatedCards--;
         }
     }
+    public UnoCard GetLastCard()
+    {
+        return LastCard;
+    }
 
 }

@@ -36,12 +36,13 @@ public class UnoGameManager : MonoBehaviour
     public GameObject FinishPanel;
     public TMP_Text text;
     public static float WaitForOneMoveDuration = 0.2f;
+   // public bool GameLocked = false;
    // public UnoDiscardPile DiscardPile;
     void Awake()
     {
-
+        // GameLocked = true;
         //CardSprites = Resources.LoadAll<Sprite>("");
-
+        LockCardsToPlayTurn(true);
         PlayerCount = 4;
 
         for (int i = 0; i < PlayerCount; i++)
@@ -54,6 +55,19 @@ public class UnoGameManager : MonoBehaviour
 
         Turn = 0;
       //  ChangeTurn();
+    }
+    public void ContinueGame(UnoCard card=null)
+    {
+        if (card == null)
+        {
+            ChangeTurn(DiscardPile.GetLastCard());
+        }
+        else
+        {
+             ChangeTurn(card);
+        }
+        
+        LockCardsToPlayTurn(false);
     }
     public int GetTurn()
     {
@@ -78,7 +92,7 @@ public class UnoGameManager : MonoBehaviour
          Turn = (Turn + ChangeTurnOrder) % PlayerCount;
         if (Turn < 0)
             Turn += PlayerCount;
-        //DebugControl.Log("turn" + Turn, 3);
+        DebugControl.Log("turn" + Turn, 3);
         UpdatePlayersTurn();
     }
     private void UpdatePlayersTurn()
@@ -105,7 +119,8 @@ public class UnoGameManager : MonoBehaviour
         else
             UpdatePlayersTurn();
 
-        //unlock cards to play if turn:TODO
+        LockCardsToPlayTurn(false);
+
     }
     public bool IsAcceptableToStart(UnoCard card)
     {

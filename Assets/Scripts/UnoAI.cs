@@ -42,14 +42,14 @@ public class UnoAI : MonoBehaviour
        // DebugControl.Log("start0" + Start, 3);
         if (Start)
         {
-            DebugControl.Log("start" + Start, 3);
+            //DebugControl.Log("start" + Start, 3);
             PrepareToPlay(PlayerCardStack, DrawStack,TryNumber);
             Play();
         }
     }
     public UnoCard.CardType SelectColorForWild(UnoCardStack PlayerCardStack)
     {
-        List<int> colorCount = new List<int>();
+        List<int> colorCount = new List<int>();//TODO:get in utility
         for(int i = 0;i<4;i++)
         {
             colorCount.Add(0) ;

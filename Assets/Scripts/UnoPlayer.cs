@@ -47,7 +47,7 @@ public class UnoPlayer : MonoBehaviour
     {
         MyTurnImage.SetActive(isMyTurn);
         TryNumber = 0;
-        DebugControl.Log("turn" + isMyTurn, 3);
+       // DebugControl.Log("turn" + isMyTurn, 3);
         if( AI != null)
         {
             if (!isMyTurn )
@@ -66,15 +66,15 @@ public class UnoPlayer : MonoBehaviour
         if (AI == null)
         {
             SelectColorPanel.SetActive(true);
-
         }
         else
         {
-            AIStop();
-            DebugControl.Log("just", 3);
+            //AIStop();
+           // DebugControl.Log("just", 3);
             GameManager.DiscardPile.SetWildLastCardColor(
                 AI.SelectColorForWild(cardStack)
                 );
+            GameManager.ContinueGame();
 
 
         }
@@ -91,6 +91,7 @@ public class UnoPlayer : MonoBehaviour
         GameManager.DiscardPile.SetWildLastCardColor((UnoCard.CardType)color);
 
         SelectColorPanel.SetActive(false);
+        GameManager.ContinueGame();
     }
     IEnumerator AIPlay()
     {
@@ -122,16 +123,22 @@ public class UnoPlayer : MonoBehaviour
                 GameManager.LockCardsToPlayTurn(true);
                 RemoveFromHand(card);//TODO: move in discard in pile code
                 GameManager.DiscardPile.DiscardedCard(card, () => {
-                if (GameManager.DiscardPile.ColorSelectIsNeeded())
-                {
-                    SelectWildCardColor(card);
-                }
+
                 if (HasWon()) 
                 {
                      GameManager.ShowWinner((int)handOwner);
+                        return;
                 }
-                GameManager.ChangeTurn(card);
-                GameManager.LockCardsToPlayTurn(false);
+                if (GameManager.DiscardPile.ColorSelectIsNeeded())
+                {
+                     SelectWildCardColor(card);
+                }
+                else
+                {
+                    GameManager.ContinueGame(card);
+                 }
+                //    GameManager.ChangeTurn(card);
+                //GameManager.LockCardsToPlayTurn(false);
                 });
                 
             }
