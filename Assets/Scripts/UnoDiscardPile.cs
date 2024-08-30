@@ -28,7 +28,7 @@ public class UnoDiscardPile : MonoBehaviour
         card.ShowBackImg(false);
         cardStack.PushAndMove(card, () => { callback(); });
         LastCard = card;
-        DebugControl.Log(LastCard.Type.ToString(),3);
+        //DebugControl.Log(LastCard.Type.ToString(),3);
     }
     public bool CanPlayOnUpCard()
     {

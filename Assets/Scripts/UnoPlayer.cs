@@ -82,7 +82,7 @@ public class UnoPlayer : MonoBehaviour
     public void PlayAgain()
     {
         TryNumber++;
-        DebugControl.Log("play again", 3);
+        //DebugControl.Log("play again", 3);
         if( AI != null ) 
             StartCoroutine(AIPlay());
     }
@@ -102,16 +102,13 @@ public class UnoPlayer : MonoBehaviour
     }
     void AIStop()
     {
+        AI.Owner = handOwner;
         AI.StartPlay(false);
 
     }
     public void OnCardSelected(UnoCard card,int globalCardIdx, Owner owner)
     {
-
-        DebugControl.Log("turn="+ GameManager.GetTurn()+""+ (int)handOwner+"lock"+ GameManager.IsLockToPlayTurn()
-            +"accu"+ GameManager.DiscardPile.CanPlayOnUpCard()+"|"
-            , 3);
-        if (GameManager.GetTurn() == (int)handOwner)
+        if (GameManager.GetTurn() == (int)handOwner && GameManager.GetTurn() == (int)card.LastClicked)
         {
             if (GameManager.DiscardPile.CanPlayOnUpCard() && GameManager.DiscardPile.CanPlayThisCard(card)) 
             {
@@ -119,7 +116,7 @@ public class UnoPlayer : MonoBehaviour
                 {
                     return;
                 }
-                DebugControl.Log("h", 3);
+               // DebugControl.Log("h", 3);
                 GameManager.LockCardsToPlayTurn(true);
                 RemoveFromHand(card);//TODO: move in discard in pile code
                 GameManager.DiscardPile.DiscardedCard(card, () => {
@@ -147,7 +144,7 @@ public class UnoPlayer : MonoBehaviour
                 PlayAgain();
             }
         }
-            DebugControl.Log(globalCardIdx + " " + owner.ToString(), 3);
+           // DebugControl.Log(globalCardIdx + " " + owner.ToString(), 3);
 
     }
     public bool HasWon()

@@ -92,7 +92,7 @@ public class UnoGameManager : MonoBehaviour
          Turn = (Turn + ChangeTurnOrder) % PlayerCount;
         if (Turn < 0)
             Turn += PlayerCount;
-        DebugControl.Log("turn" + Turn, 3);
+        //DebugControl.Log("turn" + Turn, 3);
         UpdatePlayersTurn();
     }
     private void UpdatePlayersTurn()

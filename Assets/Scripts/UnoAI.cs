@@ -7,6 +7,7 @@ public class UnoAI : MonoBehaviour
 
     private bool IsPlaying = false;
     List<UnoCard> cards;//= new List<UnoCard>();
+    public Owner Owner;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class UnoAI : MonoBehaviour
     {        
         if (cards.Count > 0)
         {
-            cards[0].OnClick();
+            cards[0].OnClick((int)Owner);
             cards.RemoveAt(0);
         }
     }

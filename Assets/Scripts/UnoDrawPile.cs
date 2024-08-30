@@ -44,12 +44,13 @@ public class UnoDrawPile : MonoBehaviour
     {
         //DebugControl.Log("draw", 1);
 
-        if (GameManager.IsLockToPlayTurn())
+        if (GameManager.IsLockToPlayTurn() ||( GameManager.GetTurn() != (int)cardScript.LastClicked)
+)
         {
             return;
         }
         GameManager.LockCardsToPlayTurn(true);
-       // RemoveFromDraw(cardScript);
+
         Players[GameManager.GetTurn()].DrawCard(cardScript, () =>
         {
             if (GameManager.GetTurn() == 0)//TODO: in online have to change

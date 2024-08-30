@@ -35,6 +35,7 @@ public class UnoCard : MonoBehaviour
     public int TurnChangeAmount = 1;
     public SpecialCard Type = SpecialCard.None;
     public int AccumulatedCards = 0;
+    public Owner LastClicked ;
     void Awake()
     {
         img = GetComponent<Image>();
@@ -68,9 +69,12 @@ public class UnoCard : MonoBehaviour
         AccumulatedCards = Type == SpecialCard.Draw2 ? 2 : Type == SpecialCard.Draw4Wild ? 4 : 0;
 
     }
-    public void OnClick()
+    public void OnClick(int Player=-1)
     {
-        //SetNumberAndColor();
+        if(Player==-1)
+            LastClicked = Owner.Player1;//TODO:multiplayer
+        else
+            LastClicked = (Owner)Player;
         OnSelected?.Invoke(this,globalCardIdx, owner);
     }
     public void SetWildColor(CardType wildColor)
