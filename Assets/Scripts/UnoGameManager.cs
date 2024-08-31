@@ -38,6 +38,7 @@ public class UnoGameManager : MonoBehaviour
     public static float WaitForOneMoveDuration = 0.2f;
    // public bool GameLocked = false;
    // public UnoDiscardPile DiscardPile;
+   public int MainPlayer = 0;
     void Awake()
     {
         // GameLocked = true;

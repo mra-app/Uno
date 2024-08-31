@@ -16,6 +16,7 @@ public class UnoPlayer : MonoBehaviour
     public UnoGameManager GameManager;
     const string ManagerTagName = "GameController";
     private int TryNumber = 0;
+    private bool UnoImmune = false;
     void Start()
     {
         cardStack.OnCardSelected += OnCardSelected;
@@ -40,6 +41,7 @@ public class UnoPlayer : MonoBehaviour
         GameManager.DrawPile.RemoveFromDraw(card);
         cardStack.PushAndMove(card, () =>
         {
+            Immune(false);
             callback();
         });
     }
@@ -120,6 +122,7 @@ public class UnoPlayer : MonoBehaviour
                 GameManager.LockCardsToPlayTurn(true);
                 RemoveFromHand(card);//TODO: move in discard in pile code
                 GameManager.DiscardPile.DiscardedCard(card, () => {
+                    Immune(false);
 
                 if (HasWon()) 
                 {
@@ -151,9 +154,30 @@ public class UnoPlayer : MonoBehaviour
     {
         return cardStack.IsEmpty();
     }
-    //public void DiscardCard(UnoCard cardScript)
-    //{
-    //    cardScript.OnSelected -= OnCardSelected;
-    //}
+
+    public void Uno(bool isCalledByOthers)//?
+    {
+        DebugControl.Log("UNO",3);
+        if ((int)handOwner !=GameManager.MainPlayer)//TODO:multiplayer
+        {
+            if (cardStack.HasOneCard())
+            {
+                DrawCard(GameManager.DrawPile.GetaCard(), () =>
+                {
+                    DrawCard(GameManager.DrawPile.GetaCard(), () => { });
+                });
+            }
+        }
+        else
+        {
+            Immune(true);
+        }
+    }
+
+    public void Immune(bool immune)
+    {
+        DebugControl.Log("UNO:"+immune,3);
+        UnoImmune |= immune;
+    }
 
 }

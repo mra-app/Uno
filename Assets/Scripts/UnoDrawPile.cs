@@ -144,5 +144,9 @@ public class UnoDrawPile : MonoBehaviour
         cardScript.InitCard(id, CardSprites[id], globalCardIdx);
         return cardScript;
     }
+    public UnoCard GetaCard()
+    {
+        return DrawStack.GetAllCards()[0];
+    }
 
 }
