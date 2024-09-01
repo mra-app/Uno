@@ -53,8 +53,8 @@ public class UnoDrawPile : MonoBehaviour
 
         Players[GameManager.GetTurn()].DrawCard(cardScript, () =>
         {
-            if (GameManager.GetTurn() == 0)//TODO: in online have to change
-                cardScript.ShowBackImg(false);
+            //if (GameManager.GetTurn() == 0)//TODO: in online have to change
+            //    cardScript.ShowBackImg(false);
 
             GameManager.DiscardPile.CardDrawn();
             if (GameManager.DiscardPile.CanPlayOnUpCard())

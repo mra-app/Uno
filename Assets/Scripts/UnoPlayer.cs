@@ -22,6 +22,7 @@ public class UnoPlayer : MonoBehaviour
         cardStack.OnCardSelected += OnCardSelected;
         if(GetComponent<UnoAI>() != null) {
             AI = GetComponent<UnoAI>();
+            AI.gameManager = GameManager;
         }
     }
     public bool AllCardsPlayed() {
@@ -42,6 +43,9 @@ public class UnoPlayer : MonoBehaviour
         cardStack.PushAndMove(card, () =>
         {
             Immune(false);
+            if ((int)handOwner == GameManager.MainPlayer)//TODO: in online have to change
+                card.ShowBackImg(false);
+
             callback();
         });
     }
@@ -98,14 +102,14 @@ public class UnoPlayer : MonoBehaviour
     IEnumerator AIPlay()
     {
         yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration);
-        AI.StartPlay(true, cardStack, GameManager.DrawPile.DrawStack,TryNumber);
+        AI.StartPlay(cardStack, GameManager.DrawPile.DrawStack,TryNumber);
 
 
     }
     void AIStop()
     {
         AI.Owner = handOwner;
-        AI.StartPlay(false);
+       // AI.StartPlay(false);
 
     }
     public void OnCardSelected(UnoCard card,int globalCardIdx, Owner owner)
@@ -155,12 +159,12 @@ public class UnoPlayer : MonoBehaviour
         return cardStack.IsEmpty();
     }
 
-    public void Uno(bool isCalledByOthers)//?
+    public void Uno(int callerID)//?
     {
         DebugControl.Log("UNO",3);
-        if ((int)handOwner !=GameManager.MainPlayer)//TODO:multiplayer
+        if (callerID != (int)handOwner)
         {
-            if (cardStack.HasOneCard())
+            if (IsUno())//&& !unnoimmune)
             {
                 DrawCard(GameManager.DrawPile.GetaCard(), () =>
                 {
@@ -172,12 +176,22 @@ public class UnoPlayer : MonoBehaviour
         {
             Immune(true);
         }
+        
+
+    }
+    public void UnoClicked()
+    {
+            Uno(GameManager.MainPlayer);//TODO: send current view player network id
+    }
+    public bool IsUno()
+    {
+        return cardStack.HasOneCard();
     }
 
     public void Immune(bool immune)
     {
         DebugControl.Log("UNO:"+immune,3);
-        UnoImmune |= immune;
+        UnoImmune = immune;
     }
 
 }

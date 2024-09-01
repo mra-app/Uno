@@ -8,6 +8,7 @@ public class UnoAI : MonoBehaviour
     private bool IsPlaying = false;
     List<UnoCard> cards;//= new List<UnoCard>();
     public Owner Owner;
+    public UnoGameManager gameManager;
 
     void Start()
     {
@@ -38,15 +39,16 @@ public class UnoAI : MonoBehaviour
         cards.AddRange(AvailableCards);
         cards.AddRange(DrawStack.GetAllCards());
     }
-    public void StartPlay(bool Start, UnoCardStack PlayerCardStack = null, UnoCardStack DrawStack = null,int TryNumber = 0)
+    public void StartPlay( UnoCardStack PlayerCardStack = null, UnoCardStack DrawStack = null,int TryNumber = 0)
     {
-       // DebugControl.Log("start0" + Start, 3);
-        if (Start)
-        {
+   
             //DebugControl.Log("start" + Start, 3);
-            PrepareToPlay(PlayerCardStack, DrawStack,TryNumber);
-            Play();
-        }
+            
+        PrepareToPlay(PlayerCardStack, DrawStack,TryNumber);
+        Play();
+        CheckForUno();
+        //random uno
+        
     }
     public UnoCard.CardType SelectColorForWild(UnoCardStack PlayerCardStack)
     {
@@ -72,6 +74,21 @@ public class UnoAI : MonoBehaviour
         }
         DebugControl.Log(color.ToString(),3);
         return color;
+    }
+    public void CheckForUno()
+    {
+        DebugControl.Log("CheckForUno", 3);
+        for (int i = 0; i < gameManager.Players.Count; i++)//TODO:Player count
+        {
+            DebugControl.Log("c" + i, 3);
+            if (gameManager.Players[i].IsUno())
+            {
+                DebugControl.Log("uno" + i, 3);
+                gameManager.Players[i].Uno((int)Owner);
+                return;
+            }
+        }
+
     }
 
 }
