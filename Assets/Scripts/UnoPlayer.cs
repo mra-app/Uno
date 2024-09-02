@@ -40,9 +40,10 @@ public class UnoPlayer : MonoBehaviour
     public void DrawCard(UnoCard card, Action callback)
     {
         GameManager.DrawPile.RemoveFromDraw(card);
+        Immune(false);
         cardStack.PushAndMove(card, () =>
         {
-            Immune(false);
+           
             if ((int)handOwner == GameManager.MainPlayer)//TODO: in online have to change
                 card.ShowBackImg(false);
 
@@ -101,7 +102,7 @@ public class UnoPlayer : MonoBehaviour
     }
     IEnumerator AIPlay()
     {
-        yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration);
+        yield return new WaitForSeconds(1);//UnoGameManager.WaitForOneMoveDuration);
         AI.StartPlay(cardStack, GameManager.DrawPile.DrawStack,TryNumber);
 
 
@@ -125,22 +126,21 @@ public class UnoPlayer : MonoBehaviour
                // DebugControl.Log("h", 3);
                 GameManager.LockCardsToPlayTurn(true);
                 RemoveFromHand(card);//TODO: move in discard in pile code
-                GameManager.DiscardPile.DiscardedCard(card, () => {
-                    Immune(false);
-
-                if (HasWon()) 
-                {
-                     GameManager.ShowWinner((int)handOwner);
-                        return;
-                }
-                if (GameManager.DiscardPile.ColorSelectIsNeeded())
-                {
-                     SelectWildCardColor(card);
-                }
-                else
-                {
-                    GameManager.ContinueGame(card);
-                 }
+                Immune(false);
+                GameManager.DiscardPile.DiscardedCard(card, () => {   
+                    if (HasWon()) 
+                    {
+                         GameManager.ShowWinner((int)handOwner);
+                            return;
+                    }
+                    if (GameManager.DiscardPile.ColorSelectIsNeeded())
+                    {
+                         SelectWildCardColor(card);
+                    }
+                    else
+                    {
+                        GameManager.ContinueGame(card);
+                     }
                 //    GameManager.ChangeTurn(card);
                 //GameManager.LockCardsToPlayTurn(false);
                 });
@@ -161,19 +161,23 @@ public class UnoPlayer : MonoBehaviour
 
     public void Uno(int callerID)//?
     {
-        DebugControl.Log("UNO",3);
+        if(handOwner==0)
+        DebugControl.Log("UNO"+callerID,3);
         if (callerID != (int)handOwner)
         {
-            if (IsUno())//&& !unnoimmune)
+            if (IsUno()&& !UnoImmune)
             {
                 DrawCard(GameManager.DrawPile.GetaCard(), () =>
                 {
-                    DrawCard(GameManager.DrawPile.GetaCard(), () => { });
+                    DrawCard(GameManager.DrawPile.GetaCard(), () => {
+                        DebugControl.Log("immune my .."+callerID, 3);
+                    });
                 });
             }
         }
         else
         {
+            DebugControl.Log("immune",3);
             Immune(true);
         }
         
@@ -190,6 +194,7 @@ public class UnoPlayer : MonoBehaviour
 
     public void Immune(bool immune)
     {
+        if(handOwner == 0)
         DebugControl.Log("UNO:"+immune,3);
         UnoImmune = immune;
     }

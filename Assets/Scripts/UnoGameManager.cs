@@ -19,7 +19,7 @@ public class UnoGameManager : MonoBehaviour
 {
     
     const int TOTAL_CARDS = 108;
-    const int PLAYER_INIT_CARDS = 5;
+    //const int PLAYER_INIT_CARDS = 3;
     //public UnoCardStack DiscardStack;
     public List<UnoPlayer> Players;
     public UnoDiscardPile DiscardPile;
@@ -35,7 +35,7 @@ public class UnoGameManager : MonoBehaviour
     private int ChangeTurnOrder = 1;
     public GameObject FinishPanel;
     public TMP_Text text;
-    public static float WaitForOneMoveDuration = 0.2f;
+    public static float WaitForOneMoveDuration = 0.5f;
    // public bool GameLocked = false;
    // public UnoDiscardPile DiscardPile;
    public int MainPlayer = 0;
