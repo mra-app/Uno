@@ -39,6 +39,7 @@ public class UnoGameManager : MonoBehaviour
    // public bool GameLocked = false;
    // public UnoDiscardPile DiscardPile;
    public int MainPlayer = 0;
+    public NotifiControl NotifiControl;
     void Awake()
     {
         // GameLocked = true;
@@ -53,7 +54,7 @@ public class UnoGameManager : MonoBehaviour
         }
         DrawPile.GameManager = this;
         //ShuffleAndDistribute(PlayerCount);
-
+        NotifiControl= GetComponent<NotifiControl>();
         Turn = 0;
       //  ChangeTurn();
     }
@@ -127,112 +128,6 @@ public class UnoGameManager : MonoBehaviour
     {
         return card.Type != UnoCard.SpecialCard.Draw4Wild;
     }
-
-    //public void ShuffleAndDistribute(int playerCount)
-    //{
-    //    List<int> allNumbers = new List<int>();
-    //    for (int i = 0; i < TOTAL_CARDS; i++) { allNumbers.Add(i); }
-    //    allNumbers = Utility.Shuffle(allNumbers);
-
-    //    for (int i = 0; i < TOTAL_CARDS; i++)
-    //    {
-    //        AllCards.Add(MakeCard(allNumbers[i], i));
-    //        //  DebugControl.Log(allNumbers[i]+" ",3);
-    //    }
-
-    //    int j = 0;
-    //    while (AllCards.Count > j)
-    //    {
-    //        DrawStack.Push(AllCards[j]);
-    //      //  AllCards[j].ShowBackImg(false);//todo
-
-    //        j++;
-    //    }
-    //    int drawCardCount = AllCards.Count - (4 * PLAYER_INIT_CARDS + 1);
-
-
-    //    DiscardStack.PushAndMove(AllCards[0], () => {
-    //        StartCoroutine(DistCardtoPlayers(drawCardCount + 1));
-    //    });
-    //     LastCard = AllCards[0];
-
-
-    //}
-    //IEnumerator DistCardtoPlayers(int AllCardIdx)
-    //{
-    //    int initj = AllCardIdx;
-    //    for (int i = 0; i < PlayerCount; i++)
-    //    {
-    //        while (AllCardIdx < initj + PLAYER_INIT_CARDS * (i + 1))
-    //        {
-    //            Players[i].DrawCard(AllCards[AllCardIdx], () => { });
-    //            if (i == 0)//TODO: in online have to change
-    //              AllCards[AllCardIdx].ShowBackImg(false);
-    //            AllCardIdx++;
-    //            yield return new WaitForSeconds(0.1f);
-    //        }
-    //    }
-    //}
-    //private UnoCard MakeCard(int id, int globalCardIdx)
-    //{
-    //    GameObject card = Instantiate(cardPrefab);
-    //    UnoCard cardScript = card.GetComponent<UnoCard>();
-    //    cardScript.InitCard(id, CardSprites[id], globalCardIdx);
-    //    cardScript.OnSelected += OnCardSelected;
-    //    return cardScript;
-    //}
-    /*public void OnCardSelected(int globalCardIdx, Owner owner)//owner d? TODO!
-    {
-        if (LockCards)
-            return;
-
-        UnoCard cardScript = AllCards[globalCardIdx];
-        if ((int)owner == Turn && LastCard.AccumulatedCards <= 0)
-        {
-
-            if (LastCard.AcceptsCard(cardScript))
-            {
-                LockCards = true;
-
-                DiscardStack.PushAndMove(cardScript, () =>
-                {
-                    Players[Turn].RemoveCard(cardScript);//for every? TODO!
-                    if (cardScript.Type == UnoCard.SpecialCard.Wild || cardScript.Type == UnoCard.SpecialCard.Take4)
-                        Players[Turn].SelectWildCardColor(cardScript);
-                    CheckFinish(Turn);
-                    ChangeTurn(cardScript);
-                    LastCard = cardScript;
-                    
-
-                    LockCards = false;
-                    DebugControl.Log("yo", 3);
-                });
-            
-            }
-        }
-        else if (owner == Owner.Draw)
-        {
-            //DebugControl.Log("2", 3);
-            LockCards = true;
-
-            Players[(int)Turn].DrawCard(cardScript, () =>
-            {
-                if ((int)Turn == 0)//TODO: in online have to change
-                    cardScript.ShowBackImg(false);
-
-                LastCard.AccumulatedCards--;
-                if (LastCard.AccumulatedCards <= 0)
-                {
-                     ChangeTurn();
-                }
-                
-                LockCards = false;
-            });
-        }
-
-
-
-    }*/
  
 
     private void CheckFinish(int turn)
