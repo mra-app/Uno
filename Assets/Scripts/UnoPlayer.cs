@@ -102,7 +102,7 @@ public class UnoPlayer : MonoBehaviour
     }
     IEnumerator AIPlay()
     {
-        yield return new WaitForSeconds(1);//UnoGameManager.WaitForOneMoveDuration);
+        yield return new WaitForSeconds(0.2f);//UnoGameManager.WaitForOneMoveDuration);
         AI.StartPlay(cardStack, GameManager.DrawPile.DrawStack,TryNumber);
 
 
@@ -167,7 +167,7 @@ public class UnoPlayer : MonoBehaviour
         {
             if (IsUno()&& !UnoImmune)
             {
-                GameManager.NotifiControl.ShowNotification("you forgot uno!");
+                GameManager.NotifiControl.ShowNotification("you forgot uno!",1);
                 DrawCard(GameManager.DrawPile.GetaCard(), () =>
                 {
                     DrawCard(GameManager.DrawPile.GetaCard(), () => {

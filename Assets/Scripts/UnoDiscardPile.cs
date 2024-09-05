@@ -8,6 +8,7 @@ public class UnoDiscardPile : MonoBehaviour
     private UnoCard LastCard = null;
     UnoCardStack cardStack;
     int AccumulatedCards = 0;
+    public UnoGameManager GameManager;
 
 
     // Start is called before the first frame update
@@ -24,6 +25,11 @@ public class UnoDiscardPile : MonoBehaviour
     }
     public void DiscardedCard(UnoCard card, Action callback)
     {
+        if (card.Type == UnoCard.SpecialCard.Reverse)
+        {
+            GameManager.NotifiControl.ShowNotification("Reverse!", 3);
+
+        }
         card.ShowBackImg(false);
         cardStack.PushAndMove(card, () => { callback(); });
         LastCard = card;

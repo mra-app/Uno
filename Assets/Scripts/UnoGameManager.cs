@@ -53,6 +53,7 @@ public class UnoGameManager : MonoBehaviour
             Players[i].GameManager = this;
         }
         DrawPile.GameManager = this;
+        DiscardPile.GameManager = this;
         //ShuffleAndDistribute(PlayerCount);
         NotifiControl= GetComponent<NotifiControl>();
         Turn = 0;

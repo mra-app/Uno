@@ -7,10 +7,19 @@ public class NotifiControl : MonoBehaviour
 {
     public GameObject UI;
     public TMP_Text text;
-    public void ShowNotification(string message)
+    public Animator animator;
+    public void ShowNotification(string message,int type)
     {
         text.text = message;
-        StartCoroutine(Display());
+        if (type == 1)
+        {
+            animator.SetTrigger("UNOF");
+            // StartCoroutine(Display());
+        }
+        else
+        {
+            animator.SetTrigger("REV");
+        }
       
     }
     IEnumerator Display()

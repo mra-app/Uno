@@ -6,7 +6,7 @@ using UnityEngine;
 public class UnoDrawPile : MonoBehaviour
 {
     const int TOTAL_CARDS = 108;
-    const int PLAYER_INIT_CARDS = 2;
+    const int PLAYER_INIT_CARDS = 5;
     public UnoCardStack DrawStack;//TODO
     //public UnoCardStack DiscardStack;
     public UnoDiscardPile DiscardPile;
