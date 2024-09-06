@@ -127,6 +127,7 @@ public class UnoGameManager : MonoBehaviour
     }
     public bool IsAcceptableToStart(UnoCard card)
     {
+        //return card.Type == UnoCard.SpecialCard.Skip;
         return card.Type != UnoCard.SpecialCard.Draw4Wild;
     }
  

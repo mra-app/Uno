@@ -30,10 +30,15 @@ public class UnoDiscardPile : MonoBehaviour
             GameManager.NotifiControl.ShowNotification("Reverse!", 3);
 
         }
+        else if (card.Type == UnoCard.SpecialCard.Skip)
+        {
+            GameManager.NotifiControl.ShowNotification("Skip!", 4);
+            DebugControl.Log("sjo",3);
+
+        }
         card.ShowBackImg(false);
         cardStack.PushAndMove(card, () => { callback(); });
         LastCard = card;
-        //DebugControl.Log(LastCard.Type.ToString(),3);
     }
     public bool CanPlayOnUpCard()
     {
