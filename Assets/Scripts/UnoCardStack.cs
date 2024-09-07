@@ -63,7 +63,13 @@ public class UnoCardStack : MonoBehaviour
     }
     public List<UnoCard> GetAllCards()
     {
-        return cards;
+        List<UnoCard> ALLcards = new List<UnoCard>();
+        for (int i = 0; i < cards.Count; i++)
+        {
+            ALLcards.Add(cards[i]);
+        }
+
+        return ALLcards;
     }
     public bool HasOneCard()
     {

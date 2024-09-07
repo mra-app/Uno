@@ -131,19 +131,10 @@ public class UnoGameManager : MonoBehaviour
         return card.Type != UnoCard.SpecialCard.Draw4Wild;
     }
  
-
-    private void CheckFinish(int turn)
-    {
-       // DebugControl.Log("turn" + turn + Players[turn].AllCardsPlayed(), 3);
-        if (Players[turn].AllCardsPlayed())
-        {
-            text.text = turn.ToString();
-            FinishPanel.SetActive(true);
-        }
-    } 
     public void ShowWinner(int turn)
     {
-        text.text = turn.ToString();
+        LockCardsToPlayTurn(true);
+        text.text = "Player " + turn.ToString() + " has won!";
         FinishPanel.SetActive(true);
     }
     public void LockCardsToPlayTurn(bool _lock)

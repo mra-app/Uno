@@ -166,8 +166,11 @@ public class UnoPlayer : MonoBehaviour
         if (callerID != (int)handOwner)
         {
             if (IsUno()&& !UnoImmune)
-            {
+            {   
+                Immune(true);
                 GameManager.NotifiControl.ShowNotification("you forgot uno!",1);
+                DebugControl.Log("youd be immune", 3);//TODO:test
+                
                 DrawCard(GameManager.DrawPile.GetaCard(), () =>
                 {
                     DrawCard(GameManager.DrawPile.GetaCard(), () => {

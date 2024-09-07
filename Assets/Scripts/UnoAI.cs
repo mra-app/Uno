@@ -37,7 +37,9 @@ public class UnoAI : MonoBehaviour
         }
 
         cards.AddRange(AvailableCards);
-        cards.AddRange(DrawStack.GetAllCards());
+        List<UnoCard> DrawCards = DrawStack.GetAllCards();
+        DrawCards.Reverse();
+        cards.AddRange(DrawCards);
     }
     public void StartPlay( UnoCardStack PlayerCardStack = null, UnoCardStack DrawStack = null,int TryNumber = 0)
     {
