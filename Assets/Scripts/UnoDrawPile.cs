@@ -131,7 +131,7 @@ public class UnoDrawPile : MonoBehaviour
                    });
                 }
 
-                yield return null;
+                yield return new WaitForSeconds(0.02f);
             }
             i++;
         }

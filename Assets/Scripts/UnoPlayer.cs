@@ -57,14 +57,9 @@ public class UnoPlayer : MonoBehaviour
        // DebugControl.Log("turn" + isMyTurn, 3);
         if( AI != null)
         {
-            if (!isMyTurn )
-            {
-                AIStop();
-            }
-            else
+            if (isMyTurn )
             {
                  StartCoroutine(AIPlay());
-
             }
         }
     }
@@ -102,19 +97,15 @@ public class UnoPlayer : MonoBehaviour
     }
     IEnumerator AIPlay()
     {
+        AI.Owner = handOwner;
         yield return new WaitForSeconds(0.2f);//UnoGameManager.WaitForOneMoveDuration);
         AI.StartPlay(cardStack, GameManager.DrawPile.DrawStack,TryNumber);
 
 
     }
-    void AIStop()
-    {
-        AI.Owner = handOwner;
-       // AI.StartPlay(false);
-
-    }
     public void OnCardSelected(UnoCard card,int globalCardIdx, Owner owner)
     {
+        DebugControl.Log("ay domino!" + (int)handOwner+" "+ GameManager.GetTurn()+" " +(int)card.LastClicked, 3);
         if (GameManager.GetTurn() == (int)handOwner && GameManager.GetTurn() == (int)card.LastClicked)
         {
             if (GameManager.DiscardPile.CanPlayOnUpCard() && GameManager.DiscardPile.CanPlayThisCard(card)) 
@@ -199,7 +190,7 @@ public class UnoPlayer : MonoBehaviour
     public void Immune(bool immune)
     {
         if(handOwner == 0)
-        DebugControl.Log("UNO:"+immune,3);
+            DebugControl.Log("UNO:"+immune,3);
         UnoImmune = immune;
     }
 

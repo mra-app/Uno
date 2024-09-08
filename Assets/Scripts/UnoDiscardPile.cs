@@ -33,8 +33,6 @@ public class UnoDiscardPile : MonoBehaviour
         else if (card.Type == UnoCard.SpecialCard.Skip)
         {
             GameManager.NotifiControl.ShowNotification("Skip!", 4);
-            DebugControl.Log("sjo",3);
-
         }
         card.ShowBackImg(false);
         cardStack.PushAndMove(card, () => { callback(); });
