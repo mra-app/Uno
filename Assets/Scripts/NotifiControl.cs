@@ -16,6 +16,10 @@ public class NotifiControl : MonoBehaviour
             animator.SetTrigger("UNOF");
             // StartCoroutine(Display());
         }
+        else if (type == 2)
+        {
+            animator.SetTrigger("DRAW2");
+        }
         else if(type == 3) {
         
             animator.SetTrigger("REV");

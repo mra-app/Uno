@@ -34,6 +34,10 @@ public class UnoDiscardPile : MonoBehaviour
         {
             GameManager.NotifiControl.ShowNotification("Skip!", 4);
         }
+        else if (card.Type == UnoCard.SpecialCard.Draw2)
+        {
+            GameManager.NotifiControl.ShowNotification("draw 2 cards!", 2);
+        }
         card.ShowBackImg(false);
         cardStack.PushAndMove(card, () => { callback(); });
         LastCard = card;
