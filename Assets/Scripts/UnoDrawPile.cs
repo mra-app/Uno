@@ -108,32 +108,21 @@ public class UnoDrawPile : MonoBehaviour
 
 
     }
-    IEnumerator DistCardtoPlayers(int AllCardIdx,Action callback)
+    IEnumerator DistCardtoPlayers(int initj, Action callback)
     {
-        int initj = AllCardIdx;
-        int i = 0;
-        //for (int i = 0; i < PlayerCount; i++)
-        while(i < PlayerCount)
+        for (int i = 0; i < PlayerCount; i++)
         {
-            int j = 0;
-            bool waiting = false; 
-            while (j<PLAYER_INIT_CARDS)//AllCardIdx < initj + PLAYER_INIT_CARDS * (i + 1))
+            for (int j = 0; j < PLAYER_INIT_CARDS; j++)
             {
-                if (!waiting)
-                {
-                    waiting = true;
-                    Players[i].DrawCard(AllCards[AllCardIdx], () => {
-                        if (i == 0)//TODO: in online have to change
-                            AllCards[AllCardIdx].ShowBackImg(false);
-                        AllCardIdx++;
-                        j++;
-                        waiting = false;
-                   });
-                }
-
-                yield return new WaitForSeconds(0.02f);
+                int index = initj+i*PLAYER_INIT_CARDS+j;
+                Players[i].DrawCard(AllCards[index], () => {
+                    if (i == 0)//TODO: in online have to change
+                        AllCards[index].ShowBackImg(false);
+                   // AllCardIdx++;
+                    
+                });
+                yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration/2);
             }
-            i++;
         }
         callback();
     }
