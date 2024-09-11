@@ -9,6 +9,8 @@ public class UnoDiscardPile : MonoBehaviour
     UnoCardStack cardStack;
     int AccumulatedCards = 0;
     public UnoGameManager GameManager;
+    public GameObject WildColorGameObject;
+    public List<GameObject> WildColors = new List<GameObject>();
 
 
     // Start is called before the first frame update
@@ -59,7 +61,14 @@ public class UnoDiscardPile : MonoBehaviour
     public void SetWildLastCardColor(UnoCard.CardType color)
     {
         LastCard.SetWildColor(color);
+        for (int i = 0; i < 4; i++)
+        {
+            WildColors[i].SetActive(i== (int)color);
+        }
+        
+        WildColorGameObject.transform.SetAsLastSibling();
     }
+        
     public void CardDrawn()
     {
         if (LastCard.AccumulatedCards > 0)

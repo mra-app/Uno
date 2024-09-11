@@ -63,7 +63,7 @@ public class UnoPlayer : MonoBehaviour
             }
         }
     }
-    public void SelectWildCardColor(UnoCard cardScript)
+    IEnumerator SelectWildCardColor(UnoCard cardScript)
     {
         if (AI == null)
         {
@@ -71,8 +71,8 @@ public class UnoPlayer : MonoBehaviour
         }
         else
         {
-            //AIStop();
-           // DebugControl.Log("just", 3);
+            yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration);
+
             GameManager.DiscardPile.SetWildLastCardColor(
                 AI.SelectColorForWild(cardStack)
                 );
@@ -126,7 +126,7 @@ public class UnoPlayer : MonoBehaviour
                     }
                     if (GameManager.DiscardPile.ColorSelectIsNeeded())
                     {
-                         SelectWildCardColor(card);
+                         StartCoroutine(SelectWildCardColor(card));
                     }
                     else
                     {
