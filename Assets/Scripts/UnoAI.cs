@@ -79,13 +79,13 @@ public class UnoAI : MonoBehaviour
     }
     public void CheckForUno()
     {
-        //DebugControl.Log("CheckForUno", 3);
+
         for (int i = 0; i < gameManager.Players.Count; i++)//TODO:Player count
         {
-           // DebugControl.Log("c" + i, 3);
+            DebugControl.Log( "count " + i, 3);
             if (gameManager.Players[i].IsUno())
             {
-               // DebugControl.Log("uno" + i, 3);
+                DebugControl.Log("uno" + i, 3);
                 gameManager.Players[i].Uno((int)Owner);
                 return;
             }

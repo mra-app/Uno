@@ -139,7 +139,8 @@ public class UnoGameManager : MonoBehaviour
     }
     public void LockCardsToPlayTurn(bool _lock)
     {
-        LockCards = _lock;
+        DebugControl.Log("mym" + _lock,3);
+        LockCards = false;//_lock;
     }
     public bool IsLockToPlayTurn()
     {

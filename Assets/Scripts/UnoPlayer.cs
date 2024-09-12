@@ -106,6 +106,7 @@ public class UnoPlayer : MonoBehaviour
     public void OnCardSelected(UnoCard card,int globalCardIdx, Owner owner)
     {
         DebugControl.Log("ay domino!" + (int)handOwner+" "+ GameManager.GetTurn()+" " +(int)card.LastClicked, 3);
+        DebugControl.Log("l"+GameManager.IsLockToPlayTurn(), 3);
         if (GameManager.GetTurn() == (int)handOwner && GameManager.GetTurn() == (int)card.LastClicked)
         {
             if (GameManager.DiscardPile.CanPlayOnUpCard() && GameManager.DiscardPile.CanPlayThisCard(card)) 
@@ -153,14 +154,14 @@ public class UnoPlayer : MonoBehaviour
     public void Uno(int callerID)//?
     {
         if(handOwner==0)
-        DebugControl.Log("UNO"+callerID,3);
+            DebugControl.Log("UNO"+callerID+ " Immune " + UnoImmune, 3);
         if (callerID != (int)handOwner)
         {
             if (IsUno()&& !UnoImmune)
             {   
                 Immune(true);
                 GameManager.NotifiControl.ShowNotification("you forgot uno!",1);
-                DebugControl.Log("youd be immune", 3);//TODO:test
+                DebugControl.Log("youd be immune"+callerID, 3);//TODO:test
                 
                 DrawCard(GameManager.DrawPile.GetaCard(), () =>
                 {
@@ -189,8 +190,12 @@ public class UnoPlayer : MonoBehaviour
 
     public void Immune(bool immune)
     {
-        if(handOwner == 0)
-            DebugControl.Log("UNO:"+immune,3);
+        if (handOwner == 0)
+        {
+            DebugControl.Log("UNO:" + immune, 3);
+            if (immune)
+                DebugControl.Log(" immuned", 3);
+        }
         UnoImmune = immune;
     }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class UnoDrawPile : MonoBehaviour
 {
     const int TOTAL_CARDS = 108;
-    const int PLAYER_INIT_CARDS = 5;
+    const int PLAYER_INIT_CARDS = 2;
     public UnoCardStack DrawStack;//TODO
     //public UnoCardStack DiscardStack;
     public UnoDiscardPile DiscardPile;
@@ -57,6 +57,7 @@ public class UnoDrawPile : MonoBehaviour
             //    cardScript.ShowBackImg(false);
 
             GameManager.DiscardPile.CardDrawn();
+            GameManager.LockCardsToPlayTurn(false);
             if (GameManager.DiscardPile.CanPlayOnUpCard())
             {
                 GameManager.ChangeTurn();
@@ -67,7 +68,7 @@ public class UnoDrawPile : MonoBehaviour
                 Players[GameManager.GetTurn()].PlayAgain();
             }
 
-            GameManager.LockCardsToPlayTurn(false);
+           
         });
     }
 
