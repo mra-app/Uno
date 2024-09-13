@@ -77,13 +77,13 @@ public class UnoAI : MonoBehaviour
         DebugControl.Log(color.ToString(),3);
         return color;
     }
-    public void CheckForUno()
+    public void CheckForUno()//TODO: it is not fair
     {
 
         for (int i = 0; i < gameManager.Players.Count; i++)//TODO:Player count
         {
             DebugControl.Log( "count " + i, 3);
-            if (gameManager.Players[i].IsUno())
+            if (gameManager.Players[i].IsUno() && !gameManager.Players[i].IsImmune())
             {
                 DebugControl.Log("uno" + i, 3);
                 gameManager.Players[i].Uno((int)Owner);

@@ -28,7 +28,7 @@ public class UnoCardStack : MonoBehaviour
     }
 
     //Push: changes the card parent and changes the rotation
-    public void Push(UnoCard card)
+    /*public void Push(UnoCard card)
     {
         card.owner = owner;
         cards.Add(card);
@@ -45,7 +45,7 @@ public class UnoCardStack : MonoBehaviour
         }
         else
             card.transform.rotation = transform.rotation;
-    }
+    }*/
     public void Pop(UnoCard card)
     {
         card.OnSelected -= OnCardSelected;
@@ -55,9 +55,27 @@ public class UnoCardStack : MonoBehaviour
     //PushAndMove: moves the card position to the stack position
     public void PushAndMove(UnoCard card, Action callback)
     {
+        // Push(card);
+
+        card.owner = owner;
+        cards.Add(card);
+
+        card.OnSelected += OnCardSelected;//TODO
+
+
+        if (isDiscard)
+        {
+            card.transform.rotation = Quaternion.Euler(0, 0, Discard_Z);
+            card.ShowBackImg(false);
+            Discard_Z += 45;
+        }
+        else
+            card.transform.rotation = transform.rotation;
+
         card.Move(transform.position, () =>
         {
-            Push(card);
+            card.transform.SetParent(transform);
+
             callback();
         });
     }

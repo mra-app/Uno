@@ -51,7 +51,7 @@ public class UnoDrawPile : MonoBehaviour
         }
         GameManager.LockCardsToPlayTurn(true);
 
-        Players[GameManager.GetTurn()].DrawCard(cardScript, () =>
+        Players[GameManager.GetTurn()].DrawCard(cardScript,false, () =>
         {
             //if (GameManager.GetTurn() == 0)//TODO: in online have to change
             //    cardScript.ShowBackImg(false);
@@ -88,7 +88,8 @@ public class UnoDrawPile : MonoBehaviour
         int j = 0;
         while (AllCards.Count > j)
         {
-            DrawStack.Push(AllCards[j]);
+            DrawStack.PushAndMove(AllCards[j], () => { });
+           // DrawStack.Push(AllCards[j]);
             //  AllCards[j].ShowBackImg(false);//todo
 
             j++;
@@ -116,7 +117,7 @@ public class UnoDrawPile : MonoBehaviour
             for (int j = 0; j < PLAYER_INIT_CARDS; j++)
             {
                 int index = initj+i*PLAYER_INIT_CARDS+j;
-                Players[i].DrawCard(AllCards[index], () => {
+                Players[i].DrawCard(AllCards[index],false, () => {
                     if (i == 0)//TODO: in online have to change
                         AllCards[index].ShowBackImg(false);
                    // AllCardIdx++;

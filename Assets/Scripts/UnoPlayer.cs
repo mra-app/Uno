@@ -37,13 +37,13 @@ public class UnoPlayer : MonoBehaviour
         handOwner = _owner;
         cardStack.owner = _owner; //stacks without player have assigned owners from editor.
     }
-    public void DrawCard(UnoCard card, Action callback)
+    public void DrawCard(UnoCard card,bool isForUno, Action callback)
     {
         GameManager.DrawPile.RemoveFromDraw(card);
-        Immune(false);
+        if(!isForUno)
+            Immune(false);
         cardStack.PushAndMove(card, () =>
         {
-           
             if ((int)handOwner == GameManager.MainPlayer)//TODO: in online have to change
                 card.ShowBackImg(false);
 
@@ -153,19 +153,19 @@ public class UnoPlayer : MonoBehaviour
 
     public void Uno(int callerID)//?
     {
-        if(handOwner==0)
-            DebugControl.Log("UNO"+callerID+ " Immune " + UnoImmune, 3);
+        //if(handOwner==0)
+            DebugControl.Log("UNO sent by"+callerID+" for"+(int)handOwner+" Immune " + IsImmune(), 3);
         if (callerID != (int)handOwner)
         {
-            if (IsUno()&& !UnoImmune)
+            if (IsUno()&& !IsImmune())
             {   
                 Immune(true);
                 GameManager.NotifiControl.ShowNotification("you forgot uno!",1);
-                DebugControl.Log("youd be immune"+callerID, 3);//TODO:test
+                DebugControl.Log("youd be immune later"+callerID, 3);//TODO:test
                 
-                DrawCard(GameManager.DrawPile.GetaCard(), () =>
+                DrawCard(GameManager.DrawPile.GetaCard(),true, () =>
                 {
-                    DrawCard(GameManager.DrawPile.GetaCard(), () => {
+                    DrawCard(GameManager.DrawPile.GetaCard(),true, () => {
                         DebugControl.Log("immune my .."+callerID, 3);
                     });
                 });
@@ -173,7 +173,7 @@ public class UnoPlayer : MonoBehaviour
         }
         else
         {
-            DebugControl.Log("immune",3);
+            DebugControl.Log("self immuned",3);
             Immune(true);
         }
         
@@ -190,13 +190,12 @@ public class UnoPlayer : MonoBehaviour
 
     public void Immune(bool immune)
     {
-        if (handOwner == 0)
-        {
-            DebugControl.Log("UNO:" + immune, 3);
-            if (immune)
-                DebugControl.Log(" immuned", 3);
-        }
+        DebugControl.Log("UNO:" + immune+" player"+handOwner, 3);
         UnoImmune = immune;
+    }
+    public bool IsImmune()
+    {
+        return UnoImmune;
     }
 
 }
