@@ -112,14 +112,19 @@ public class UnoDrawPile : MonoBehaviour
     }
     IEnumerator DistCardtoPlayers(int initj, Action callback)
     {
+        initj = 0;
         for (int i = 0; i < PlayerCount; i++)
         {
             for (int j = 0; j < PLAYER_INIT_CARDS; j++)
             {
                 int index = initj+i*PLAYER_INIT_CARDS+j;
-                Players[i].DrawCard(AllCards[index],false, () => {
+                UnoCard card = DrawStack.GetAllCards()[0];
+                RemoveFromDraw(card);
+                Players[i].DrawCard(card, false, () => {
+              //  Players[i].DrawCard(AllCards[index],false, () => {
                     if (i == 0)//TODO: in online have to change
-                        AllCards[index].ShowBackImg(false);
+                        card.ShowBackImg(false);
+                     //   AllCards[index].ShowBackImg(false);
                    // AllCardIdx++;
                     
                 });
