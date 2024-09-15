@@ -106,17 +106,19 @@ public class UnoGameManager : MonoBehaviour
         }
     }
 
-    public void GameStart(UnoCard lastCard)
+    public void GameStart(UnoCard firstCard)
     {
-        if (lastCard.Type == UnoCard.SpecialCard.Reverse)
+        DiscardPile.DiscardedCard(firstCard, () => { });
+
+        if (firstCard.Type == UnoCard.SpecialCard.Reverse)
         {
             Turn = 1;
-            ChangeTurn(lastCard);
+            ChangeTurn(firstCard);
         }
-        else if (lastCard.Type == UnoCard.SpecialCard.Skip)
+        else if (firstCard.Type == UnoCard.SpecialCard.Skip)
         {
             Turn = -1;
-            ChangeTurn(lastCard);
+            ChangeTurn(firstCard);
         }
 
         else

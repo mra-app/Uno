@@ -6,7 +6,7 @@ using UnityEngine;
 public class UnoDrawPile : MonoBehaviour
 {
     const int TOTAL_CARDS = 108;
-    const int PLAYER_INIT_CARDS = 2;
+    const int PLAYER_INIT_CARDS = 5;
     public UnoCardStack DrawStack;//TODO
     //public UnoCardStack DiscardStack;
     public UnoDiscardPile DiscardPile;
@@ -100,25 +100,38 @@ public class UnoDrawPile : MonoBehaviour
         {
             x++;
         }
+        UnoCard firstCard = AllCards[x];
         RemoveFromDraw(AllCards[x]);
-        DiscardPile.DiscardedCard(AllCards[x], () => {
-            StartCoroutine(DistCardtoPlayers(drawCardCount + 1, () => {
-                GameManager.GameStart(AllCards[x]);
-            }));
+
+
+        StartCoroutine(DistCardtoPlayers(drawCardCount + 1, () => {
+            //DiscardPile.DiscardedCard(firstCard, () =>
+            //  {
+            GameManager.GameStart(firstCard);
+            // }));
             
-        });
+        }));
+        //; DiscardPile.DiscardedCard(AllCards[x], () => {
+        //    StartCoroutine(DistCardtoPlayers(drawCardCount + 1, () => {
+        //        GameManager.GameStart(AllCards[x]);
+        //    }));
+            
+        //});
 
 
     }
     IEnumerator DistCardtoPlayers(int initj, Action callback)
     {
+        yield return new WaitForSeconds((5/2)*UnoGameManager.WaitForOneMoveDuration );
+
         initj = 0;
         for (int i = 0; i < PlayerCount; i++)
         {
             for (int j = 0; j < PLAYER_INIT_CARDS; j++)
             {
                 int index = initj+i*PLAYER_INIT_CARDS+j;
-                UnoCard card = DrawStack.GetAllCards()[0];
+                int id = DrawStack.GetAllCards().Count-1;
+                UnoCard card = DrawStack.GetAllCards()[id];
                 RemoveFromDraw(card);
                 Players[i].DrawCard(card, false, () => {
               //  Players[i].DrawCard(AllCards[index],false, () => {
@@ -128,7 +141,7 @@ public class UnoDrawPile : MonoBehaviour
                    // AllCardIdx++;
                     
                 });
-                yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration/2);
+                yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration*3/4);
             }
         }
         callback();
