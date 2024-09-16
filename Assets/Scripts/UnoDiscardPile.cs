@@ -12,11 +12,14 @@ public class UnoDiscardPile : MonoBehaviour
     public GameObject WildColorGameObject;
     public List<GameObject> WildColors = new List<GameObject>();
 
+    private Animation ChooseColorAnim;
+
 
     // Start is called before the first frame update
     void Awake()
     {
         cardStack = GetComponent<UnoCardStack>();
+        ChooseColorAnim = WildColorGameObject.GetComponent<Animation>();
 
     }
 
@@ -67,6 +70,7 @@ public class UnoDiscardPile : MonoBehaviour
         }
         
         WildColorGameObject.transform.SetAsLastSibling();
+        ChooseColorAnim.Play();
     }
         
     public void CardDrawn()
