@@ -20,14 +20,17 @@ public class NotifiControl : MonoBehaviour
         {
             animator.SetTrigger("DRAW2");
         }
-        else if(type == 3) {
-        
+        else if(type == 3) 
+        {        
             animator.SetTrigger("REV");
         }
         else if (type == 4)
         {
-
             animator.SetTrigger("SKIP");
+        }
+        if (type == 5)
+        {
+            animator.SetTrigger("DRAW4");
         }
 
     }

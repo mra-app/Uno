@@ -43,6 +43,10 @@ public class UnoDiscardPile : MonoBehaviour
         {
             GameManager.NotifiControl.ShowNotification("draw 2 cards!", 2);
         }
+        else if (card.Type == UnoCard.SpecialCard.Draw4Wild)
+        {
+            GameManager.NotifiControl.ShowNotification("draw 4 cards!", 5);
+        }
         card.ShowBackImg(false);
         cardStack.PushAndMove(card, () => { callback(); });
         LastCard = card;
