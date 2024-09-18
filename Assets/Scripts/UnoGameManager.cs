@@ -139,10 +139,10 @@ public class UnoGameManager : MonoBehaviour
         text.text = "Player " + turn.ToString() + " has won!";
         FinishPanel.SetActive(true);
     }
-    public void LockCardsToPlayTurn(bool _lock)
+    public void LockCardsToPlayTurn(bool _lock)//tODO:
     {
         DebugControl.Log("mym" + _lock,3);
-        LockCards = false;//_lock;
+        LockCards = false; //_lock;
     }
     public bool IsLockToPlayTurn()
     {

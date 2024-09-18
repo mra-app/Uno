@@ -5,15 +5,14 @@ using UnityEngine;
 
 public class UnoPlayer : MonoBehaviour
 {
-    [SerializeField]
     public UnoCardStack cardStack;
-    private Owner handOwner;
     public GameObject MyTurnImage;
     public GameObject SelectColorPanel;
-    UnoAI AI;
-    //UnoCardStack DrawStack;//TODO: unserialized?
-    //UnoCard LastCard = null;
+    [NonSerialized]
     public UnoGameManager GameManager;
+    [SerializeField]
+    private Owner handOwner;
+    private UnoAI AI;
     const string ManagerTagName = "GameController";
     private int TryNumber = 0;
     private bool UnoImmune = false;
