@@ -2,6 +2,7 @@ using PlasticPipe.PlasticProtocol.Messages;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnoPlayer : MonoBehaviour
 {
@@ -16,13 +17,21 @@ public class UnoPlayer : MonoBehaviour
     const string ManagerTagName = "GameController";
     private int TryNumber = 0;
     private bool UnoImmune = false;
-    void Start()
+    private Button UnoButon;
+    public void Init()
     {
         cardStack.OnCardSelected += OnCardSelected;
-        if(GetComponent<UnoAI>() != null) {
+        if (GetComponent<UnoAI>() != null)
+        {
             AI = GetComponent<UnoAI>();
             AI.gameManager = GameManager;
         }
+        UnoButon = GetComponentInChildren<Button>();
+
+    }
+    public void InteractableUnoButton(bool interactable)
+    {
+        UnoButon.interactable = interactable;
     }
     public bool AllCardsPlayed() {
         return cardStack.IsEmpty();
@@ -105,7 +114,7 @@ public class UnoPlayer : MonoBehaviour
     public void OnCardSelected(UnoCard card,int globalCardIdx, Owner owner)
     {
         DebugControl.Log("ay domino!" + (int)handOwner+" "+ GameManager.GetTurn()+" " +(int)card.LastClicked, 3);
-        DebugControl.Log("l"+GameManager.IsLockToPlayTurn(), 3);
+     //   DebugControl.Log("l"+GameManager.IsLockToPlayTurn(), 3);
         if (GameManager.GetTurn() == (int)handOwner && GameManager.GetTurn() == (int)card.LastClicked)
         {
             if (GameManager.DiscardPile.CanPlayOnUpCard() && GameManager.DiscardPile.CanPlayThisCard(card)) 

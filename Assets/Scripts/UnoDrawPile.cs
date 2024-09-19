@@ -9,29 +9,20 @@ public class UnoDrawPile : MonoBehaviour
     const int PLAYER_INIT_CARDS = 5;
     public UnoCardStack DrawStack;//TODO
     //public UnoCardStack DiscardStack;
-    public UnoDiscardPile DiscardPile;
+    //public UnoDiscardPile DiscardPile;
     public UnoGameManager GameManager;
 
-    public List<UnoPlayer> Players;
+    //public List<UnoPlayer> Players;
     public GameObject cardPrefab;
     Sprite[] CardSprites;
     List<UnoCard> AllCards = new List<UnoCard>();
-    private int PlayerCount;
 
-    private void Start()
+    private void Awake()
     {
         DrawStack = GetComponent<UnoCardStack>();
         CardSprites = Resources.LoadAll<Sprite>("");
         DrawStack.OnCardSelected += OnCardSelected;
-        PlayerCount = 4;
 
-        for (int i = 0; i < PlayerCount; i++)
-        {
-            Players[i].SetOwner((Owner)i);//is it needed? move to manager//TODO
-            //Players[i].DrawStack = DrawStack;
-        }
-
-        ShuffleAndDistribute(PlayerCount);
     }
     public void RemoveFromDraw(UnoCard card)
     {
@@ -51,7 +42,7 @@ public class UnoDrawPile : MonoBehaviour
         }
         GameManager.LockCardsToPlayTurn(true);
 
-        Players[GameManager.GetTurn()].DrawCard(cardScript,false, () =>
+        GameManager.Players[GameManager.GetTurn()].DrawCard(cardScript,false, () =>
         {
             //if (GameManager.GetTurn() == 0)//TODO: in online have to change
             //    cardScript.ShowBackImg(false);
@@ -65,7 +56,7 @@ public class UnoDrawPile : MonoBehaviour
             }
             else
             {
-                Players[GameManager.GetTurn()].PlayAgain();
+                GameManager.Players[GameManager.GetTurn()].PlayAgain();
             }
 
            
@@ -125,7 +116,7 @@ public class UnoDrawPile : MonoBehaviour
         yield return new WaitForSeconds((5/2)*UnoGameManager.WaitForOneMoveDuration );
 
         initj = 0;
-        for (int i = 0; i < PlayerCount; i++)
+        for (int i = 0; i < GameManager.Players.Count; i++)
         {
             for (int j = 0; j < PLAYER_INIT_CARDS; j++)
             {
@@ -133,7 +124,7 @@ public class UnoDrawPile : MonoBehaviour
                 int id = DrawStack.GetAllCards().Count-1;
                 UnoCard card = DrawStack.GetAllCards()[id];
                 RemoveFromDraw(card);
-                Players[i].DrawCard(card, false, () => {
+                GameManager.Players[i].DrawCard(card, false, () => {
               //  Players[i].DrawCard(AllCards[index],false, () => {
                     if (i == 0)//TODO: in online have to change
                         card.ShowBackImg(false);

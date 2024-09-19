@@ -10,11 +10,6 @@ public class UnoAI : MonoBehaviour
     public Owner Owner;
     public UnoGameManager gameManager;
 
-    void Start()
-    {
-        
-    }
-
 
     void Play()
     {        
@@ -79,6 +74,10 @@ public class UnoAI : MonoBehaviour
     }
     public void CheckForUno()//TODO: it is not fair
     {
+        if (gameManager == null)
+        {
+            Debug.LogError("yo!");
+        }
 
         for (int i = 0; i < gameManager.Players.Count; i++)//TODO:Player count
         {

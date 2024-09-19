@@ -46,17 +46,22 @@ public class UnoGameManager : MonoBehaviour
         //CardSprites = Resources.LoadAll<Sprite>("");
         LockCardsToPlayTurn(true);
         PlayerCount = 4;
+        Turn = 0;
 
         for (int i = 0; i < PlayerCount; i++)
         {
             Players[i].SetOwner((Owner)i);
             Players[i].GameManager = this;
+            Players[i].Init();
+            Players[i].InteractableUnoButton(false);//if called in awake, button would be null
+
         }
         DrawPile.GameManager = this;
         DiscardPile.GameManager = this;
         //ShuffleAndDistribute(PlayerCount);
         NotifiControl= GetComponent<NotifiControl>();
-        Turn = 0;
+        
+
       //  ChangeTurn();
     }
     public void ContinueGame(UnoCard card=null)
@@ -71,6 +76,10 @@ public class UnoGameManager : MonoBehaviour
         }
         
         LockCardsToPlayTurn(false);
+    }
+    public void Start()
+    {
+       DrawPile.ShuffleAndDistribute(PlayerCount);
     }
     public int GetTurn()
     {
@@ -125,6 +134,10 @@ public class UnoGameManager : MonoBehaviour
             UpdatePlayersTurn();
 
         LockCardsToPlayTurn(false);
+        for (int i = 0; i < PlayerCount; ++i)
+        {
+            Players[i].InteractableUnoButton(true);
+        }
 
     }
     public bool IsAcceptableToStart(UnoCard card)

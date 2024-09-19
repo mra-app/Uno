@@ -22,12 +22,6 @@ public class UnoDiscardPile : MonoBehaviour
         ChooseColorAnim = WildColorGameObject.GetComponent<Animation>();
 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void DiscardedCard(UnoCard card, Action callback)
     {
         if (card.Type == UnoCard.SpecialCard.Reverse)

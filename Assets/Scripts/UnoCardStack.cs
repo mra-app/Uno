@@ -10,18 +10,6 @@ public class UnoCardStack : MonoBehaviour
     public Owner owner;
     int Discard_Z = 0;
     public Action<UnoCard,int,Owner> OnCardSelected;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public bool IsEmpty()
     {
         return cards.Count == 0;//TODO!
