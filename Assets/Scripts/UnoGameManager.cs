@@ -40,6 +40,7 @@ public class UnoGameManager : MonoBehaviour
    // public UnoDiscardPile DiscardPile;
    public int MainPlayer = 0;
     public NotifiControl NotifiControl;
+    private bool Paused = false;
     void Awake()
     {
         // GameLocked = true;
@@ -81,6 +82,15 @@ public class UnoGameManager : MonoBehaviour
     {
        DrawPile.ShuffleAndDistribute(PlayerCount);
     }
+    public void Pause(bool _pause)
+    {
+        Paused = _pause;
+        if (!_pause)
+        {
+            UpdatePlayersTurn();
+
+        }
+    }
     public int GetTurn()
     {
         return Turn;
@@ -105,7 +115,8 @@ public class UnoGameManager : MonoBehaviour
         if (Turn < 0)
             Turn += PlayerCount;
         //DebugControl.Log("turn" + Turn, 3);
-        UpdatePlayersTurn();
+        if(!Paused)
+            UpdatePlayersTurn();
     }
     private void UpdatePlayersTurn()
     {
@@ -149,7 +160,7 @@ public class UnoGameManager : MonoBehaviour
     public void ShowWinner(int turn)
     {
         LockCardsToPlayTurn(true);
-        text.text = "Player " + turn.ToString() + " has won!";
+        text.text = "Player " + (turn+1) + " has won!";
         FinishPanel.SetActive(true);
     }
     public void LockCardsToPlayTurn(bool _lock)//tODO:
