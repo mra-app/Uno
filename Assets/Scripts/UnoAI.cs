@@ -43,9 +43,9 @@ public class UnoAI : MonoBehaviour
             
         PrepareToPlay(PlayerCardStack, DrawStack,TryNumber);
         Play();
-        CheckForUno();
+        StartCoroutine(CheckForUno());
         //random uno
-        
+
     }
     public UnoCard.CardType SelectColorForWild(UnoCardStack PlayerCardStack)
     {
@@ -72,12 +72,9 @@ public class UnoAI : MonoBehaviour
         DebugControl.Log(color.ToString(),3);
         return color;
     }
-    public void CheckForUno()//TODO: it is not fair
+    IEnumerator CheckForUno()//TODO: it is not fair
     {
-        if (gameManager == null)
-        {
-            Debug.LogError("yo!");
-        }
+        yield return new WaitForSeconds(2*UnoGameManager.WaitForOneMoveDuration);
 
         for (int i = 0; i < gameManager.Players.Count; i++)//TODO:Player count
         {
@@ -86,7 +83,6 @@ public class UnoAI : MonoBehaviour
             {
                 DebugControl.Log("uno" + i, 3);
                 gameManager.Players[i].Uno((int)Owner);
-                return;
             }
         }
 
