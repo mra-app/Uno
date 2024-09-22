@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class UnoAI : MonoBehaviour
 {
@@ -43,7 +44,9 @@ public class UnoAI : MonoBehaviour
             
         PrepareToPlay(PlayerCardStack, DrawStack,TryNumber);
         Play();
-        StartCoroutine(CheckForUno());
+        int x = Random.Range(0, 10);
+        if(x<1)
+            StartCoroutine(CheckForUno());
         //random uno
 
     }
