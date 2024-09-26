@@ -8,8 +8,10 @@ public class NotifiControl : MonoBehaviour
     public GameObject UI;
     public TMP_Text text;
     public Animator animator;
+    public AudioSource Audio;
     public void ShowNotification(string message,int type)
     {
+        
         text.text = message;
         if (type == 1)
         {
@@ -32,6 +34,7 @@ public class NotifiControl : MonoBehaviour
         {
             animator.SetTrigger("DRAW4");
         }
+        Audio.Play();
 
     }
     IEnumerator Display()
