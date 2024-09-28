@@ -20,27 +20,24 @@ public class UnoGameManager : MonoBehaviour
     
     const int TOTAL_CARDS = 108;
     //const int PLAYER_INIT_CARDS = 3;
-    //public UnoCardStack DiscardStack;
     public List<UnoPlayer> Players;
     public UnoDiscardPile DiscardPile;
     public UnoDrawPile DrawPile;
-    //public GameObject cardPrefab;
-    //Sprite[] CardSprites;
-    //List<UnoCard> AllCards = new List<UnoCard>();
 
     private int Turn = -1;
     private int PlayerCount;
     bool LockCards = false;
-    //private UnoCard LastCard = null;
     private int ChangeTurnOrder = 1;
     public GameObject FinishPanel;
     public TMP_Text text;
     public static float WaitForOneMoveDuration = 0.5f;
-   // public bool GameLocked = false;
-   // public UnoDiscardPile DiscardPile;
    public int MainPlayer = 0;
     public NotifiControl NotifiControl;
     private bool Paused = false;
+
+
+   
+
     void Awake()
     {
         // GameLocked = true;
@@ -48,18 +45,33 @@ public class UnoGameManager : MonoBehaviour
         LockCardsToPlayTurn(true);
         PlayerCount = 4;
         Turn = 0;
-
+        List<UnoCard.CardType> Colors = new List<UnoCard.CardType>();
+        foreach (UnoCard.CardType color in Enum.GetValues(typeof(UnoCard.CardType))){
+            Colors.Add(color);
+        }
         for (int i = 0; i < PlayerCount; i++)
         {
             Players[i].SetOwner((Owner)i);
             Players[i].GameManager = this;
             Players[i].Init();
+            if (i == 0) {
+                DebugControl.Log("long" + (UnoColorSelect.ColorSelected), 3);
+
+                Players[i].SetColor(UnoColorSelect.ColorSelected);
+                Colors.Remove(UnoColorSelect.ColorSelected);
+            }
+            else {
+                DebugControl.Log("long" + Colors[0], 3);
+
+                Players[i].SetColor(Colors[0]);
+                Colors.Remove(Colors[0]);
+            }
+
             Players[i].InteractableUnoButton(false);//if called in awake, button would be null
 
         }
         DrawPile.GameManager = this;
         DiscardPile.GameManager = this;
-        //DebugControl.Log("long" + (NotifiControl == null), 3);
         //ShuffleAndDistribute(PlayerCount);
         //NotifiControl= GetComponent<NotifiControl>();
         
@@ -164,12 +176,12 @@ public class UnoGameManager : MonoBehaviour
         text.text = "Player " + (turn+1) + " has won!";
         FinishPanel.SetActive(true);
     }
-    public void LockCardsToPlayTurn(bool _lock)//tODO:
+    public void LockCardsToPlayTurn(bool _lock)//TODO:remove
     {
         DebugControl.Log("mym" + _lock,3);
         LockCards = false; //_lock;
     }
-    public bool IsLockToPlayTurn()
+    public bool IsLockToPlayTurn()//TODO:remove
     {
         return LockCards;
     }

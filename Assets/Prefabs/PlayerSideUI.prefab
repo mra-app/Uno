@@ -413,7 +413,19 @@ MonoBehaviour:
   cardStack: {fileID: 9002128491507840012}
   MyTurnImage: {fileID: 7981573356878516259}
   SelectColorPanel: {fileID: 0}
-  GameManager: {fileID: 0}
+  handOwner: 0
+  PlayerColorImg:
+  - {fileID: 21300000, guid: 5f4beb01d8f32584293c3bbcbde7c67b, type: 3}
+  - {fileID: 21300000, guid: f134f58bfd49828498c85fdb28a5e131, type: 3}
+  - {fileID: 21300000, guid: 36450ef1bb964d940a05d1bf57c10882, type: 3}
+  - {fileID: 21300000, guid: ad019968d832aad4ca35f4c8d5171dc0, type: 3}
+  PlayerColorHex:
+  - '#CCA9E5'
+  - '#82E894'
+  - '#88E0E8'
+  - '#EDD0BD'
+  CardPlaceImage: {fileID: 8875937128769882189}
+  PlayerImg: {fileID: 2570150594709945483}
 --- !u!1 &7981573356878516259
 GameObject:
   m_ObjectHideFlags: 0

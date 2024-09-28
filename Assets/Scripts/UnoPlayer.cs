@@ -1,6 +1,7 @@
 using PlasticPipe.PlasticProtocol.Messages;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,10 @@ public class UnoPlayer : MonoBehaviour
     private int TryNumber = 0;
     private bool UnoImmune = false;
     private Button UnoButon;
+    public List<Sprite> PlayerColorImg;
+    public List<string> PlayerColorHex;
+    public Image CardPlaceImage;
+    public Image PlayerImg;
     public void Init()
     {
         cardStack.OnCardSelected += OnCardSelected;
@@ -27,6 +32,11 @@ public class UnoPlayer : MonoBehaviour
             AI.gameManager = GameManager;
         }
         UnoButon = GetComponentInChildren<Button>();
+        //PlayerColorHex = new List<string>();
+        //PlayerColorHex.Add("EDD0BD");yello
+        //PlayerColorHex.Add("88E0E8");blu
+        //PlayerColorHex.Add("CCA9E5");red
+        //PlayerColorHex.Add("82E894");green
 
     }
     public void InteractableUnoButton(bool interactable)
@@ -35,6 +45,18 @@ public class UnoPlayer : MonoBehaviour
     }
     public bool AllCardsPlayed() {
         return cardStack.IsEmpty();
+    }
+    public void SetColor(UnoCard.CardType color)
+    {
+        Color temp;
+        if(ColorUtility.TryParseHtmlString(PlayerColorHex[(int)color]+"67", out temp))
+        {
+            DebugControl.Log("yes", 3);
+CardPlaceImage.color = temp;
+        }
+        DebugControl.Log("2yes", 3);
+
+        PlayerImg.sprite=PlayerColorImg[(int)color];
     }
     public void RemoveFromHand(UnoCard card)
     {
