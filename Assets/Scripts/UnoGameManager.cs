@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -26,7 +25,6 @@ public class UnoGameManager : MonoBehaviour
 
     private int Turn = -1;
     private int PlayerCount;
-    bool LockCards = false;
     private int ChangeTurnOrder = 1;
     public GameObject FinishPanel;
     public TMP_Text text;
@@ -40,9 +38,6 @@ public class UnoGameManager : MonoBehaviour
 
     void Awake()
     {
-        // GameLocked = true;
-        //CardSprites = Resources.LoadAll<Sprite>("");
-        LockCardsToPlayTurn(true);
         PlayerCount = 4;
         Turn = 0;
         List<UnoCard.CardType> Colors = new List<UnoCard.CardType>();
@@ -55,14 +50,10 @@ public class UnoGameManager : MonoBehaviour
             Players[i].GameManager = this;
             Players[i].Init();
             if (i == 0) {
-                DebugControl.Log("long" + (UnoColorSelect.ColorSelected), 3);
-
                 Players[i].SetColor(UnoColorSelect.ColorSelected);
                 Colors.Remove(UnoColorSelect.ColorSelected);
             }
             else {
-                DebugControl.Log("long" + Colors[0], 3);
-
                 Players[i].SetColor(Colors[0]);
                 Colors.Remove(Colors[0]);
             }
@@ -72,11 +63,6 @@ public class UnoGameManager : MonoBehaviour
         }
         DrawPile.GameManager = this;
         DiscardPile.GameManager = this;
-        //ShuffleAndDistribute(PlayerCount);
-        //NotifiControl= GetComponent<NotifiControl>();
-        
-
-      //  ChangeTurn();
     }
     public void ContinueGame(UnoCard card=null)
     {
@@ -88,8 +74,6 @@ public class UnoGameManager : MonoBehaviour
         {
              ChangeTurn(card);
         }
-        
-        LockCardsToPlayTurn(false);
     }
     public void Start()
     {
@@ -127,7 +111,6 @@ public class UnoGameManager : MonoBehaviour
          Turn = (Turn + ChangeTurnOrder) % PlayerCount;
         if (Turn < 0)
             Turn += PlayerCount;
-        //DebugControl.Log("turn" + Turn, 3);
         if(!Paused)
             UpdatePlayersTurn();
     }
@@ -157,7 +140,6 @@ public class UnoGameManager : MonoBehaviour
         else
             UpdatePlayersTurn();
 
-        LockCardsToPlayTurn(false);
         for (int i = 0; i < PlayerCount; ++i)
         {
             Players[i].InteractableUnoButton(true);
@@ -172,20 +154,8 @@ public class UnoGameManager : MonoBehaviour
  
     public void ShowWinner(int turn)
     {
-        LockCardsToPlayTurn(true);
         text.text = "Player " + (turn+1) + " has won!";
         FinishPanel.SetActive(true);
     }
-    public void LockCardsToPlayTurn(bool _lock)//TODO:remove
-    {
-        DebugControl.Log("mym" + _lock,3);
-        LockCards = false; //_lock;
-    }
-    public bool IsLockToPlayTurn()//TODO:remove
-    {
-        return LockCards;
-    }
-
-
 
 }

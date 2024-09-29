@@ -1,4 +1,3 @@
-using PlasticPipe.PlasticProtocol.Messages;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -51,11 +50,8 @@ public class UnoPlayer : MonoBehaviour
         Color temp;
         if(ColorUtility.TryParseHtmlString(PlayerColorHex[(int)color]+"67", out temp))
         {
-            DebugControl.Log("yes", 3);
-CardPlaceImage.color = temp;
+            CardPlaceImage.color = temp;
         }
-        DebugControl.Log("2yes", 3);
-
         PlayerImg.sprite=PlayerColorImg[(int)color];
     }
     public void RemoveFromHand(UnoCard card)
@@ -135,18 +131,16 @@ CardPlaceImage.color = temp;
     }
     public void OnCardSelected(UnoCard card,int globalCardIdx, Owner owner)
     {
-        DebugControl.Log("ay domino!" + (int)handOwner+" "+ GameManager.GetTurn()+" " +(int)card.LastClicked, 3);
-     //   DebugControl.Log("l"+GameManager.IsLockToPlayTurn(), 3);
         if (GameManager.GetTurn() == (int)handOwner && GameManager.GetTurn() == (int)card.LastClicked)
         {
             if (GameManager.DiscardPile.CanPlayOnUpCard() && GameManager.DiscardPile.CanPlayThisCard(card)) 
             {
-                if (GameManager.IsLockToPlayTurn())
-                {
-                    return;
-                }
+                //if (GameManager.IsLockToPlayTurn())
+                //{
+                //    return;
+                //}
                // DebugControl.Log("h", 3);
-                GameManager.LockCardsToPlayTurn(true);
+              //  GameManager.LockCardsToPlayTurn(true);
                 RemoveFromHand(card);//TODO: move in discard in pile code
                 Immune(false);
                 GameManager.DiscardPile.DiscardedCard(card, () => {   
@@ -183,27 +177,20 @@ CardPlaceImage.color = temp;
 
     public void Uno(int callerID)//?
     {
-        //if(handOwner==0)
-            DebugControl.Log("UNO sent by"+callerID+" for"+(int)handOwner+" Immune " + IsImmune(), 3);
         if (callerID != (int)handOwner)
         {
             if (IsUno()&& !IsImmune())
             {   
                 Immune(true);
-                GameManager.NotifiControl.ShowNotification("you forgot uno!",1);
-                DebugControl.Log("youd be immune later"+callerID, 3);//TODO:test
-                
+                GameManager.NotifiControl.ShowNotification("forgot uno!",1);
                 DrawCard(GameManager.DrawPile.GetaCard(),true, () =>
                 {
-                    DrawCard(GameManager.DrawPile.GetaCard(),true, () => {
-                        DebugControl.Log("immune my .."+callerID, 3);
-                    });
+                    DrawCard(GameManager.DrawPile.GetaCard(),true, () => {});
                 });
             }
         }
         else
         {
-            DebugControl.Log("self immuned",3);
             Immune(true);
         }
         
@@ -220,7 +207,6 @@ CardPlaceImage.color = temp;
 
     public void Immune(bool immune)
     {
-        DebugControl.Log("UNO:" + immune+" player"+handOwner, 3);
         UnoImmune = immune;
     }
     public bool IsImmune()

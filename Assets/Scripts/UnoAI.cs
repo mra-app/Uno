@@ -5,9 +5,7 @@ using Random = UnityEngine.Random;
 
 public class UnoAI : MonoBehaviour
 {
-
-    private bool IsPlaying = false;
-    List<UnoCard> cards;//= new List<UnoCard>();
+    List<UnoCard> cards;
     public Owner Owner;
     public UnoGameManager gameManager;
 
@@ -72,19 +70,17 @@ public class UnoAI : MonoBehaviour
                 max = colorCount[i];
             }
         }
-        DebugControl.Log(color.ToString(),3);
+       
         return color;
     }
-    IEnumerator CheckForUno()//TODO: it is not fair
+    IEnumerator CheckForUno()
     {
         yield return new WaitForSeconds(2*UnoGameManager.WaitForOneMoveDuration);
 
         for (int i = 0; i < gameManager.Players.Count; i++)//TODO:Player count
         {
-            DebugControl.Log( "count " + i, 3);
             if (gameManager.Players[i].IsUno() && !gameManager.Players[i].IsImmune())
             {
-                DebugControl.Log("uno" + i, 3);
                 gameManager.Players[i].Uno((int)Owner);
             }
         }

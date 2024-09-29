@@ -8,11 +8,7 @@ public class UnoDrawPile : MonoBehaviour
     const int TOTAL_CARDS = 108;
     const int PLAYER_INIT_CARDS = 5;
     public UnoCardStack DrawStack;//TODO
-    //public UnoCardStack DiscardStack;
-    //public UnoDiscardPile DiscardPile;
     public UnoGameManager GameManager;
-
-    //public List<UnoPlayer> Players;
     public GameObject cardPrefab;
     Sprite[] CardSprites;
     List<UnoCard> AllCards = new List<UnoCard>();
@@ -35,20 +31,19 @@ public class UnoDrawPile : MonoBehaviour
     {
         //DebugControl.Log("draw", 1);
 
-        if (GameManager.IsLockToPlayTurn() ||( GameManager.GetTurn() != (int)cardScript.LastClicked)
-)
-        {
+        //if (GameManager.IsLockToPlayTurn() ||
+         if( GameManager.GetTurn() != (int)cardScript.LastClicked){
             return;
         }
-        GameManager.LockCardsToPlayTurn(true);
+       // GameManager.LockCardsToPlayTurn(true);
 
         GameManager.Players[GameManager.GetTurn()].DrawCard(cardScript,false, () =>
         {
             //if (GameManager.GetTurn() == 0)//TODO: in online have to change
             //    cardScript.ShowBackImg(false);
-
+            //TODO: check empty draw pile and show finish panle.
             GameManager.DiscardPile.CardDrawn();
-            GameManager.LockCardsToPlayTurn(false);
+          //  GameManager.LockCardsToPlayTurn(false);
             if (GameManager.DiscardPile.CanPlayOnUpCard())
             {
                 GameManager.ChangeTurn();

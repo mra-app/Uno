@@ -7,15 +7,12 @@ public class UnoDiscardPile : MonoBehaviour
     List<UnoCard> AllCards = new List<UnoCard>();
     private UnoCard LastCard = null;
     UnoCardStack cardStack;
-    int AccumulatedCards = 0;
     public UnoGameManager GameManager;
     public GameObject WildColorGameObject;
     public List<GameObject> WildColors = new List<GameObject>();
 
     private Animation ChooseColorAnim;
 
-
-    // Start is called before the first frame update
     void Awake()
     {
         cardStack = GetComponent<UnoCardStack>();

@@ -23,7 +23,6 @@ public class UnoCard : MonoBehaviour
 
     public event Action<UnoCard,int,Owner> OnSelected;
     public int id;
-    //public CardType type;
     Image img;
     public Sprite BackImg;
     Sprite FrontImg;
