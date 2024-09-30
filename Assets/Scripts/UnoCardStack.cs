@@ -9,6 +9,8 @@ public class UnoCardStack : MonoBehaviour
     public Owner owner;
     int Discard_Z = 0;
     public Action<UnoCard,int,Owner> OnCardSelected;
+    public AudioSource CardSound;
+
     public bool IsEmpty()
     {
         return cards.Count == 0;//TODO!
@@ -20,9 +22,16 @@ public class UnoCardStack : MonoBehaviour
 
         cards.Remove(card);
     }
-    //PushAndMove: moves the card position to the stack position
-    public void PushAndMove(UnoCard card, Action callback)
+    public void PlayCardSound()
     {
+        CardSound.Play();
+    }
+    //PushAndMove: moves the card position to the stack position
+    public void PushAndMove(UnoCard card,bool Silent, Action callback)
+    {
+        if(!Silent) {
+            PlayCardSound();
+            }
 
         card.owner = owner;
         cards.Add(card);

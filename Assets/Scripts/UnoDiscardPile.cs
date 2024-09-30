@@ -39,7 +39,10 @@ public class UnoDiscardPile : MonoBehaviour
             GameManager.NotifiControl.ShowNotification("draw 4 cards!", 5);
         }
         card.ShowBackImg(false);
-        cardStack.PushAndMove(card, () => { callback(); });
+
+        cardStack.PushAndMove(card,false, () => {
+            callback();
+        });
         LastCard = card;
     }
     public bool CanPlayOnUpCard()

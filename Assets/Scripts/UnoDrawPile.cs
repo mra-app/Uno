@@ -74,7 +74,7 @@ public class UnoDrawPile : MonoBehaviour
         int j = 0;
         while (AllCards.Count > j)
         {
-            DrawStack.PushAndMove(AllCards[j], () => { });
+            DrawStack.PushAndMove(AllCards[j],true, () => { });
            // DrawStack.Push(AllCards[j]);
             //  AllCards[j].ShowBackImg(false);//todo
 

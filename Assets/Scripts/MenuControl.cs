@@ -5,6 +5,14 @@ public class MenuControl : MonoBehaviour
 {
     public string SceneName;
     public string MenuName;
+    public AudioSource Music;
+
+    private void Awake()
+    {
+        GameObject temp = GameObject.FindWithTag("MUSIC");
+        if (temp != null)
+            Music = temp.GetComponent<AudioSource>();
+    }
     public void OnGameClick(int idx)
     {
 
@@ -20,5 +28,10 @@ public class MenuControl : MonoBehaviour
         //TODO: test on build
         DebugControl.Log("quit called", 1);
         Application.Quit();
+    }
+    public void PlayMusic(bool play)
+    {
+        if (play) Music.Play();
+        else Music.Stop();
     }
 }

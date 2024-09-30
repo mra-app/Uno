@@ -68,11 +68,11 @@ public class UnoPlayer : MonoBehaviour
         GameManager.DrawPile.RemoveFromDraw(card);
         if(!isForUno)
             Immune(false);
-        cardStack.PushAndMove(card, () =>
+
+        cardStack.PushAndMove(card,false, () =>
         {
             if ((int)handOwner == GameManager.MainPlayer)//TODO: in online have to change
                 card.ShowBackImg(false);
-
             callback();
         });
     }
