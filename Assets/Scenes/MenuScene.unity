@@ -935,6 +935,7 @@ MonoBehaviour:
   SceneName: GameScene
   MenuName: 
   Music: {fileID: 1984610125}
+  MusicControlToggle: {fileID: 2064647724}
 --- !u!4 &187810042
 Transform:
   m_ObjectHideFlags: 0
@@ -4964,6 +4965,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6665201013666800691, guid: d1534c275bcca41478b185c146b8a450, type: 3}
   m_PrefabInstance: {fileID: 3571879023592816585}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2064647724 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8116771272854793426, guid: d1534c275bcca41478b185c146b8a450, type: 3}
+  m_PrefabInstance: {fileID: 3571879023592816585}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2140586601
 GameObject:
   m_ObjectHideFlags: 0
