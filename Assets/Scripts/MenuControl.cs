@@ -1,17 +1,29 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuControl : MonoBehaviour
 {
     public string SceneName;
     public string MenuName;
     public AudioSource Music;
+    public Toggle MusicControlToggle;
 
     private void Awake()
     {
         GameObject temp = GameObject.FindWithTag("MUSIC");
         if (temp != null)
+        {
             Music = temp.GetComponent<AudioSource>();
+            if (Music.isPlaying)
+            {
+                MusicControlToggle.isOn = true;
+            }
+            else
+            {
+                MusicControlToggle.isOn = false;
+            }
+        }
     }
     public void OnGameClick(int idx)
     {
