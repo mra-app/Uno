@@ -48,7 +48,7 @@ public class UnoPlayer : MonoBehaviour
     public void SetColor(UnoCard.CardType color)
     {
         Color temp;
-        if(ColorUtility.TryParseHtmlString(PlayerColorHex[(int)color]+"67", out temp))
+        if(ColorUtility.TryParseHtmlString(PlayerColorHex[(int)color]+"20", out temp))
         {
             CardPlaceImage.color = temp;
         }
