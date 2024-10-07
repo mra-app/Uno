@@ -6,7 +6,6 @@ using UnityEngine;
 public class UnoDrawPile : MonoBehaviour
 {
     const int TOTAL_CARDS = 108;
-    const int PLAYER_INIT_CARDS = 5;
     public UnoCardStack DrawStack;//TODO
     public UnoGameManager GameManager;
     public GameObject cardPrefab;
@@ -80,9 +79,9 @@ public class UnoDrawPile : MonoBehaviour
 
             j++;
         }
-        int drawCardCount = AllCards.Count - (4 * PLAYER_INIT_CARDS + 1);
+        int drawCardCount = AllCards.Count - (4 * GameManager.PLAYER_INIT_CARDS + 1);
         int x = 0;
-        while (!GameManager.IsAcceptableToStart(AllCards[x]))
+        while (!GameManager.IsCardAcceptableToStart(AllCards[x]))
         {
             x++;
         }
@@ -113,9 +112,9 @@ public class UnoDrawPile : MonoBehaviour
         initj = 0;
         for (int i = 0; i < GameManager.Players.Count; i++)
         {
-            for (int j = 0; j < PLAYER_INIT_CARDS; j++)
+            for (int j = 0; j < GameManager.PLAYER_INIT_CARDS; j++)
             {
-                int index = initj+i*PLAYER_INIT_CARDS+j;
+                int index = initj+ j+ i*GameManager.PLAYER_INIT_CARDS;
                 int id = DrawStack.GetAllCards().Count-1;
                 UnoCard card = DrawStack.GetAllCards()[id];
                 RemoveFromDraw(card);

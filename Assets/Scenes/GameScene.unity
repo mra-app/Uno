@@ -2580,8 +2580,7 @@ MonoBehaviour:
   DiscardPile: {fileID: 2128047488}
   DrawPile: {fileID: 154178887}
   FinishPanel: {fileID: 469760240}
-  text: {fileID: 97823677}
-  MainPlayer: 0
+  WinText: {fileID: 97823677}
   NotifiControl: {fileID: 1844288688}
 --- !u!114 &743404880
 MonoBehaviour:
