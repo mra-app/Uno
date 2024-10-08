@@ -1269,10 +1269,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 546897921}
+  - {fileID: 702995854}
   - {fileID: 1941455550}
   - {fileID: 1385137007}
-  - {fileID: 702995854}
-  - {fileID: 546897921}
   m_Father: {fileID: 469760241}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1670,7 +1670,7 @@ GameObject:
   - component: {fileID: 546897923}
   - component: {fileID: 546897922}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2308,7 +2308,7 @@ GameObject:
   - component: {fileID: 702995856}
   - component: {fileID: 702995855}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2577,6 +2577,11 @@ MonoBehaviour:
   - {fileID: 445733891}
   - {fileID: 740886811}
   - {fileID: 1305516683}
+  WinnerPlayerIcons:
+  - {fileID: 546897920}
+  - {fileID: 702995853}
+  - {fileID: 1941455549}
+  - {fileID: 1385137006}
   DiscardPile: {fileID: 2128047488}
   DrawPile: {fileID: 154178887}
   FinishPanel: {fileID: 469760240}
@@ -4565,7 +4570,7 @@ GameObject:
   - component: {fileID: 1385137009}
   - component: {fileID: 1385137008}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5911,7 +5916,7 @@ GameObject:
   - component: {fileID: 1941455552}
   - component: {fileID: 1941455551}
   m_Layer: 5
-  m_Name: Image
+  m_Name: blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

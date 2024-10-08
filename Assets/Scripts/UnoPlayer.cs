@@ -22,6 +22,7 @@ public class UnoPlayer : MonoBehaviour
     public List<string> PlayerColorHex;
     public Image CardPlaceImage;
     public Image PlayerImg;
+    public UnoCard.CardType PlayerColor;
     public void Init()
     {
         cardStack.OnCardSelected += OnCardSelected;
@@ -48,7 +49,8 @@ public class UnoPlayer : MonoBehaviour
     public void SetColor(UnoCard.CardType color)
     {
         Color temp;
-        if(ColorUtility.TryParseHtmlString(PlayerColorHex[(int)color]+"20", out temp))
+        PlayerColor = color;
+        if (ColorUtility.TryParseHtmlString(PlayerColorHex[(int)color]+"20", out temp))
         {
             CardPlaceImage.color = temp;
         }

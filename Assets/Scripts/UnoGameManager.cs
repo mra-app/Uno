@@ -17,6 +17,7 @@ public enum Owner
 public class UnoGameManager : MonoBehaviour
 {
     public List<UnoPlayer> Players;
+    public List<GameObject> WinnerPlayerIcons;
     public UnoDiscardPile DiscardPile;
     public UnoDrawPile DrawPile;
 
@@ -161,6 +162,8 @@ public class UnoGameManager : MonoBehaviour
     {
         WinText.text = "Player " + (turn+1) + " has won!";
         FinishPanel.SetActive(true);
+        WinnerPlayerIcons[(int)Players[turn].PlayerColor].SetActive(true);
+       
     }
 
 }
