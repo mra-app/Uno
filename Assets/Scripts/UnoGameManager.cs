@@ -33,7 +33,7 @@ public class UnoGameManager : MonoBehaviour
     public int PLAYER_INIT_CARDS = 3;
 
     private int Turn = -1;
-    private int PlayerCount;
+    public int PlayerCount;
     private int ChangeTurnOrder = 1;
     private bool Paused = false;
 

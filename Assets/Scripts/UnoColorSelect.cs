@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//Select player color in game menu
 public class UnoColorSelect : MonoBehaviour
 {
     public static UnoCard.CardType ColorSelected = UnoCard.CardType.Red;

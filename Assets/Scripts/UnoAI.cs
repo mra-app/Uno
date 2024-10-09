@@ -37,24 +37,15 @@ public class UnoAI : MonoBehaviour
     }
     public void StartPlay( UnoCardStack PlayerCardStack = null, UnoCardStack DrawStack = null,int TryNumber = 0)
     {
-   
-            //DebugControl.Log("start" + Start, 3);
-            
         PrepareToPlay(PlayerCardStack, DrawStack,TryNumber);
         Play();
         int x = Random.Range(0, 10);
         if(x<1)
             StartCoroutine(CheckForUno());
-        //random uno
-
     }
     public UnoCard.CardType SelectColorForWild(UnoCardStack PlayerCardStack)
     {
-        List<int> colorCount = new List<int>();//TODO:get in utility
-        for(int i = 0;i<4;i++)
-        {
-            colorCount.Add(0) ;
-        }
+        List<int> colorCount = new List<int> { 0, 0, 0, 0 };
 
         foreach (var card in PlayerCardStack.GetAllCards()) {
             colorCount[(int)card.GetColor()]++;
@@ -77,7 +68,7 @@ public class UnoAI : MonoBehaviour
     {
         yield return new WaitForSeconds(2*UnoGameManager.WaitForOneMoveDuration);
 
-        for (int i = 0; i < gameManager.Players.Count; i++)//TODO:Player count
+        for (int i = 0; i < gameManager.PlayerCount; i++)
         {
             if (gameManager.Players[i].IsUno() && !gameManager.Players[i].IsImmune())
             {

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class UnoDiscardPile : MonoBehaviour
 {
-    List<UnoCard> AllCards = new List<UnoCard>();
-    private UnoCard LastCard = null;
-    UnoCardStack cardStack;
+
     public UnoGameManager GameManager;
     public GameObject WildColorGameObject;
     public List<GameObject> WildColors = new List<GameObject>();
 
     private Animation ChooseColorAnim;
+    private UnoCard LastCard = null;
+    private UnoCardStack cardStack;
 
     void Awake()
     {
@@ -24,7 +24,6 @@ public class UnoDiscardPile : MonoBehaviour
         if (card.Type == UnoCard.SpecialCard.Reverse)
         {
             GameManager.NotifiControl.ShowNotification("Reverse!", 3);
-
         }
         else if (card.Type == UnoCard.SpecialCard.Skip)
         {
@@ -55,11 +54,9 @@ public class UnoDiscardPile : MonoBehaviour
     }
     public bool ColorSelectIsNeeded()
     {
-
         return (LastCard.Type == UnoCard.SpecialCard.Wild || LastCard.Type == UnoCard.SpecialCard.Draw4Wild);
-
     }
-    public void SetWildLastCardColor(UnoCard.CardType color)
+    public void SetWildLastCardUIColor(UnoCard.CardType color)
     {
         LastCard.SetWildColor(color);
         for (int i = 0; i < 4; i++)

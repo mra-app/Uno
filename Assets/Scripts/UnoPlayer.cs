@@ -101,7 +101,7 @@ public class UnoPlayer : MonoBehaviour
         {
             yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration);
 
-            GameManager.DiscardPile.SetWildLastCardColor(
+            GameManager.DiscardPile.SetWildLastCardUIColor(
                 AI.SelectColorForWild(cardStack)
                 );
             GameManager.ContinueGame();
@@ -118,7 +118,7 @@ public class UnoPlayer : MonoBehaviour
     }
     public void ColorSelected(int color)
     {
-        GameManager.DiscardPile.SetWildLastCardColor((UnoCard.CardType)color);
+        GameManager.DiscardPile.SetWildLastCardUIColor((UnoCard.CardType)color);
 
         SelectColorPanel.SetActive(false);
         GameManager.ContinueGame();

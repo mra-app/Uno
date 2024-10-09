@@ -6,7 +6,6 @@ using UnityEngine;
 public class MoveObject : MonoBehaviour
 {
     public Transform targetTransform;
-   // public Vector3 EndPosition;
     float Duration=UnoGameManager.WaitForOneMoveDuration;
     public void Move(Vector3 EndPosition,Action callback)
     {
