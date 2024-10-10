@@ -14,7 +14,8 @@ public class UnoPlayer : MonoBehaviour
     [SerializeField]
     private Owner handOwner;
     private UnoAI AI;
-    const string ManagerTagName = "GameController";
+
+
     private int TryNumber = 0;
     private bool UnoImmune = false;
     private Button UnoButon;

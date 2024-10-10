@@ -7,7 +7,7 @@ public class NotifiControl : MonoBehaviour
     public TMP_Text text;
     public Animator animator;
     public AudioSource Audio;
-    public void ShowNotification(string message,int type)
+    public void ShowNotification(string message,int type)//0 for no message only audio
     {
         
         text.text = message;

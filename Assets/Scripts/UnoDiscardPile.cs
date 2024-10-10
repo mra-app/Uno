@@ -66,8 +66,10 @@ public class UnoDiscardPile : MonoBehaviour
         
         WildColorGameObject.transform.SetAsLastSibling();
         ChooseColorAnim.Play();
+        GameManager.NotifiControl.ShowNotification("", 0);
+
     }
-        
+
     public void CardDrawn()
     {
         if (LastCard.AccumulatedCards > 0)
