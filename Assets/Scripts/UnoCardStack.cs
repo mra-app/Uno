@@ -6,9 +6,9 @@ public class UnoCardStack : MonoBehaviour
 {
     List<UnoCard> cards = new List<UnoCard>();
     public bool isDiscard = false;
-    public Owner owner;
+   // public Owner owner;
     int Discard_Z = 0;
-    public Action<UnoCard,int,Owner> OnCardSelected;
+    public Action<UnoCard> OnCardSelected;
     public AudioSource CardSound;
 
     public bool IsEmpty()
@@ -33,7 +33,7 @@ public class UnoCardStack : MonoBehaviour
             PlayCardSound();
             }
 
-        card.owner = owner;
+       // card.owner = owner;
         cards.Add(card);
 
         card.OnSelected += OnCardSelected;//TODO

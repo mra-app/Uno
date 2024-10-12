@@ -64,7 +64,7 @@ public class UnoPlayer : MonoBehaviour
     public void SetOwner(Owner _owner)
     {
         handOwner = _owner;
-        cardStack.owner = _owner; //stacks without player have assigned owners from editor.
+      //  cardStack.owner = _owner; //stacks without player have assigned owners from editor.
     }
     public void DrawCard(UnoCard card,bool isForUno, Action callback)
     {
@@ -127,12 +127,12 @@ public class UnoPlayer : MonoBehaviour
     IEnumerator AIPlay()
     {
         AI.Owner = handOwner;
-        yield return new WaitForSeconds(0.2f);//UnoGameManager.WaitForOneMoveDuration);
+        yield return new WaitForSeconds(0.4f*UnoGameManager.WaitForOneMoveDuration);
         AI.StartPlay(cardStack, GameManager.DrawPile.DrawStack,TryNumber);
 
 
     }
-    public void OnCardSelected(UnoCard card,int globalCardIdx, Owner owner)
+    public void OnCardSelected(UnoCard card)
     {
         if (GameManager.GetTurn() == (int)handOwner && GameManager.GetTurn() == (int)card.LastClicked)
         {
@@ -178,7 +178,7 @@ public class UnoPlayer : MonoBehaviour
         return cardStack.IsEmpty();
     }
 
-    public void Uno(int callerID)//?
+    public void Uno(int callerID)
     {
         if (callerID != (int)handOwner)
         {
@@ -186,9 +186,17 @@ public class UnoPlayer : MonoBehaviour
             {   
                 Immune(true);
                 GameManager.NotifiControl.ShowNotification("forgot uno!",1);
+
                 DrawCard(GameManager.DrawPile.GetaCard(),true, () =>
                 {
-                    DrawCard(GameManager.DrawPile.GetaCard(),true, () => {});
+                    DrawCard(GameManager.DrawPile.GetaCard(),true, () => {
+
+                        if (GameManager.DrawPile.IsEmpty())
+                        {
+                            GameManager.EmptyDrawPileShowWinner();
+                            return;
+                        }
+                    });
                 });
             }
         }

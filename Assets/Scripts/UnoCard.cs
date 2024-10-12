@@ -21,7 +21,7 @@ public class UnoCard : MonoBehaviour
         Draw4Wild = 14
     }
 
-    public event Action<UnoCard,int,Owner> OnSelected;
+    public event Action<UnoCard> OnSelected;
     public int id;
     Image img;
     public Sprite BackImg;
@@ -72,7 +72,7 @@ public class UnoCard : MonoBehaviour
             LastClicked = Owner.Player1;//TODO:multiplayer
         else
             LastClicked = (Owner)Player;
-        OnSelected?.Invoke(this,globalCardIdx, owner);
+        OnSelected?.Invoke(this);
     }
     public void SetWildColor(CardType wildColor)
     {

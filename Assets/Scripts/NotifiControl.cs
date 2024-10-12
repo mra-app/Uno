@@ -14,7 +14,6 @@ public class NotifiControl : MonoBehaviour
         if (type == 1)
         {
             animator.SetTrigger("UNOF");
-            // StartCoroutine(Display());
         }
         else if (type == 2)
         {
@@ -34,11 +33,5 @@ public class NotifiControl : MonoBehaviour
         }
         Audio.Play();
 
-    }
-    IEnumerator Display()
-    {
-        UI.SetActive(true);
-        yield return new WaitForSeconds(1);
-        UI.SetActive(false);
     }
 }

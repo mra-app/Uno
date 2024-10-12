@@ -11,7 +11,7 @@ public class UnoDrawPile : MonoBehaviour
     public GameObject cardPrefab;
 
     Sprite[] CardSprites;
-    const int TOTAL_CARDS = 108;
+    const int TOTAL_CARDS = 20;//108;
     private List<UnoCard> AllCards = new List<UnoCard>();
 
     private void Awake()
@@ -26,23 +26,34 @@ public class UnoDrawPile : MonoBehaviour
         DrawStack.Pop(card);
     }
 
-    //Draw a card to the player who's turn is now
-    private void OnCardSelected(UnoCard cardScript, int arg2, Owner owner)
+    /// <summary>
+    /// Draw a card to the player who's turn is now
+    /// </summary>
+    /// <param name="cardScript"></param>
+    /// <param name="arg2"></param>
+    /// <param name="owner"></param>
+    private void OnCardSelected(UnoCard cardScript)
     {
          if( GameManager.GetTurn() != (int)cardScript.LastClicked){//if its not the turn of the player clicked on this card,
             return;}
 
         GameManager.Players[GameManager.GetTurn()].DrawCard(cardScript,false, () =>
         {
-            //TODO: check empty draw pile and show finish panle.
-            GameManager.DiscardPile.CardDrawn();;
-            if (GameManager.DiscardPile.CanPlayOnUpCard())
+            if (DrawStack.IsEmpty())
             {
-                GameManager.ChangeTurn();
+                GameManager.EmptyDrawPileShowWinner();
             }
             else
             {
-                GameManager.Players[GameManager.GetTurn()].PlayAgain();
+                GameManager.DiscardPile.CardDrawn(); ;
+                if (GameManager.DiscardPile.CanPlayOnUpCard())
+                {
+                    GameManager.ChangeTurn();
+                }
+                else
+                {
+                    GameManager.Players[GameManager.GetTurn()].PlayAgain();
+                }
             }
         });
     }
@@ -97,9 +108,19 @@ public class UnoDrawPile : MonoBehaviour
         cardScript.InitCard(id, CardSprites[id], globalCardIdx);
         return cardScript;
     }
+    public bool IsEmpty()
+    {
+        return DrawStack.IsEmpty();
+    }
     public UnoCard GetaCard()
     {
-        return DrawStack.GetAllCards()[0];
+        if (DrawStack.IsEmpty())
+        {
+            GameManager.EmptyDrawPileShowWinner();
+            return null;
+        }
+        else
+            return DrawStack.GetAllCards()[0];
     }
     private void CreateAllCards()
     {

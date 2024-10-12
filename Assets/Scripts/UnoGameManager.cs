@@ -164,6 +164,25 @@ public class UnoGameManager : MonoBehaviour
         FinishPanel.SetActive(true);
         WinnerPlayerIcons[(int)Players[turn].PlayerColor].SetActive(true);
        
+    } 
+    /// <summary>
+    /// when a player selects a card from draw pile, after the card is given, the condition is checked
+    /// when a player forgets to say uno, before giving a card, the condition is checked.S
+    /// </summary>
+    public void EmptyDrawPileShowWinner()
+    {
+        int Winner = 0;
+        int MinCards = int.MaxValue;
+        for (int i = 0; i < PlayerCount; ++i)
+        {
+            if (Players[i].cardStack.GetAllCards().Count < MinCards)
+            {
+                Winner = i;
+                MinCards = Players[i].cardStack.GetAllCards().Count;
+            }
+        }
+       ShowWinner(Winner);
+       
     }
 
 }

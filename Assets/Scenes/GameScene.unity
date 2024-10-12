@@ -600,7 +600,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDiscard: 0
-  owner: 5
   CardSound: {fileID: 778695208}
 --- !u!222 &154178886
 CanvasRenderer:
@@ -2587,6 +2586,7 @@ MonoBehaviour:
   FinishPanel: {fileID: 469760240}
   WinText: {fileID: 97823677}
   NotifiControl: {fileID: 1844288688}
+  PlayerCount: 0
 --- !u!114 &743404880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6259,7 +6259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDiscard: 1
-  owner: 4
   CardSound: {fileID: 778695208}
 --- !u!114 &2128047488
 MonoBehaviour:
@@ -6316,10 +6315,10 @@ RectTransform:
   - {fileID: 154178882}
   - {fileID: 2128047485}
   - {fileID: 823931279}
+  - {fileID: 743404878}
   - {fileID: 1961143324}
   - {fileID: 634242930}
   - {fileID: 469760241}
-  - {fileID: 743404878}
   m_Father: {fileID: 519420032}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
