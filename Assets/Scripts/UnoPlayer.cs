@@ -63,8 +63,7 @@ public class UnoPlayer : MonoBehaviour
     }
     public void SetOwner(Owner _owner)
     {
-        handOwner = _owner;
-      //  cardStack.owner = _owner; //stacks without player have assigned owners from editor.
+        handOwner = _owner; //stacks without player have assigned owners from editor.
     }
     public void DrawCard(UnoCard card,bool isForUno, Action callback)
     {
@@ -74,7 +73,7 @@ public class UnoPlayer : MonoBehaviour
 
         cardStack.PushAndMove(card,false, () =>
         {
-            if ((int)handOwner == GameManager.MainPlayer)//TODO: in online have to change
+            if ((int)handOwner == GameManager.MainPlayer)
                 card.ShowBackImg(false);
             callback();
         });
@@ -187,10 +186,10 @@ public class UnoPlayer : MonoBehaviour
                 Immune(true);
                 GameManager.NotifiControl.ShowNotification("forgot uno!",1);
 
-                DrawCard(GameManager.DrawPile.GetaCard(),true, () =>
+                GetOnePenaltyCard(() =>
                 {
-                    DrawCard(GameManager.DrawPile.GetaCard(),true, () => {
-
+                    GetOnePenaltyCard(() =>
+                    {
                         if (GameManager.DrawPile.IsEmpty())
                         {
                             GameManager.EmptyDrawPileShowWinner();
@@ -207,6 +206,17 @@ public class UnoPlayer : MonoBehaviour
         
 
     }
+
+    public void GetOnePenaltyCard(Action callback)
+    {
+        UnoCard PenaltyCard = GameManager.DrawPile.GetaCard();
+        if (PenaltyCard != null)
+            DrawCard(PenaltyCard, true, () =>
+            {
+                callback();
+            });
+    }
+
     public void UnoClicked()
     {
             Uno(GameManager.MainPlayer);//TODO: send current view player network id

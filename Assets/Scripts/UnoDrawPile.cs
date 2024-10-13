@@ -93,7 +93,7 @@ public class UnoDrawPile : MonoBehaviour
                 RemoveFromDraw(card);
                 GameManager.Players[i].DrawCard(card, false, () => {
 
-                    if (i == 0)//TODO: in online have to change
+                    if (i == GameManager.MainPlayer)
                         card.ShowBackImg(false);
                 });
                 yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration*3/4);
