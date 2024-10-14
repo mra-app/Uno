@@ -137,12 +137,6 @@ public class UnoPlayer : MonoBehaviour
         {
             if (GameManager.DiscardPile.CanPlayOnUpCard() && GameManager.DiscardPile.CanPlayThisCard(card)) 
             {
-                //if (GameManager.IsLockToPlayTurn())
-                //{
-                //    return;
-                //}
-               // DebugControl.Log("h", 3);
-              //  GameManager.LockCardsToPlayTurn(true);
                 RemoveFromHand(card);//TODO: move in discard in pile code
                 Immune(false);
                 GameManager.DiscardPile.DiscardedCard(card, () => {   
@@ -159,8 +153,6 @@ public class UnoPlayer : MonoBehaviour
                     {
                         GameManager.ContinueGame(card);
                      }
-                //    GameManager.ChangeTurn(card);
-                //GameManager.LockCardsToPlayTurn(false);
                 });
                 
             }
@@ -219,7 +211,7 @@ public class UnoPlayer : MonoBehaviour
 
     public void UnoClicked()
     {
-            Uno(GameManager.MainPlayer);//TODO: send current view player network id
+            Uno(GameManager.MainPlayer);
     }
     public bool IsUno()
     {

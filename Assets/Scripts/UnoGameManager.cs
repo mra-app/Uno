@@ -28,9 +28,9 @@ public class UnoGameManager : MonoBehaviour
     [NonSerialized]
     public static float WaitForOneMoveDuration = 0.5f;
     [NonSerialized]
-    public int MainPlayer = 0;//must be assigned in online game, based on player id
+    public int MainPlayer = 0;//TODO:must be assigned in online game, based on player id
     [NonSerialized]
-    public int PLAYER_INIT_CARDS = 3;
+    public int PLAYER_INIT_CARDS = 5;
 
     private int Turn = -1;
     public int PlayerCount;

@@ -20,34 +20,27 @@ public class UnoCard : MonoBehaviour
         Wild = 13,
         Draw4Wild = 14
     }
-
-    public event Action<UnoCard> OnSelected;
     public int id;
-    Image img;
-    public Sprite BackImg;
-    Sprite FrontImg;
-    public MoveObject moveComponent;
-    public Owner owner;
-    public int globalCardIdx;
     CardType Color;
     int Number;
     public int TurnChangeAmount = 1;
     public SpecialCard Type = SpecialCard.None;
     public int AccumulatedCards = 0;
-    public Owner LastClicked ;
+    public Owner LastClicked;
+    
+    Image img;
+    public Sprite BackImg;
+    Sprite FrontImg;
+    MoveObject moveComponent;
+
+    public event Action<UnoCard> OnSelected;
     void Awake()
     {
         img = GetComponent<Image>();
         moveComponent = GetComponent<MoveObject>();
         moveComponent.targetTransform = transform;
     }
-    public void ShowBackImg(bool back)
-    {
-        if(back)
-            img.sprite = BackImg;
-        else
-            img.sprite = FrontImg;
-    }
+
     public void InitCard(int id,Sprite sprite,int _globalCardIdx)
     {
         this.id = id;
@@ -58,9 +51,7 @@ public class UnoCard : MonoBehaviour
             FrontImg = sprite;
         }
         ShowBackImg(true);
-        globalCardIdx = _globalCardIdx;
         SetNumberAndColor();
-
         
         TurnChangeAmount =  Type == SpecialCard.Skip? 2: Type == SpecialCard.Reverse ? -1:1;
         AccumulatedCards = Type == SpecialCard.Draw2 ? 2 : Type == SpecialCard.Draw4Wild ? 4 : 0;
@@ -73,6 +64,13 @@ public class UnoCard : MonoBehaviour
         else
             LastClicked = (Owner)Player;
         OnSelected?.Invoke(this);
+    }
+    public void ShowBackImg(bool back)
+    {
+        if (back)
+            img.sprite = BackImg;
+        else
+            img.sprite = FrontImg;
     }
     public void SetWildColor(CardType wildColor)
     {

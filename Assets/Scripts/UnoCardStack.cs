@@ -5,15 +5,14 @@ using UnityEngine;
 public class UnoCardStack : MonoBehaviour
 {
     List<UnoCard> cards = new List<UnoCard>();
-    public bool isDiscard = false;
-   // public Owner owner;
     int Discard_Z = 0;
+
+    public bool isDiscard = false;
     public Action<UnoCard> OnCardSelected;
     public AudioSource CardSound;
-
     public bool IsEmpty()
     {
-        return cards.Count == 0;//TODO!
+        return cards.Count == 0;
     }
 
     public void Pop(UnoCard card)
@@ -26,18 +25,21 @@ public class UnoCardStack : MonoBehaviour
     {
         CardSound.Play();
     }
-    //PushAndMove: moves the card position to the stack position
+
+    /// <summary>
+    /// moves the card position to this stack position and change parents and add to list
+    /// </summary>
+    /// <param name="card"></param>
+    /// <param name="Silent"></param>
+    /// <param name="callback"></param>
     public void PushAndMove(UnoCard card,bool Silent, Action callback)
     {
         if(!Silent) {
             PlayCardSound();
             }
 
-       // card.owner = owner;
         cards.Add(card);
-
-        card.OnSelected += OnCardSelected;//TODO
-
+        card.OnSelected += OnCardSelected;
 
         if (isDiscard)
         {
@@ -51,7 +53,6 @@ public class UnoCardStack : MonoBehaviour
         card.Move(transform.position, () =>
         {
             card.transform.SetParent(transform);
-
             callback();
         });
     }

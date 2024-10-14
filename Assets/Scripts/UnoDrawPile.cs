@@ -11,7 +11,7 @@ public class UnoDrawPile : MonoBehaviour
     public GameObject cardPrefab;
 
     Sprite[] CardSprites;
-    const int TOTAL_CARDS = 20;//108;
+    const int TOTAL_CARDS = 108;
     private List<UnoCard> AllCards = new List<UnoCard>();
 
     private void Awake()
