@@ -934,7 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: GameScene
-  MenuName: 
+  MenuName: MenuScene
   Music: {fileID: 1984610125}
   MusicControlToggle: {fileID: 2064647724}
 --- !u!4 &187810042

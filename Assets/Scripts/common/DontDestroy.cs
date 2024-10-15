@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class DontDistroy : MonoBehaviour
+public class DontDestroy : MonoBehaviour
 {
-    public static DontDistroy Instance;
+    public static DontDestroy Instance;
     private void Awake()
     {
         if (Instance != null)
