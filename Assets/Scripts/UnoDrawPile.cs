@@ -6,20 +6,25 @@ using UnityEngine;
 public class UnoDrawPile : MonoBehaviour
 {
     
-    public UnoCardStack DrawStack;
-    public UnoGameManager GameManager;
+   
     public GameObject cardPrefab;
 
     Sprite[] CardSprites;
     const int TOTAL_CARDS = 108;
     private List<UnoCard> AllCards = new List<UnoCard>();
-
+    UnoCardStack DrawStack;
+    UnoGameManager GameManager;
     private void Awake()
     {
         DrawStack = GetComponent<UnoCardStack>();
         CardSprites = Resources.LoadAll<Sprite>("");
         DrawStack.OnCardSelected += OnCardSelected;//set a call back for it's stack
 
+    }
+
+    public void SetManager(UnoGameManager manager)
+    {
+        GameManager = manager;
     }
     public void RemoveFromDraw(UnoCard card)
     {
@@ -121,6 +126,9 @@ public class UnoDrawPile : MonoBehaviour
         }
         else
             return DrawStack.GetAllCards()[0];
+    }
+    public List<UnoCard> GetAllCards() {
+        return DrawStack.GetAllCards();
     }
     private void CreateAllCards()
     {

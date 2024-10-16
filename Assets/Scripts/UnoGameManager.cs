@@ -42,7 +42,8 @@ public class UnoGameManager : MonoBehaviour
         PlayerCount = 4;
         Turn = 0;
         PrepareUnoPlayers(UnoColorSelect.ColorSelected);
-        DrawPile.GameManager = this;
+       
+        DrawPile.SetManager(this);
         DiscardPile.GameManager = this;
     }
     public void Start()

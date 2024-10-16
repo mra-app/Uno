@@ -18,9 +18,9 @@ public class UnoAI : MonoBehaviour
             cards.RemoveAt(0);
         }
     }
-    void PrepareToPlay(UnoCardStack PlayerCardStack, UnoCardStack DrawStack,int TryNumber)
+    void PrepareToPlay(UnoCardStack PlayerCardStack, List<UnoCard> DrawStackCards,int TryNumber)
     {
-        cards =new List<UnoCard>(PlayerCardStack.GetAllCards().Count+ DrawStack.GetAllCards().Count);
+        cards =new List<UnoCard>(PlayerCardStack.GetAllCards().Count+ DrawStackCards.Count);
         List<UnoCard> AvailableCards= new List<UnoCard>();
         for (int i = 0; i < PlayerCardStack.GetAllCards().Count; i++)
         {
@@ -31,13 +31,13 @@ public class UnoAI : MonoBehaviour
         }
 
         cards.AddRange(AvailableCards);
-        List<UnoCard> DrawCards = DrawStack.GetAllCards();
+        List<UnoCard> DrawCards = DrawStackCards;
         DrawCards.Reverse();
         cards.AddRange(DrawCards);
     }
-    public void StartPlay( UnoCardStack PlayerCardStack = null, UnoCardStack DrawStack = null,int TryNumber = 0)
+    public void StartPlay( UnoCardStack PlayerCardStack = null, List<UnoCard> DrawStackCards = null,int TryNumber = 0)
     {
-        PrepareToPlay(PlayerCardStack, DrawStack,TryNumber);
+        PrepareToPlay(PlayerCardStack, DrawStackCards,TryNumber);
         Play();
         int x = Random.Range(0, 10);
         if(x<1)

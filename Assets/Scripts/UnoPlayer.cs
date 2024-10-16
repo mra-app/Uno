@@ -127,7 +127,7 @@ public class UnoPlayer : MonoBehaviour
     {
         AI.Owner = handOwner;
         yield return new WaitForSeconds(0.4f*UnoGameManager.WaitForOneMoveDuration);
-        AI.StartPlay(cardStack, GameManager.DrawPile.DrawStack,TryNumber);
+        AI.StartPlay(cardStack, GameManager.DrawPile.GetAllCards(),TryNumber);
 
 
     }
