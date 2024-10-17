@@ -31,9 +31,10 @@ public class UnoGameManager : MonoBehaviour
     public int MainPlayer = 0;//TODO:must be assigned in online game, based on player id
     [NonSerialized]
     public int PLAYER_INIT_CARDS = 5;
+    [NonSerialized ]
+    public int PlayerCount;
 
     private int Turn = -1;
-    public int PlayerCount;
     private int ChangeTurnOrder = 1;
     private bool Paused = false;
 
@@ -44,7 +45,7 @@ public class UnoGameManager : MonoBehaviour
         PrepareUnoPlayers(UnoColorSelect.ColorSelected);
        
         DrawPile.SetManager(this);
-        DiscardPile.GameManager = this;
+        DiscardPile.SetManager(this);
     }
     public void Start()
     {

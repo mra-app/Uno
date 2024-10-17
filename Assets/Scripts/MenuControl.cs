@@ -6,8 +6,9 @@ public class MenuControl : MonoBehaviour
 {
     public string SceneName;
     public string MenuName;
-    public AudioSource Music;
     public Toggle MusicControlToggle;
+
+    AudioSource Music;
 
     private void Awake()
     {

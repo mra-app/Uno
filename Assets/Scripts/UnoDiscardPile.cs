@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnoDiscardPile : MonoBehaviour
 {
 
-    public UnoGameManager GameManager;
+    UnoGameManager GameManager;
     public GameObject WildColorGameObject;
     public List<GameObject> WildColors = new List<GameObject>();
 
@@ -16,8 +16,14 @@ public class UnoDiscardPile : MonoBehaviour
     void Awake()
     {
         cardStack = GetComponent<UnoCardStack>();
+        cardStack.SetAsDiscardStack();
         ChooseColorAnim = WildColorGameObject.GetComponent<Animation>();
 
+
+    }
+    public void SetManager(UnoGameManager manager)
+    {
+        GameManager = manager;
     }
     public void DiscardedCard(UnoCard card, Action callback)
     {

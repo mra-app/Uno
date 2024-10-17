@@ -7,12 +7,16 @@ public class UnoCardStack : MonoBehaviour
     List<UnoCard> cards = new List<UnoCard>();
     int Discard_Z = 0;
 
-    public bool isDiscard = false;
+    bool isDiscard = false;
     public Action<UnoCard> OnCardSelected;
     public AudioSource CardSound;
     public bool IsEmpty()
     {
         return cards.Count == 0;
+    }
+    public void SetAsDiscardStack()
+    {
+        isDiscard = true;
     }
 
     public void Pop(UnoCard card)
