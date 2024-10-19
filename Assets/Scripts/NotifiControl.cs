@@ -3,34 +3,25 @@ using UnityEngine;
 using TMPro;
 public class NotifiControl : MonoBehaviour
 {
+    public enum NotificationCode
+    {
+        None,
+        UNOF,
+        DRAW2,
+        REV,
+        SKIP,
+        DRAW4
+
+    }
     public GameObject UI;
     public TMP_Text text;
     public Animator animator;
     public AudioSource Audio;
-    public void ShowNotification(string message,int type)//0 for no message only audio
-    {
-        
+    public void ShowNotification(string message,NotificationCode type)//0 for no message only audio
+    {       
         text.text = message;
-        if (type == 1)
-        {
-            animator.SetTrigger("UNOF");
-        }
-        else if (type == 2)
-        {
-            animator.SetTrigger("DRAW2");
-        }
-        else if(type == 3) 
-        {        
-            animator.SetTrigger("REV");
-        }
-        else if (type == 4)
-        {
-            animator.SetTrigger("SKIP");
-        }
-        if (type == 5)
-        {
-            animator.SetTrigger("DRAW4");
-        }
+        if(type!=NotificationCode.None)
+             animator.SetTrigger(type.ToString());
         Audio.Play();
 
     }

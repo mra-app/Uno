@@ -29,19 +29,19 @@ public class UnoDiscardPile : MonoBehaviour
     {
         if (card.Type == UnoCard.SpecialCard.Reverse)
         {
-            GameManager.NotifiControl.ShowNotification("Reverse!", 3);
+            GameManager.NotifiControl.ShowNotification("Reverse!", NotifiControl.NotificationCode.REV);
         }
         else if (card.Type == UnoCard.SpecialCard.Skip)
         {
-            GameManager.NotifiControl.ShowNotification("Skip!", 4);
+            GameManager.NotifiControl.ShowNotification("Skip!", NotifiControl.NotificationCode.SKIP);
         }
         else if (card.Type == UnoCard.SpecialCard.Draw2)
         {
-            GameManager.NotifiControl.ShowNotification("draw 2 cards!", 2);
+            GameManager.NotifiControl.ShowNotification("draw 2 cards!", NotifiControl.NotificationCode.DRAW2);
         }
         else if (card.Type == UnoCard.SpecialCard.Draw4Wild)
         {
-            GameManager.NotifiControl.ShowNotification("draw 4 cards!", 5);
+            GameManager.NotifiControl.ShowNotification("draw 4 cards!", NotifiControl.NotificationCode.DRAW4);
         }
         card.ShowBackImg(false);
 
@@ -72,7 +72,7 @@ public class UnoDiscardPile : MonoBehaviour
         
         WildColorGameObject.transform.SetAsLastSibling();
         ChooseColorAnim.Play();
-        GameManager.NotifiControl.ShowNotification("", 0);
+        GameManager.NotifiControl.ShowNotification("", NotifiControl.NotificationCode.None);
 
     }
 

@@ -176,7 +176,7 @@ public class UnoPlayer : MonoBehaviour
             if (IsUno()&& !IsImmune())
             {   
                 Immune(true);
-                GameManager.NotifiControl.ShowNotification("forgot uno!",1);
+                GameManager.NotifiControl.ShowNotification("forgot uno!",NotifiControl.NotificationCode.UNOF);
 
                 GetOnePenaltyCard(() =>
                 {
