@@ -33,6 +33,7 @@ public class UnoGameManager : MonoBehaviour
     public int PLAYER_INIT_CARDS = 5;
     [NonSerialized ]
     public int PlayerCount;
+    public int MaxPlayerCount = 4;
 
     private int Turn = -1;
     private int ChangeTurnOrder = 1;
@@ -40,8 +41,9 @@ public class UnoGameManager : MonoBehaviour
 
     void Awake()
     {
-        PlayerCount = 4;
+        PlayerCount =  2;
         Turn = 0;
+        
         PrepareUnoPlayers(UnoColorSelect.ColorSelected);
        
         DrawPile.SetManager(this);
@@ -60,8 +62,16 @@ public class UnoGameManager : MonoBehaviour
             Colors.Add(color);
         }
         //set player colors and owners and disable uno button at first
-        for (int i = 0; i < PlayerCount; i++)
+        for (int i = 0; i < Players.Count; i++)
         {
+            DebugControl.Log(i.ToString()+Players.Count,3);
+            if (PlayerCount!=MaxPlayerCount &&( i== Players.Count -1|| i==1))
+            {
+                Destroy(Players[i].gameObject);
+                Players.RemoveAt(i);
+                if(i >= Players.Count)
+                 continue;
+            }
             Players[i].SetOwner((Owner)i);
             Players[i].GameManager = this;
             Players[i].Init();

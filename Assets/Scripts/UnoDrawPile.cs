@@ -88,7 +88,7 @@ public class UnoDrawPile : MonoBehaviour
         yield return new WaitForSeconds((5/2)*UnoGameManager.WaitForOneMoveDuration );
 
         initj = 0;
-        for (int i = 0; i < GameManager.Players.Count; i++)
+        for (int i = 0; i < GameManager.PlayerCount; i++)
         {
             for (int j = 0; j < GameManager.PLAYER_INIT_CARDS; j++)
             {
