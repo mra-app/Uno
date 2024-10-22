@@ -40,7 +40,7 @@ public class UnoAI : MonoBehaviour
         PrepareToPlay(PlayerCardStack, DrawStackCards,TryNumber);
         Play();
         int x = Random.Range(0, 10);
-        if(x<1)
+        if(x<2)
             StartCoroutine(CheckForUno());
     }
     public UnoCard.CardType SelectColorForWild(UnoCardStack PlayerCardStack)
