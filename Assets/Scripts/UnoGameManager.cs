@@ -64,7 +64,7 @@ public class UnoGameManager : MonoBehaviour
         //set player colors and owners and disable uno button at first
         for (int i = 0; i < Players.Count; i++)
         {
-            DebugControl.Log(i.ToString()+Players.Count,3);
+            //DebugControl.Log(i.ToString()+Players.Count,3);
             if (PlayerCount!=MaxPlayerCount &&( i== Players.Count -1|| i==1))
             {
                 Destroy(Players[i].gameObject);
@@ -119,12 +119,17 @@ public class UnoGameManager : MonoBehaviour
     /// <param name="card"></param>
     public void ChangeTurn(UnoCard card = null)
     {
-        if(card != null)//-1+1=0   -1+-1=-2   0+-1=--1
+        if(card != null)//-1+1=0   -1+-1=-2   0+-1=--1  1-1=0 
         {
-            Turn = (Turn + card.TurnChangeAmount* ChangeTurnOrder) % PlayerCount;
-            if(card.TurnChangeAmount < 0)
+            if (!(PlayerCount == 2 && card.Type == UnoCard.SpecialCard.Reverse))//else everything stays the same
             {
-                ChangeTurnOrder = ChangeTurnOrder * -1;
+
+
+                Turn = (Turn + card.TurnChangeAmount * ChangeTurnOrder) % PlayerCount;
+                if (card.TurnChangeAmount < 0)
+                {
+                    ChangeTurnOrder = ChangeTurnOrder * -1;
+                }
             }
         }
         else
