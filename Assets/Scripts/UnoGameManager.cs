@@ -41,7 +41,7 @@ public class UnoGameManager : MonoBehaviour
 
     void Awake()
     {
-        PlayerCount =  2;
+        PlayerCount =  DontDestroy.TempData;
         Turn = 0;
         
         PrepareUnoPlayers(UnoColorSelect.ColorSelected);

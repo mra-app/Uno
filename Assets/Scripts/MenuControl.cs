@@ -28,6 +28,7 @@ public class MenuControl : MonoBehaviour
     }
     public void OnGameClick(int idx)
     {
+        DontDestroy.TempData = idx;
 
         SceneManager.LoadScene(SceneName);
     }
