@@ -38,10 +38,18 @@ public class UnoGameManager : MonoBehaviour
     private int Turn = -1;
     private int ChangeTurnOrder = 1;
     private bool Paused = false;
+    private bool OnlineGame = false;
 
     void Awake()
     {
-        PlayerCount =  DontDestroy.TempData;
+        if (DontDestroy.TempData == 1)
+        {
+            OnlineGame = true;
+            PlayerCount = 2;
+        }
+        else
+            PlayerCount =  DontDestroy.TempData;
+
         Turn = 0;
         
         PrepareUnoPlayers(UnoColorSelect.ColorSelected);

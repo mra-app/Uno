@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class MenuControl : MonoBehaviour
 {
     public string SceneName;
+    public string LobbyName;
     public string MenuName;
     public Toggle MusicControlToggle;
 
@@ -29,8 +30,11 @@ public class MenuControl : MonoBehaviour
     public void OnGameClick(int idx)
     {
         DontDestroy.TempData = idx;
+        if (idx == 1)
+            SceneManager.LoadScene(LobbyName);
 
-        SceneManager.LoadScene(SceneName);
+        else
+            SceneManager.LoadScene(SceneName);
     }
     public void OnGoToMenuClick()
     {

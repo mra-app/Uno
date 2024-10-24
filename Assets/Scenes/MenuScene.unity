@@ -934,6 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: GameScene
+  LobbyName: LobbyScene
   MenuName: MenuScene
   MusicControlToggle: {fileID: 2064647724}
 --- !u!4 &187810042
@@ -2415,7 +2416,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 989522619}
   m_OnClick:
     m_PersistentCalls:
