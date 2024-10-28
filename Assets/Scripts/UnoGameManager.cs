@@ -38,7 +38,7 @@ public class UnoGameManager : MonoBehaviour
     private int Turn = -1;
     private int ChangeTurnOrder = 1;
     private bool Paused = false;
-    private bool OnlineGame = false;
+    public bool OnlineGame = false;
 
     void Awake()
     {

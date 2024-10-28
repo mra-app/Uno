@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class UnoDrawPile : MonoBehaviour
+public class UnoDrawPile : MonoBehaviourPunCallbacks
 {
     
    
@@ -25,10 +26,19 @@ public class UnoDrawPile : MonoBehaviour
     public void SetManager(UnoGameManager manager)
     {
         GameManager = manager;
+        if(PhotonNetwork.IsMasterClient)
+        photonView.RPC("SendCardList", RpcTarget.All, "yo"+ PhotonNetwork.NickName);
     }
     public void RemoveFromDraw(UnoCard card)
     {
         DrawStack.Pop(card);
+    }
+
+    [PunRPC]
+    public void SendCardList(string s)
+    {
+       // List<int> AllCardsInts = new List<int>(cards);
+        Debug.LogError(s);
     }
 
     /// <summary>
@@ -66,7 +76,7 @@ public class UnoDrawPile : MonoBehaviour
 
     public void ShuffleAndDistribute(int playerCount)
     {
-        CreateAllCards();
+        ShuffleCreateAllCards();
         //push all cards to draw stack
         int j = 0;
         while (AllCards.Count > j)
@@ -130,7 +140,7 @@ public class UnoDrawPile : MonoBehaviour
     public List<UnoCard> GetAllCards() {
         return DrawStack.GetAllCards();
     }
-    private void CreateAllCards()
+    private void ShuffleCreateAllCards()
     {
         List<int> allNumbers = new List<int>();
         for (int i = 0; i < TOTAL_CARDS; i++)
