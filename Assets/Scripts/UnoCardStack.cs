@@ -74,5 +74,14 @@ public class UnoCardStack : MonoBehaviour
     {
         return cards.Count == 1;
     }
+    public UnoCard GetCard(int id) {
+        foreach (UnoCard card in cards)
+        {
+            if (card.id == id)//TODO:test
+                return card;
+        }
+        Debug.LogError("miss");
+        return null;
+    }
 
 }

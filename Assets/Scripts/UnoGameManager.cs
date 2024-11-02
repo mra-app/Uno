@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
+using Photon.Realtime;
 
 public enum Owner
 {
@@ -14,7 +16,7 @@ public enum Owner
     Draw,
 }
 
-public class UnoGameManager : MonoBehaviour
+public class UnoGameManager : MonoBehaviourPunCallbacks
 {
     public List<UnoPlayer> Players;
     public List<GameObject> WinnerPlayerIcons;
@@ -24,6 +26,11 @@ public class UnoGameManager : MonoBehaviour
     public GameObject FinishPanel;
     public TMP_Text WinText;
     public NotifiControl NotifiControl;
+    [SerializeField]
+    private GameObject NameTagUp;
+    [SerializeField]
+    private GameObject NameTagDown;
+
 
     [NonSerialized]
     public static float WaitForOneMoveDuration = 0.5f;
@@ -34,11 +41,14 @@ public class UnoGameManager : MonoBehaviour
     [NonSerialized ]
     public int PlayerCount;
     public int MaxPlayerCount = 4;
+    
 
     private int Turn = -1;
     private int ChangeTurnOrder = 1;
     private bool Paused = false;
     public bool OnlineGame = false;
+    public bool isMasterClient = false;
+    
 
     void Awake()
     {
@@ -46,9 +56,14 @@ public class UnoGameManager : MonoBehaviour
         {
             OnlineGame = true;
             PlayerCount = 2;
+            Online_ShowPlayerName(PhotonNetwork.IsMasterClient, PhotonNetwork.NickName);
+            Online_ShowPlayerName(!PhotonNetwork.IsMasterClient, Online_GetOpponent().NickName);
+            MainPlayer = PhotonNetwork.IsMasterClient ? 0 : 1;
+            isMasterClient = PhotonNetwork.IsMasterClient;
         }
-        else
-            PlayerCount =  DontDestroy.TempData;
+        else {
+            PlayerCount = DontDestroy.TempData;
+        }
 
         Turn = 0;
         
@@ -59,7 +74,26 @@ public class UnoGameManager : MonoBehaviour
     }
     public void Start()
     {
-        DrawPile.ShuffleAndDistribute(PlayerCount);
+        DrawPile.ShuffleAndDistAllCards();
+    }
+    //master is the down player
+    private void Online_ShowPlayerName(bool isMaster,string Name)
+    {
+        GameObject TargetGameObject = isMaster ? NameTagDown : NameTagUp;
+        TargetGameObject.SetActive(true);
+        TMP_Text text = TargetGameObject.GetComponentInChildren<TMP_Text>();
+        text.text = Name;
+    }
+    private Player Online_GetOpponent()
+    {
+        foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values)
+        {
+            if (!player.IsLocal)
+            {
+                return player;
+            }
+        }
+        return null;
     }
     private void PrepareUnoPlayers(UnoCard.CardType MainPlayerColor)
     {
@@ -72,7 +106,7 @@ public class UnoGameManager : MonoBehaviour
         //set player colors and owners and disable uno button at first
         for (int i = 0; i < Players.Count; i++)
         {
-            //DebugControl.Log(i.ToString()+Players.Count,3);
+            //#if its not a four player game, remove extra game objects(player 3 and 1)
             if (PlayerCount!=MaxPlayerCount &&( i== Players.Count -1|| i==1))
             {
                 Destroy(Players[i].gameObject);

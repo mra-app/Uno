@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ExitGames.Client.Photon;
+using Photon.Realtime;
 using Photon.Pun;
 
-public class UnoDrawPile : MonoBehaviourPunCallbacks
+public class UnoDrawPile : MonoBehaviour
 {
     
    
@@ -26,8 +28,8 @@ public class UnoDrawPile : MonoBehaviourPunCallbacks
     public void SetManager(UnoGameManager manager)
     {
         GameManager = manager;
-        if(PhotonNetwork.IsMasterClient)
-        photonView.RPC("SendCardList", RpcTarget.All, "yo"+ PhotonNetwork.NickName);
+        //if(PhotonNetwork.IsMasterClient)
+        //    photonView.RPC("SendCardList", RpcTarget.All, "yo"+ PhotonNetwork.NickName);
     }
     public void RemoveFromDraw(UnoCard card)
     {
@@ -63,6 +65,15 @@ public class UnoDrawPile : MonoBehaviourPunCallbacks
                 GameManager.DiscardPile.CardDrawn(); ;
                 if (GameManager.DiscardPile.CanPlayOnUpCard())
                 {
+                if (GameManager.OnlineGame)
+                    {
+                           const byte MoveUnitsToTargetPositionEventCode = 1;
+
+    object[] content = new object[] { new Vector3(10.0f, 2.0f, 5.0f), 1, 2, 5, 10 }; // Array contains the target position and the IDs of the selected units
+                        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+                        PhotonNetwork.RaiseEvent(MoveUnitsToTargetPositionEventCode, content, raiseEventOptions, SendOptions.SendReliable);
+                       // photonView.RPC("OnCardClicked", RpcTarget., cardScript.id, (int)cardScript.LastClicked,2);
+                    }
                     GameManager.ChangeTurn();
                 }
                 else
@@ -72,11 +83,37 @@ public class UnoDrawPile : MonoBehaviourPunCallbacks
             }
         });
     }
-
-
-    public void ShuffleAndDistribute(int playerCount)
+    public void ShuffleAndDistAllCards()
     {
-        ShuffleCreateAllCards();
+       
+        List<int> allNumbers = ShuffleAllCards();
+        if (GameManager.OnlineGame && GameManager.isMasterClient)
+        {
+            const byte ShuffleAndDistAllCardsCode = 2;
+
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+            PhotonNetwork.RaiseEvent(ShuffleAndDistAllCardsCode, allNumbers.ToArray(), raiseEventOptions, SendOptions.SendReliable);
+            
+            CreateAndDistCards(allNumbers);
+        }
+        else if(!GameManager.OnlineGame)
+        {
+            CreateAndDistCards(allNumbers);
+        }
+    }
+    public void CreateAndDistCards(List<int> allNumbers)
+    {
+        for (int i = 0; i < TOTAL_CARDS; i++)
+        {
+            AllCards.Add(MakeCard(allNumbers[i], i));
+        }
+        DistributeCards(GameManager.PlayerCount);
+        Debug.LogError("CreateAndDistCards" + AllCards.Count);
+
+    }
+
+    public void DistributeCards(int playerCount)
+    {
         //push all cards to draw stack
         int j = 0;
         while (AllCards.Count > j)
@@ -106,10 +143,22 @@ public class UnoDrawPile : MonoBehaviourPunCallbacks
                 UnoCard card = DrawStack.GetAllCards()[id];
 
                 RemoveFromDraw(card);
+                int CurrentID = i;
                 GameManager.Players[i].DrawCard(card, false, () => {
 
-                    if (i == GameManager.MainPlayer)
+                    if (CurrentID == GameManager.MainPlayer)
+                    {
                         card.ShowBackImg(false);
+                    }
+                    else
+                    {
+                        card.ShowBackImg(true);
+                    }
+                    //if (j == 4)
+                    //{
+                    //    Debug.LogError(i == GameManager.MainPlayer);
+                    //}
+
                 });
                 yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration*3/4);
             }
@@ -127,20 +176,27 @@ public class UnoDrawPile : MonoBehaviourPunCallbacks
     {
         return DrawStack.IsEmpty();
     }
-    public UnoCard GetaCard()
+    public UnoCard GetaCard(int id = -1)
     {
-        if (DrawStack.IsEmpty())
+        if (id != -1)
         {
-            GameManager.EmptyDrawPileShowWinner();
-            return null;
+            return DrawStack.GetCard(id);//TODO:test
         }
         else
-            return DrawStack.GetAllCards()[0];
+        {
+            if (DrawStack.IsEmpty())
+            {
+                GameManager.EmptyDrawPileShowWinner();
+                return null;
+            }
+            else
+                return DrawStack.GetAllCards()[0];
+        }
     }
     public List<UnoCard> GetAllCards() {
         return DrawStack.GetAllCards();
     }
-    private void ShuffleCreateAllCards()
+    private List<int> ShuffleAllCards()
     {
         List<int> allNumbers = new List<int>();
         for (int i = 0; i < TOTAL_CARDS; i++)
@@ -148,11 +204,8 @@ public class UnoDrawPile : MonoBehaviourPunCallbacks
             allNumbers.Add(i);
         }
         allNumbers = Utility.Shuffle(allNumbers);
+        return allNumbers;
 
-        for (int i = 0; i < TOTAL_CARDS; i++)
-        {
-            AllCards.Add(MakeCard(allNumbers[i], i));
-        }
     }
     private UnoCard FindFirstCard()
     {

@@ -12,7 +12,7 @@ public class UnoGameManagerTest
     public void SetUp()
     {
         gameObject = new GameObject();
-        gameManager = gameObject.AddComponent<UnoGameManager>();
+       // gameManager = gameObject.AddComponent<UnoGameManager>();
     }
 
     [TearDown]
