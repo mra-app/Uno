@@ -35,7 +35,7 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
     [NonSerialized]
     public static float WaitForOneMoveDuration = 0.5f;
     [NonSerialized]
-    public int MainPlayer = 0;//TODO:must be assigned in online game, based on player id
+    public static int MainPlayer = 0;//TODO:must be assigned in online game, based on player id
     [NonSerialized]
     public int PLAYER_INIT_CARDS = 5;
     [NonSerialized ]
@@ -60,6 +60,11 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
             Online_ShowPlayerName(!PhotonNetwork.IsMasterClient, Online_GetOpponent().NickName);
             MainPlayer = PhotonNetwork.IsMasterClient ? 0 : 1;
             isMasterClient = PhotonNetwork.IsMasterClient;
+            UnoAI AI = Players[2].GetComponent<UnoAI>();
+            if (AI != null)
+            {
+                Destroy(AI);
+            }
         }
         else {
             PlayerCount = DontDestroy.TempData;

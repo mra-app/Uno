@@ -59,8 +59,8 @@ public class UnoCard : MonoBehaviour
     }
     public void OnClick(int Player=-1)
     {
-        if(Player==-1)
-            LastClicked = Owner.Player1;//TODO:multiplayer
+        if (Player == -1)
+            LastClicked = (Owner)UnoGameManager.MainPlayer;//Owner.Player1;//TODO:multiplayer
         else
             LastClicked = (Owner)Player;
         OnSelected?.Invoke(this);

@@ -43,7 +43,6 @@ public class MenuControl : MonoBehaviour
     }
     public void OnExitClicked()
     {
-        //TODO: test on build
         DebugControl.Log("quit called", 1);
         Application.Quit();
     }

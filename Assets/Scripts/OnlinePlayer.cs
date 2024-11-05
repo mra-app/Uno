@@ -4,6 +4,7 @@ using UnityEngine;
 using ExitGames.Client.Photon;
 using Photon.Realtime;
 using Photon.Pun;
+using System;
 
 public class OnlinePlayer : MonoBehaviour, IOnEventCallback
 {
@@ -21,7 +22,7 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
 
     //}
 
-    public const byte MoveUnitsToTargetPositionEventCode = 1;
+    public const byte OnCardSelectedDrawEventCode = 1;
     public const byte ShuffleAndDistAllCardsCode = 2;
     UnoGameManager gameManager;
 
@@ -52,10 +53,16 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
             gameManager.DrawPile.CreateAndDistCards(list);
 
         }
-        if (eventCode == MoveUnitsToTargetPositionEventCode)
+        if (eventCode == OnCardSelectedDrawEventCode)
         {
             object[] data = (object[])photonEvent.CustomData;
-            Debug.LogError("yo!");
+           
+            int id = (int)data[0];
+            int owner = (int)data[1];
+             Debug.LogError("yo!"+id+" "+owner);
+
+            UnoCard card = gameManager.DrawPile.GetaCard(id);
+            card.OnClick(owner);
             //Vector3 targetPosition = (Vector3)data[0];
             //for (int index = 1; index < data.Length; ++index)
             //{

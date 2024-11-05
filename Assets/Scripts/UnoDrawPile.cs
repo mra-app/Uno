@@ -65,14 +65,14 @@ public class UnoDrawPile : MonoBehaviour
                 GameManager.DiscardPile.CardDrawn(); ;
                 if (GameManager.DiscardPile.CanPlayOnUpCard())
                 {
-                if (GameManager.OnlineGame)
+                    if (GameManager.OnlineGame && (Owner)UnoGameManager.MainPlayer == cardScript.LastClicked)
                     {
-                           const byte MoveUnitsToTargetPositionEventCode = 1;
+                        const byte OnCardSelectedDrawEventCode = 1;
+                        object[] content = new object[] { cardScript.id, (int)cardScript.LastClicked }; 
+                        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others }; 
+                        PhotonNetwork.RaiseEvent(OnCardSelectedDrawEventCode, content, raiseEventOptions, SendOptions.SendReliable);
+                        Debug.LogError("lo!" +cardScript.id + " " +(int)cardScript.LastClicked);
 
-    object[] content = new object[] { new Vector3(10.0f, 2.0f, 5.0f), 1, 2, 5, 10 }; // Array contains the target position and the IDs of the selected units
-                        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-                        PhotonNetwork.RaiseEvent(MoveUnitsToTargetPositionEventCode, content, raiseEventOptions, SendOptions.SendReliable);
-                       // photonView.RPC("OnCardClicked", RpcTarget., cardScript.id, (int)cardScript.LastClicked,2);
                     }
                     GameManager.ChangeTurn();
                 }
@@ -146,7 +146,7 @@ public class UnoDrawPile : MonoBehaviour
                 int CurrentID = i;
                 GameManager.Players[i].DrawCard(card, false, () => {
 
-                    if (CurrentID == GameManager.MainPlayer)
+                    if (CurrentID == UnoGameManager.MainPlayer)//TODO:Online
                     {
                         card.ShowBackImg(false);
                     }
@@ -154,12 +154,8 @@ public class UnoDrawPile : MonoBehaviour
                     {
                         card.ShowBackImg(true);
                     }
-                    //if (j == 4)
-                    //{
-                    //    Debug.LogError(i == GameManager.MainPlayer);
-                    //}
 
-                });
+                    });
                 yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration*3/4);
             }
         }

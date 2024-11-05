@@ -73,7 +73,7 @@ public class UnoPlayer : MonoBehaviour
 
         cardStack.PushAndMove(card,false, () =>
         {
-            if ((int)handOwner == GameManager.MainPlayer)
+            if ((int)handOwner == UnoGameManager.MainPlayer)//TODO:Online
                 card.ShowBackImg(false);
             callback();
         });
@@ -211,7 +211,7 @@ public class UnoPlayer : MonoBehaviour
 
     public void UnoClicked()
     {
-            Uno(GameManager.MainPlayer);
+            Uno(UnoGameManager.MainPlayer);
     }
     public bool IsUno()
     {
