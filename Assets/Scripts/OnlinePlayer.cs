@@ -80,7 +80,7 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
             int owner = (int)data[1];
             Debug.LogError("yo!" + id + " " + owner);
 
-            UnoCard card = gameManager.Players[owner].GetaCard(id);
+            UnoCard card = gameManager.GetPlayer((Owner)owner).GetaCard(id);
             card.OnClick(owner);
         }
 

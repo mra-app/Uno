@@ -53,8 +53,8 @@ public class UnoDrawPile : MonoBehaviour
     {
          if( GameManager.GetTurn() != (int)cardScript.LastClicked){//if its not the turn of the player clicked on this card,
             return;}
-
-        GameManager.Players[GameManager.GetTurn()].DrawCard(cardScript,false, () =>
+         GameManager.GetPlayer((Owner)GameManager.GetTurn()).DrawCard(cardScript, false, () =>
+     //   GameManager.Players[GameManager.GetTurn()].DrawCard(cardScript,false, () =>
         {
             if (DrawStack.IsEmpty())
             {
@@ -78,7 +78,8 @@ public class UnoDrawPile : MonoBehaviour
                 }
                 else
                 {
-                    GameManager.Players[GameManager.GetTurn()].PlayAgain();
+                    GameManager.GetPlayer((Owner)GameManager.GetTurn()).PlayAgain();
+                  //  GameManager.Players[GameManager.GetTurn()].PlayAgain();
                 }
             }
         });
@@ -108,8 +109,6 @@ public class UnoDrawPile : MonoBehaviour
             AllCards.Add(MakeCard(allNumbers[i], i));
         }
         DistributeCards(GameManager.PlayerCount);
-        Debug.LogError("CreateAndDistCards" + AllCards.Count);
-
     }
 
     public void DistributeCards(int playerCount)
@@ -144,7 +143,7 @@ public class UnoDrawPile : MonoBehaviour
 
                 RemoveFromDraw(card);
                 int CurrentID = i;
-                GameManager.Players[i].DrawCard(card, false, () => {
+                GameManager.GetPlayer((Owner)i).DrawCard(card, false, () => {
 
                     if (CurrentID == UnoGameManager.MainPlayer)//TODO:Online
                     {

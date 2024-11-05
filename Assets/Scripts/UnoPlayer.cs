@@ -12,7 +12,7 @@ public class UnoPlayer : MonoBehaviour
     [NonSerialized]
     public UnoGameManager GameManager;
     [SerializeField]
-    private Owner handOwner;
+    public Owner handOwner;
     private UnoAI AI;
 
 

@@ -57,8 +57,8 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
         {
             OnlineGame = true;
             PlayerCount = 2;
-            Online_ShowPlayerName(PhotonNetwork.IsMasterClient, PhotonNetwork.NickName);
-            Online_ShowPlayerName(!PhotonNetwork.IsMasterClient, Online_GetOpponent().NickName);
+            Online_ShowPlayerName(true, PhotonNetwork.NickName);
+            Online_ShowPlayerName(false, Online_GetOpponent().NickName);
             MainPlayer = PhotonNetwork.IsMasterClient ? 0 : 1;
             isMasterClient = PhotonNetwork.IsMasterClient;
             UnoAI AI = Players[2].GetComponent<UnoAI>();
@@ -82,10 +82,22 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
     {
         DrawPile.ShuffleAndDistAllCards();
     }
-    //master is the down player
-    private void Online_ShowPlayerName(bool isMaster,string Name)
+
+    public UnoPlayer GetPlayer(Owner owner)
     {
-        GameObject TargetGameObject = isMaster ? NameTagDown : NameTagUp;
+        foreach (UnoPlayer player in Players)
+        {
+            if (player.handOwner == owner)
+                return player;
+        }
+        Debug.LogError("Exception: no player");
+        return null;
+    }
+
+    //mainPlayer is the down player
+    private void Online_ShowPlayerName(bool isMainPlayer,string Name)
+    {
+        GameObject TargetGameObject = isMainPlayer ? NameTagDown : NameTagUp;
         TargetGameObject.SetActive(true);
         TMP_Text text = TargetGameObject.GetComponentInChildren<TMP_Text>();
         text.text = Name;
@@ -134,6 +146,11 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
                 Colors.Remove(Colors[0]);
             }
             Players[i].InteractableUnoButton(false);//if called in awake, button would be null
+        }
+        if (OnlineGame)
+        {
+            Players[0].SetOwner((Owner)MainPlayer);
+            Players[1].SetOwner((Owner) (MainPlayer==0?1:0));
         }
     }
     public void ContinueGame(UnoCard card=null)
@@ -189,9 +206,10 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
     }
     private void UpdatePlayersTurn()
     {
+        Debug.Log("turn" + Turn);
         for (int i = 0; i < PlayerCount; ++i)
         {
-            Players[i].ChangeTurnToMe(Turn == i);
+            Players[i].ChangeTurnToMe(Turn == (int)Players[i].handOwner);//TODO:off i
         }
     }
 
@@ -227,7 +245,7 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
     {
         WinText.text = "Player " + (turn+1) + " has won!";
         FinishPanel.SetActive(true);
-        WinnerPlayerIcons[(int)Players[turn].PlayerColor].SetActive(true);
+        WinnerPlayerIcons[(int)GetPlayer((Owner)turn).PlayerColor].SetActive(true);
        
     } 
     /// <summary>
@@ -240,10 +258,10 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
         int MinCards = int.MaxValue;
         for (int i = 0; i < PlayerCount; ++i)
         {
-            if (Players[i].cardStack.GetAllCards().Count < MinCards)
+            if (GetPlayer((Owner)i).cardStack.GetAllCards().Count < MinCards)
             {
                 Winner = i;
-                MinCards = Players[i].cardStack.GetAllCards().Count;
+                MinCards = GetPlayer((Owner)i).cardStack.GetAllCards().Count;
             }
         }
        ShowWinner(Winner);
