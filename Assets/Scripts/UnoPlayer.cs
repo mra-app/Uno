@@ -139,7 +139,13 @@ public class UnoPlayer : MonoBehaviour
             {
                 RemoveFromHand(card);//TODO: move in discard in pile code
                 Immune(false);
-                GameManager.DiscardPile.DiscardedCard(card, () => {   
+                GameManager.DiscardPile.DiscardedCard(card, () => {
+
+                    //if the card is mine, notify the other player in online game
+                    if (GameManager.OnlineGame && (Owner)UnoGameManager.MainPlayer == card.LastClicked)
+                    {
+                        GameManager.EventSender.Online_OnPlayerHandCardSelected(card);
+                    }
                     if (HasWon()) 
                     {
                          GameManager.ShowWinner((int)handOwner);
@@ -207,6 +213,24 @@ public class UnoPlayer : MonoBehaviour
             {
                 callback();
             });
+    }
+    public UnoCard GetaCard(int id = -1)
+    {
+        if (id != -1)
+        {
+            return cardStack.GetCard(id);
+        }
+        else//TODO:unused
+        {
+            if (cardStack.IsEmpty())
+            {
+               // GameManager.EmptyDrawPileShowWinner();
+                Debug.LogError("Empty");
+                return null;
+            }
+            else
+                return cardStack.GetAllCards()[0];
+        }
     }
 
     public void UnoClicked()

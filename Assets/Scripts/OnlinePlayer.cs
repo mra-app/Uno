@@ -24,6 +24,8 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
 
     public const byte OnCardSelectedDrawEventCode = 1;
     public const byte ShuffleAndDistAllCardsCode = 2;
+    public const byte OnCardSelectedPlayerHandEventCode = 3;
+
     UnoGameManager gameManager;
 
     private void OnEnable()
@@ -70,5 +72,17 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
             //    UnitList[unitId].TargetPosition = targetPosition;
             //}
         }
+        if (eventCode == OnCardSelectedPlayerHandEventCode)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+
+            int id = (int)data[0];
+            int owner = (int)data[1];
+            Debug.LogError("yo!" + id + " " + owner);
+
+            UnoCard card = gameManager.Players[owner].GetaCard(id);
+            card.OnClick(owner);
+        }
+
     }
 }

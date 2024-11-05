@@ -22,6 +22,7 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
     public List<GameObject> WinnerPlayerIcons;
     public UnoDiscardPile DiscardPile;
     public UnoDrawPile DrawPile;
+    public EventSender EventSender;
 
     public GameObject FinishPanel;
     public TMP_Text WinText;
