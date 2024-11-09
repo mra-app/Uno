@@ -49,6 +49,7 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
     private bool Paused = false;
     public bool OnlineGame = false;
     public bool isMasterClient = false;
+    private bool isGameLock = false;
     
 
     void Awake()
@@ -82,7 +83,16 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
     {
         DrawPile.ShuffleAndDistAllCards();
     }
+    public bool isGameLocked()
+    {
+        return isGameLock;
+    }
+    public void LockGame(bool isLock)
+    {
+        DebugControl.LogTesting("lock"+isLock);
+        isGameLock = isLock;
 
+    }
     public UnoPlayer GetPlayer(Owner owner)
     {
         foreach (UnoPlayer player in Players)
@@ -184,7 +194,9 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
     /// <param name="card"></param>
     public void ChangeTurn(UnoCard card = null)
     {
-        if(card != null)//-1+1=0   -1+-1=-2   0+-1=--1  1-1=0 
+        LockGame(false);
+
+        if (card != null)//-1+1=0   -1+-1=-2   0+-1=--1  1-1=0 
         {
             if (!(PlayerCount == 2 && card.Type == UnoCard.SpecialCard.Reverse))//else everything stays the same
             {

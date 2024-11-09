@@ -51,8 +51,11 @@ public class UnoDrawPile : MonoBehaviour
     /// <param name="owner"></param>
     private void OnCardSelected(UnoCard cardScript)
     {
-         if( GameManager.GetTurn() != (int)cardScript.LastClicked){//if its not the turn of the player clicked on this card,
+       
+         if ( GameManager.isGameLocked() || GameManager.GetTurn() != (int)cardScript.LastClicked){//if its not the turn of the player clicked on this card,
             return;}
+         GameManager.LockGame(true);
+        DebugControl.LogTesting("drawing"+GameManager.isGameLocked()+" "+ GameManager.GetTurn());
          GameManager.GetPlayer((Owner)GameManager.GetTurn()).DrawCard(cardScript, false, () =>
      //   GameManager.Players[GameManager.GetTurn()].DrawCard(cardScript,false, () =>
         {
