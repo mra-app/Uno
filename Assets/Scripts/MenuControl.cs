@@ -43,7 +43,7 @@ public class MenuControl : MonoBehaviour
     }
     public void OnExitClicked()
     {
-        DebugControl.Log("quit called", 1);
+        DebugControl.LogTesting("quit called");
         Application.Quit();
     }
     public void PlayMusic(bool play)

@@ -80,7 +80,7 @@ public class UnoCardStack : MonoBehaviour
             if (card.id == id)//TODO:test
                 return card;
         }
-        Debug.LogError("miss");
+        Debug.LogError("Exception: miss");
         return null;
     }
 
