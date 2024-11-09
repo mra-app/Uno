@@ -93,24 +93,36 @@ public class UnoPlayer : MonoBehaviour
     }
     IEnumerator SelectWildCardColor(UnoCard cardScript)
     {
-        if (AI == null)
+        if (GameManager.OnlineGame)
         {
-            SelectColorPanel.SetActive(true);
+            if (GameManager.GetTurn() == UnoGameManager.MainPlayer)
+            {
+                SelectColorPanel.SetActive(true);
+            }
         }
         else
         {
-            yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration);
+            if (AI == null)
+            {
+                SelectColorPanel.SetActive(true);
+            }
+            else
+            {
+                yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration);
 
-            GameManager.DiscardPile.SetWildLastCardUIColor(
-                AI.SelectColorForWild(cardStack)
-                );
-            GameManager.ContinueGame();
+                GameManager.DiscardPile.SetWildLastCardUIColor(
+                    AI.SelectColorForWild(cardStack)
+                    );
+                GameManager.ContinueGame();
 
 
+            }
         }
     }
     public void PlayAgain()
     {
+        GameManager.LockGame(false);
+
         TryNumber++;
         //DebugControl.Log("play again", 3);
         if( AI != null ) 
@@ -122,6 +134,10 @@ public class UnoPlayer : MonoBehaviour
 
         SelectColorPanel.SetActive(false);
         GameManager.ContinueGame();
+        if (GameManager.OnlineGame)
+        {
+            GameManager.EventSender.Online_OnWildColorSelected(color);
+        }
     }
     IEnumerator AIPlay()
     {

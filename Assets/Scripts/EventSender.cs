@@ -13,6 +13,13 @@ public class EventSender : MonoBehaviour
         object[] content = new object[] { card.id, (int)card.LastClicked };
         RaiseEvent(OnlinePlayer.OnCardSelectedPlayerHandEventCode, content);
     }
+
+    public void Online_OnWildColorSelected(int color)
+    {
+        object[] content = new object[] { color };
+        RaiseEvent(OnlinePlayer.OnWildColorSelectedEventCode, content);
+    }
+
     public void RaiseEvent(byte EventCode, object[] content)
     {
        // if(EventCode == OnCardSelectedPlayerHandEventCode) { 
