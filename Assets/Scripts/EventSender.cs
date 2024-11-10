@@ -18,17 +18,18 @@ public class EventSender : MonoBehaviour
     {
         object[] content = new object[] { color };
         RaiseEvent(OnlinePlayer.OnWildColorSelectedEventCode, content);
+    }  
+    public void Online_OnDrawCardSelected(UnoCard card)
+    {
+        object[] content = new object[] { card.id, (int)card.LastClicked };
+        RaiseEvent(OnlinePlayer.OnCardSelectedDrawEventCode, content);
     }
 
     public void RaiseEvent(byte EventCode, object[] content)
     {
-       // if(EventCode == OnCardSelectedPlayerHandEventCode) { 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
             PhotonNetwork.RaiseEvent(EventCode, content, raiseEventOptions, SendOptions.SendReliable);
-            Debug.LogError(EventCode);
-        
-        //}
-        
+            Debug.LogError(EventCode);        
     }
 
 }

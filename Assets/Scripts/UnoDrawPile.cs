@@ -57,32 +57,27 @@ public class UnoDrawPile : MonoBehaviour
          GameManager.LockGame(true);
         DebugControl.LogTesting("drawing"+GameManager.isGameLocked()+" "+ GameManager.GetTurn());
          GameManager.GetPlayer((Owner)GameManager.GetTurn()).DrawCard(cardScript, false, () =>
-     //   GameManager.Players[GameManager.GetTurn()].DrawCard(cardScript,false, () =>
-        {
+         {
             if (DrawStack.IsEmpty())
             {
                 GameManager.EmptyDrawPileShowWinner();
             }
             else
             {
-                GameManager.DiscardPile.CardDrawn(); ;
+                GameManager.DiscardPile.CardDrawn();
+
+                if (GameManager.OnlineGame && (Owner)UnoGameManager.MainPlayer == cardScript.LastClicked)
+                {
+                    GameManager.EventSender.Online_OnDrawCardSelected(cardScript);
+                }
+
                 if (GameManager.DiscardPile.CanPlayOnUpCard())
                 {
-                    if (GameManager.OnlineGame && (Owner)UnoGameManager.MainPlayer == cardScript.LastClicked)
-                    {
-                        const byte OnCardSelectedDrawEventCode = 1;
-                        object[] content = new object[] { cardScript.id, (int)cardScript.LastClicked }; 
-                        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others }; 
-                        PhotonNetwork.RaiseEvent(OnCardSelectedDrawEventCode, content, raiseEventOptions, SendOptions.SendReliable);
-                        Debug.LogError("lo!" +cardScript.id + " " +(int)cardScript.LastClicked);
-
-                    }
                     GameManager.ChangeTurn();
                 }
                 else
                 {
                     GameManager.GetPlayer((Owner)GameManager.GetTurn()).PlayAgain();
-                  //  GameManager.Players[GameManager.GetTurn()].PlayAgain();
                 }
             }
         });

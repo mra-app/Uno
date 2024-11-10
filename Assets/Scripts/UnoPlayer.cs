@@ -97,22 +97,20 @@ public class UnoPlayer : MonoBehaviour
         {
             if (GameManager.GetTurn() == UnoGameManager.MainPlayer)
             {
-                SelectColorPanel.SetActive(true);
+                SelectColorPanel.SetActive(true);//then ColorSelected function will be called
             }
         }
         else
         {
             if (AI == null)
             {
-                SelectColorPanel.SetActive(true);
+                SelectColorPanel.SetActive(true);//then ColorSelected function will be called
             }
             else
             {
                 yield return new WaitForSeconds(UnoGameManager.WaitForOneMoveDuration);
 
-                GameManager.DiscardPile.SetWildLastCardUIColor(
-                    AI.SelectColorForWild(cardStack)
-                    );
+                GameManager.DiscardPile.SetWildLastCardUIColor(AI.SelectColorForWild(cardStack));
                 GameManager.ContinueGame();
 
 
@@ -128,7 +126,7 @@ public class UnoPlayer : MonoBehaviour
         if( AI != null ) 
             StartCoroutine(AIPlay());
     }
-    public void ColorSelected(int color)
+    public void ColorSelected(int color)//called from button clicked
     {
         GameManager.DiscardPile.SetWildLastCardUIColor((UnoCard.CardType)color);
 
@@ -149,10 +147,15 @@ public class UnoPlayer : MonoBehaviour
     }
     public void OnCardSelected(UnoCard card)
     {
+        if (GameManager.isGameLocked()){
+            return;
+        }
         if (GameManager.GetTurn() == (int)handOwner && GameManager.GetTurn() == (int)card.LastClicked)
         {
             if (GameManager.DiscardPile.CanPlayOnUpCard() && GameManager.DiscardPile.CanPlayThisCard(card)) 
             {
+                GameManager.LockGame(true);
+
                 RemoveFromHand(card);//TODO: move in discard in pile code
                 Immune(false);
                 GameManager.DiscardPile.DiscardedCard(card, () => {
@@ -167,6 +170,7 @@ public class UnoPlayer : MonoBehaviour
                          GameManager.ShowWinner((int)handOwner);
                             return;
                     }
+
                     if (GameManager.DiscardPile.ColorSelectIsNeeded())
                     {
                          StartCoroutine(SelectWildCardColor(card));

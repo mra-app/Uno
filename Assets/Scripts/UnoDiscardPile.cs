@@ -65,6 +65,7 @@ public class UnoDiscardPile : MonoBehaviour
     public void SetWildLastCardUIColor(UnoCard.CardType color)
     {
         LastCard.SetWildColor(color);
+        //show the selected color on the wild card
         for (int i = 0; i < 4; i++)
         {
             WildColors[i].SetActive(i== (int)color);
