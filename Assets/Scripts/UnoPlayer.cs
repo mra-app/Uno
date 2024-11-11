@@ -24,6 +24,7 @@ public class UnoPlayer : MonoBehaviour
     public Image CardPlaceImage;
     public Image PlayerImg;
     public UnoCard.CardType PlayerColor;
+    public Animator animator;
     public void Init()
     {
         cardStack.OnCardSelected += OnCardSelected;
@@ -33,6 +34,7 @@ public class UnoPlayer : MonoBehaviour
             AI.gameManager = GameManager;
         }
         UnoButon = GetComponentInChildren<Button>();
+        animator = GetComponent<Animator>();
         //PlayerColorHex = new List<string>();
         //PlayerColorHex.Add("EDD0BD");yello
         //PlayerColorHex.Add("88E0E8");blu
@@ -197,6 +199,8 @@ public class UnoPlayer : MonoBehaviour
 
     public void Uno(int callerID)
     {
+        animator.SetTrigger("UNOC");
+
         if (callerID != (int)handOwner)
         {
             if (IsUno()&& !IsImmune())
