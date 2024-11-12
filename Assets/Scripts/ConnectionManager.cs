@@ -16,7 +16,12 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
 
     void Awake()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+        if (DontDestroy.TempData == 5)
+        {
+            ShowStatus("The other player left");
+
+        }
+
     }
 
     public void SaveName(string name)
@@ -29,8 +34,9 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = name;
     }
 
-    public void OnButtonClicked()
+    public void OnButtonClicked()//connect button
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         Debug.Log(PhotonNetwork.NickName);
         Connect();
     }
@@ -86,11 +92,24 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel("GameScene");
+            PhotonNetwork.AutomaticallySyncScene = false;//so it can go to menu and the othe would go to lobby after
+
         }
     }
 
     void ShowStatus(string status)
     {
         StatusText.text = status;
+    }
+    public override void OnPlayerLeftRoom(Player other)
+    {
+        // The other player left - might as well leave, too!
+        PhotonNetwork.LeaveRoom();
+        DontDestroy.TempData = 5;
+        Debug.Log("oy why did you leave");
+    }
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("LobbyScene");
     }
 }

@@ -104,6 +104,13 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
         return null;
     }
 
+    public void Leave()
+    {
+        if (OnlineGame)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+    }
     //mainPlayer is the down player
     private void Online_ShowPlayerName(bool isMainPlayer,string Name)
     {
