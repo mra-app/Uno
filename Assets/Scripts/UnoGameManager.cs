@@ -255,7 +255,16 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
  
     public void ShowWinner(int turn)
     {
-        WinText.text = "Player " + (turn+1) + " has won!";
+        string name = "Player " + (turn+1);
+        if (OnlineGame)
+        {
+            if (turn == MainPlayer)
+                name = PhotonNetwork.NickName;
+            else
+                name = Online_GetOpponent().NickName;
+        }
+
+        WinText.text = name + " has won!";
         FinishPanel.SetActive(true);
         WinnerPlayerIcons[(int)GetPlayer((Owner)turn).PlayerColor].SetActive(true);
        
