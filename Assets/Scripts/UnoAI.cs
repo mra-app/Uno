@@ -70,9 +70,11 @@ public class UnoAI : MonoBehaviour
 
         for (int i = 0; i < gameManager.PlayerCount; i++)
         {
-            if (gameManager.GetPlayer((Owner)i).IsUno() && !gameManager.GetPlayer((Owner)i).IsImmune())
+            UnoPlayer player = gameManager.GetPlayer((Owner)i);
+
+            if (player.IsUno() && !player.IsImmune())
             {
-                gameManager.GetPlayer((Owner)i).Uno((int)Owner);
+                player.Uno((int)Owner);
             }
         }
 

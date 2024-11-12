@@ -23,6 +23,11 @@ public class EventSender : MonoBehaviour
     {
         object[] content = new object[] { card.id, (int)card.LastClicked };
         RaiseEvent(OnlinePlayer.OnCardSelectedDrawEventCode, content);
+    }   
+    public void Online_OnUnoCalled(int sender,Owner target)//(sender is an owner type as well)
+    {
+        object[] content = new object[] { (int)sender, (int)target };
+        RaiseEvent(OnlinePlayer.OnUnoEventCode, content);
     }
 
     public void RaiseEvent(byte EventCode, object[] content)

@@ -26,6 +26,7 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
     public const byte ShuffleAndDistAllCardsCode = 2;
     public const byte OnCardSelectedPlayerHandEventCode = 3;
     public const byte OnWildColorSelectedEventCode = 4;
+    public const byte OnUnoEventCode = 5;
 
     UnoGameManager gameManager;
 
@@ -96,6 +97,16 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
             gameManager.ContinueGame();
 
 
+        }
+        if (eventCode == OnUnoEventCode)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+
+            int sender = (int)data[0]; 
+            int target= (int)data[1]; 
+            Debug.LogError("uno!" + target);
+
+            gameManager.GetPlayer((Owner)target).Uno(sender);
         }
 
     }

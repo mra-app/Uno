@@ -259,7 +259,11 @@ public class UnoPlayer : MonoBehaviour
 
     public void UnoClicked()
     {
-            Uno(UnoGameManager.MainPlayer);
+        Uno(UnoGameManager.MainPlayer);
+        if (GameManager.OnlineGame)
+        {
+            GameManager.EventSender.Online_OnUnoCalled(UnoGameManager.MainPlayer, handOwner);
+        }
     }
     public bool IsUno()
     {
