@@ -48,7 +48,7 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-       // object[] data = (object[])photonEvent.CustomData;
+
         if (eventCode == ShuffleAndDistAllCardsCode)
         {
             int[] intArray = (int[])photonEvent.CustomData;
@@ -58,7 +58,7 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
             gameManager.DrawPile.CreateAndDistCards(list);
 
         }
-        if (eventCode == OnCardSelectedDrawEventCode)
+        else if (eventCode == OnCardSelectedDrawEventCode)
         {
             object[] data = (object[])photonEvent.CustomData;
            
@@ -68,14 +68,8 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
 
             UnoCard card = gameManager.DrawPile.GetaCard(id);
             card.OnClick(owner);
-            //Vector3 targetPosition = (Vector3)data[0];
-            //for (int index = 1; index < data.Length; ++index)
-            //{
-            //    int unitId = (int)data[index];
-            //    UnitList[unitId].TargetPosition = targetPosition;
-            //}
         }
-        if (eventCode == OnCardSelectedPlayerHandEventCode)
+        else if (eventCode == OnCardSelectedPlayerHandEventCode)
         {
             object[] data = (object[])photonEvent.CustomData;
 
@@ -86,7 +80,7 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
             UnoCard card = gameManager.GetPlayer((Owner)owner).GetaCard(id);
             card.OnClick(owner);
         }
-        if (eventCode == OnWildColorSelectedEventCode)
+        else if (eventCode == OnWildColorSelectedEventCode)
         {
             object[] data = (object[])photonEvent.CustomData;
 
@@ -98,7 +92,7 @@ public class OnlinePlayer : MonoBehaviour, IOnEventCallback
 
 
         }
-        if (eventCode == OnUnoEventCode)
+        else if (eventCode == OnUnoEventCode)
         {
             object[] data = (object[])photonEvent.CustomData;
 

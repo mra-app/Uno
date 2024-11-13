@@ -6,6 +6,7 @@ public class UnoCardStack : MonoBehaviour
 {
     List<UnoCard> cards = new List<UnoCard>();
     int Discard_Z = 0;
+    const int addVal = 45;
 
     bool isDiscard = false;
     public Action<UnoCard> OnCardSelected;
@@ -49,7 +50,9 @@ public class UnoCardStack : MonoBehaviour
         {
             card.transform.rotation = Quaternion.Euler(0, 0, Discard_Z);
             card.ShowBackImg(false);
-            Discard_Z += 45;
+            Discard_Z += addVal;
+            if (Discard_Z > 2*addVal)
+                Discard_Z = -addVal;
         }
         else
             card.transform.rotation = transform.rotation;
@@ -77,7 +80,7 @@ public class UnoCardStack : MonoBehaviour
     public UnoCard GetCard(int id) {
         foreach (UnoCard card in cards)
         {
-            if (card.id == id)//TODO:test
+            if (card.id == id)
                 return card;
         }
         Debug.LogError("Exception: miss");

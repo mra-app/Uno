@@ -141,9 +141,9 @@ public class UnoDrawPile : MonoBehaviour
 
                 RemoveFromDraw(card);
                 int CurrentID = i;
-                GameManager.GetPlayer((Owner)i).DrawCard(card, false, () => {
+                GameManager.GetPlayer((Owner)i).DrawCard(card, false, () => {//TODO:null exception when play again online game
 
-                    if (CurrentID == UnoGameManager.MainPlayer)//TODO:Online
+                    if (CurrentID == UnoGameManager.MainPlayer)
                     {
                         card.ShowBackImg(false);
                     }
@@ -173,7 +173,7 @@ public class UnoDrawPile : MonoBehaviour
     {
         if (id != -1)
         {
-            return DrawStack.GetCard(id);//TODO:test
+            return DrawStack.GetCard(id);
         }
         else
         {
