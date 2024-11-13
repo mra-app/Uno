@@ -106,10 +106,9 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         // The other player left - might as well leave, too!
         PhotonNetwork.LeaveRoom();
         DontDestroy.TempData = 5;
-        Debug.Log("oy why did you leave");
     }
     public override void OnLeftRoom()
     {
-        SceneManager.LoadScene("LobbyScene");
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
 }
