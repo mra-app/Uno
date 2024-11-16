@@ -43,6 +43,8 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
 
     public void Connect()
     {
+        DontDestroy.TempData = 1;//if not changed here, when other player leaves and were in lobby, it stays 5
+
         isConnecting = true;
         ConnectPanel.SetActive(false);
         ShowStatus("Connecting...");
@@ -99,11 +101,15 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
 
     void ShowStatus(string status)
     {
-        StatusText.text = status;
+        if (StatusText != null)
+            StatusText.text = status;
+        else
+            DebugControl.LogError(status);
     }
     public override void OnPlayerLeftRoom(Player other)
     {
         // The other player left - might as well leave, too!
+        DebugControl.LogError("im gone" + PhotonNetwork.NickName);
         PhotonNetwork.LeaveRoom();
         DontDestroy.TempData = 5;
     }

@@ -108,7 +108,7 @@ public class UnoGameManager : MonoBehaviourPunCallbacks
     {
         if (OnlineGame)
         {
-            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.Disconnect();
         }
     }
     //mainPlayer is the down player
